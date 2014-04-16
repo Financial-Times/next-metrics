@@ -1,0 +1,25 @@
+{
+  "forin": false,
+  "noarg": true,
+  "noempty": true,
+  "eqeqeq": true,
+  "bitwise": true,
+  "strict": true,
+  "undef": true,
+  "unused": true,
+  "browser": true,
+  "curly": true,
+  "boss": true,
+  "browser": true,
+  "node": true,
+  "newcap": false,
+  "immed": true,
+  "trailing": true,
+  "smarttabs": true,
+  "globals": {
+    "require": false,
+    "console": false,
+    "Promise": false,
+    "requireText": false
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Thing",
+  "version": "0.0.0",
+  "authors": [
+    "The Dude <The_Dude@ft.com>"
+  ],
+  "description": "Desc",
+  "keywords": [
+    "thing"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src",
+    "test",
+    "tests"
+  ]
+}

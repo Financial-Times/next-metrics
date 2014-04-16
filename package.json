@@ -1,0 +1,18 @@
+{
+  "name": "Thing",
+  "version": "0.0.0",
+  "description": "",
+  "main": "app/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webapp"
+  ],
+  "author": "The Dude",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.0.0",
+    "request": "^2.34.0"
+  }
+}
