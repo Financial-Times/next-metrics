@@ -1,12 +1,12 @@
 {
-  "name": "Thing",
+  "name": "Template webapp with bower components",
   "version": "0.0.0",
   "authors": [
-    "The Dude <The_Dude@ft.com>"
+    "Richard Still <rstill@netaphor.net>"
   ],
-  "description": "Desc",
+  "description": "Define FE dependencies to be used in this webapp",
   "keywords": [
-    "thing"
+    "web app"
   ],
   "license": "MIT",
   "private": true,
