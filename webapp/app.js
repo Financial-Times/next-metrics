@@ -3,7 +3,7 @@
 var express			= require('express'),
 	mware			= require('./middleware.js'),
 	mustache		= require('hogan-express'),
-	compression		= require('compression'),
+	compression		= require('compression')(),
 	cookieParser	= require('cookie-parser'),
 	cookieSession	= require('cookie-session'),
 	config			= require('./config.js');
@@ -11,7 +11,7 @@ var express			= require('express'),
 var app = express();
 
 // Enable output compression
-app.use(compression());
+app.use(compression);
 
 // Enable secure cookies
 app.use(cookieParser());
