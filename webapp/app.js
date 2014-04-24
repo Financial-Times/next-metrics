@@ -36,9 +36,12 @@ app.engine('mustache', mustache);
 app.use(express.static('./static'));
 
 // Setup the routes
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
 	res.render('body', {title: 'Hello world', content: 'Hello worlds'});
 });
+
+app.get('/__health', require('./controllers/health'));
+app.get('/__metrics', require('./controllers/metrics'));
 
 app.listen(config.PORT);
 console.log('Up and running on port', config.PORT);
