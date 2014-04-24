@@ -15,7 +15,7 @@ app.use(compression);
 
 // Enable secure cookies
 app.use(cookieParser());
-app.use(cookieSession({ path: '/', httpOnly: true, maxAge: 3600, secret: "e98gaha[dc;eojf"})); // SET A NEW SECRET
+app.use(cookieSession({ path: '/', httpOnly: true, maxAge: config.COOKIE_AGE, secret: config.COOKIE_SECRET})); // SET A NEW SECRET
 
 // Using mustache via Hogan
 app.set('view engine', 'mustache');
