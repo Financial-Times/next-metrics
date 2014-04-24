@@ -40,10 +40,5 @@ app.get('/', function(req, res){
 	res.render('body', {title: 'Hello world', content: 'Hello worlds'});
 });
 
-// Setup the routes
-app.get('/badger', function(req, res){
-	res.render('body', {title: 'Hello world', content: 'Badgers'});
-});
-
 app.listen(config.PORT);
 console.log('Up and running on port', config.PORT);
