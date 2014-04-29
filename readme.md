@@ -1,4 +1,4 @@
-A template express webapp usig Origami components
+A template express webapp using Origami components
 ===
 
 Defaults
@@ -13,12 +13,12 @@ Defaults
 
 To use
 --
-    git clone https://github.com/netaphor/templateWebApp.git
-    npm install
-    bower install
-    grunt
-    node webapp/app.js
-    
+	git clone https://github.com/netaphor/templateWebApp.git
+	npm install
+	bower install
+	grunt
+	node webapp/app.js
+
 Config options
 --
 Open `./webapp/config.js`
