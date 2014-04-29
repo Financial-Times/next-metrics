@@ -25,11 +25,11 @@ module.exports = function(grunt) {
     },
     watch: {
       sass: {
-        files: ['./client/sass/**'],
+        files: ['./src/scss/**'],
         tasks: ['sass']
       },
       js: {
-        files: ['./client/js/**'],
+        files: ['./src/js/**'],
         tasks: ['browserify']
       }
     }
