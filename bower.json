@@ -17,5 +17,8 @@
     "src",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "o-ft-header": "1.1.*"
+  }
 }

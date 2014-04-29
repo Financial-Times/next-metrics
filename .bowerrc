@@ -1,3 +1,9 @@
 {
-"directory": "src"
+"directory": "src",
+"registry": {
+"search": [
+  "http://registry.origami.ft.com",
+  "https://bower.herokuapp.com"
+]
+}
 }

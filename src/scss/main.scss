@@ -1,0 +1,10 @@
+/* Set Origami config */
+$o-assets-global-path: '/static/';
+
+/* Import Origami components */
+@import '../o-ft-header/main';
+
+/* Add our own SASS */
+.badger {
+	color: red;
+}
