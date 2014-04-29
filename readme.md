@@ -2,7 +2,7 @@ A template express webapp using Origami components
 ===
 
 Defaults
---
+---
 
 * Uses Hogan
 * A 'static' folder for assets
@@ -12,7 +12,8 @@ Defaults
 * Secure session cookies enabled
 
 To use
---
+---
+
 	git clone https://github.com/netaphor/templateWebApp.git
 	npm install
 	bower install
@@ -20,7 +21,7 @@ To use
 	node webapp/app.js
 
 Config options
---
-Open `./webapp/config.js`
+---
 
+Open `./webapp/config.js`
 Add a values for `COOKIE_SECRET` and `COOKIE_AGE`
