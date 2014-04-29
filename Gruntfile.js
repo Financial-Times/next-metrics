@@ -32,6 +32,18 @@ module.exports = function(grunt) {
         files: ['./src/js/**'],
         tasks: ['browserify']
       }
+    },
+    copy: {
+      resources: {
+        files: [
+          {
+            src: '**/*',
+            dest: './static/o-ft-header/img/',
+            expand: true,
+            cwd: './src/o-ft-header/img'
+          }
+        ]
+      }
     }
   });
 
@@ -39,6 +51,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Default task(s).
   grunt.registerTask('default', ['sass', 'browserify']);
