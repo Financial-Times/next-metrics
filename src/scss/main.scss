@@ -1,7 +1,21 @@
 /* Set Origami config */
-$o-assets-global-path: '/static/';
+$o-assets-global-path: '/';
+
+/*  Inlcude fonts, brought in by header but need to be included explicitly */
+@import 'o-fonts/main';
+@include oFontsInclude(BentonSans, Lighter);
+@include oFontsInclude(BentonSans, Normal);
+@include oFontsInclude(Clarion, Normal, Italic);
 
 /* Import Origami components */
-@import '../o-ft-header/main';
+@import 'o-ft-header/main';
 
 /* Add our own SASS */
+body,
+header {
+	font-family: $o-fonts-bentonsans-lighter;
+}
+
+footer {
+	font-family: $o-fonts-bentonsans-normal;
+}
