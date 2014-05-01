@@ -10,6 +10,7 @@ Defaults
 * Compression enbaled
 * Cookie parser enabled
 * Secure session cookies enabled
+* Set CORS header to allow requests from all domains
 
 To use
 ---
