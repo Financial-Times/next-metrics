@@ -1,1 +1,12 @@
 static
+src/dom-delegate
+src/lodash
+.bower.json
+src/o-assets
+src/o-colors
+src/o-fonts
+src/o-ft-header
+src/o-grid
+src/o-hoverable
+src/o-useragent
+src/o-viewport
