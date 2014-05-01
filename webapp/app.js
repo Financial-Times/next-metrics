@@ -1,7 +1,7 @@
 'use strict';
 
 var express			= require('express'),
-	mware			= require('./middleware.js'),
+	middleware		= require('./middleware.js'),
 	mustache		= require('hogan-express'),
 	compression		= require('compression')(),
 	cookieParser	= require('cookie-parser'),
@@ -12,6 +12,9 @@ var app = express();
 
 // Enable output compression
 app.use(compression);
+
+// Set CORS headers
+app.use(middleware.allowCrossDomain);
 
 // Enable secure cookies
 app.use(cookieParser());
