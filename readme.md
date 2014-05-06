@@ -19,7 +19,7 @@ To use
 	npm install
 	bower install
 	grunt
-	node webapp/app.js
+	node server/app.js
 
 Config options
 ---
