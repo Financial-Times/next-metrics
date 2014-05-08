@@ -15,14 +15,32 @@ Defaults
 To use
 ---
 
-	git clone https://github.com/netaphor/templateWebApp.git
-	npm install
-	bower install
-	grunt
-	node server/app.js
+    http://git.svc.ft.com:8080/scm/strat_p/template-origami-express-app.git
+    cd template-origami-express-app/
+    npm install
+    bower install
+    grunt
+
+To run locally
+---
+
+As above, plus, 
+
+    node webapp/app.js
+
+To deploy
+---
+
+As above, plus
+
+    heroku create {mySensibleAppName}
+    git push heroku master
+
+Remember to commit your static directory and run `grunt` if you update the CSS.
+=======
 
 Config options
 ---
 
-Open `./webapp/config.js`
-Add a values for `COOKIE_SECRET` and `COOKIE_AGE`
+* Open `./webapp/config.js`
+* Add a values for `COOKIE_SECRET` and `COOKIE_AGE`
