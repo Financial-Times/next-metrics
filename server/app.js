@@ -1,12 +1,13 @@
 'use strict';
 
-var express			= require('express'),
-	middleware		= require('./middleware.js'),
-	mustache		= require('hogan-express'),
-	compression		= require('compression')(),
-	cookieParser	= require('cookie-parser'),
-	cookieSession	= require('cookie-session'),
-	config			= require('./config.js');
+var express         = require('express'),
+    middleware      = require('./middleware.js'),
+    mustache        = require('hogan-express'),
+    compression     = require('compression')(),
+    cookieParser    = require('cookie-parser'),
+    cookieSession   = require('cookie-session'),
+    config          = require('./config.js'),
+    ftApi           = require('ft-api-client');
 
 var app = express();
 
@@ -38,9 +39,24 @@ app.engine('mustache', mustache);
 // Static resources folder
 app.use(express.static('./static'));
 
+var ft = new ftApi({ apiKey: process.env.FT_API_KEY });
+
 // Setup the routes
 app.get('/', function (req, res) {
-	res.render('body', {title: 'Hello world', content: 'Hello worlds'});
+    res.render('body', {title: 'Hello world', content: 'Hello worlds' });
+});
+
+app.get('/news/:id', function (req, res) {
+    ft.getItem(req.params.id, function (err, response) {
+        if (err) {
+            res.send(404, err);
+        } else {
+            res.render('body', {
+                title: response.item.title.title,
+                content: response.item.body.body
+            });
+        }
+    })
 });
 
 app.get('/__health', require('./controllers/health'));

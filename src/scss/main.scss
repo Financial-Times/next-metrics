@@ -19,3 +19,9 @@ header {
 footer {
 	font-family: $o-fonts-bentonsans-normal;
 }
+
+.ft-article__container {
+    margin: 10px auto;
+    max-width: 500px;
+    padding: 10px;
+}
