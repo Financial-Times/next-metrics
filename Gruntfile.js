@@ -54,7 +54,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Default task(s).
-  grunt.registerTask('default', ['sass', 'browserify']);
+  grunt.registerTask('default', ['sass', 'browserify', 'copy']);
   grunt.registerTask('js', ['browserify']);
   grunt.registerTask('css', ['sass']);
 };
