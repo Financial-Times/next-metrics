@@ -56,7 +56,7 @@ app.get('/news/:id', function (req, res) {
                 content: response.item.body.body
             });
         }
-    })
+    });
 });
 
 app.get('/__health', require('./controllers/health'));
