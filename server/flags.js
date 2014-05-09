@@ -11,6 +11,7 @@ var domain      = require('domain'),
 var Flag = function (opts) {
     var opts = opts || {};
     this.state = opts.state || false;
+    this.lastUpdated = new Date();
 }
 
 Flag.prototype.isSwitchedOn = function () {
