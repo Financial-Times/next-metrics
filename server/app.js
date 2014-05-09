@@ -3,6 +3,7 @@
 var express         = require('express'),
     middleware      = require('./middleware.js'),
     mustache        = require('hogan-express'),
+    os              = require('os'),
     compression     = require('compression')(),
     cookieParser    = require('cookie-parser'),
     cookieSession   = require('cookie-session'),
@@ -42,7 +43,10 @@ app.use(express.static('./static'));
 
 var ft = new ftApi({ apiKey: process.env.FT_API_KEY });
 
-flags.hydrate();
+var flagUrl = 'http://' + os.hostname() + ':' + config.PORT + '/__flags';
+
+console.log(flagUrl);
+flags.hydrate(flagUrl);
 
 // Setup the routes
 app.get('/', function (req, res) {
@@ -62,6 +66,10 @@ app.get('/news/:id', function (req, res) {
     })
 });
 
+// dummy flag service
+app.get('/__flags', function (req, res) {
+    res.send(200, '{ "foo": true, "boo": false }');
+});
 app.get('/__health', require('./controllers/health'));
 app.get('/__metrics', require('./controllers/metrics'));
 
