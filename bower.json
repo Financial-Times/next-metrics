@@ -19,6 +19,7 @@
     "tests"
   ],
   "dependencies": {
-    "o-ft-header": "1.1.*"
+    "o-ft-header": "1.1.*",
+    "o-ft-footer": "1.1.*"
   }
 }

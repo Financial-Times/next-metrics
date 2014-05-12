@@ -9,11 +9,17 @@ $o-assets-global-path: '/';
 
 /* Import Origami components */
 @import 'o-ft-header/main';
+@import 'o-ft-footer/main';
 
 /* Add our own SASS */
 body,
 header {
 	font-family: $o-fonts-bentonsans-lighter;
+}
+
+body {
+    margin: 0;
+    padding: 0;
 }
 
 footer {
