@@ -1,0 +1,28 @@
+{
+    "options": {
+        "sass": "demos/src/demo.scss"
+    },
+    "demos": {
+        "headings": {
+            "template": "demos/src/headings.mustache"
+        },
+        "titles": {
+            "template": "demos/src/titles.mustache"
+        },
+        "leads": {
+            "template": "demos/src/leads.mustache"
+        },
+        "metadata": {
+            "template": "demos/src/metadata.mustache"
+        },
+        "body": {
+            "template": "demos/src/body.mustache"
+        },
+        "labels": {
+            "template": "demos/src/labels.mustache"
+        },
+        "badges": {
+            "template": "demos/src/badges.mustache"
+        }
+    }
+}
