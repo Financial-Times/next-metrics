@@ -3,11 +3,13 @@
 var express         = require('express'),
     middleware      = require('./middleware.js'),
     mustache        = require('hogan-express'),
+    os              = require('os'),
     compression     = require('compression')(),
     cookieParser    = require('cookie-parser'),
     cookieSession   = require('cookie-session'),
     config          = require('./config.js'),
-    ftApi           = require('ft-api-client');
+    ftApi           = require('ft-api-client'),
+    flags           = require('./flags');
 
 var app = express();
 
@@ -41,9 +43,14 @@ app.use(express.static('./static'));
 
 var ft = new ftApi({ apiKey: process.env.FT_API_KEY });
 
+var flagUrl = 'http://' + os.hostname() + ':' + config.PORT + '/__flags';
+
+console.log(flagUrl);
+flags.hydrate(flagUrl);
+
 // Setup the routes
 app.get('/', function (req, res) {
-    res.render('body', {title: 'Hello world', content: 'Hello worlds' });
+    res.render('body', {title: 'Hello world', content: 'Hello worlds', flags: flags.get() });
 });
 
 app.get('/news/:id', function (req, res) {
@@ -59,6 +66,10 @@ app.get('/news/:id', function (req, res) {
     });
 });
 
+// dummy flag service
+app.get('/__flags', function (req, res) {
+    res.send(200, '{ "foo": true, "boo": false }');
+});
 app.get('/__health', require('./controllers/health'));
 app.get('/__metrics', require('./controllers/metrics'));
 
