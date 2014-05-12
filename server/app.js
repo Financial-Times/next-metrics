@@ -5,8 +5,6 @@ var express         = require('express'),
     mustache        = require('hogan-express'),
     os              = require('os'),
     compression     = require('compression')(),
-    cookieParser    = require('cookie-parser'),
-    cookieSession   = require('cookie-session'),
     config          = require('./config.js'),
     ftApi           = require('ft-api-client'),
     flags           = require('./flags');
@@ -18,10 +16,6 @@ app.use(compression);
 
 // Set CORS headers
 app.use(middleware.allowCrossDomain);
-
-// Enable secure cookies
-app.use(cookieParser());
-app.use(cookieSession({ path: '/', httpOnly: true, maxAge: config.COOKIE_AGE, secret: config.COOKIE_SECRET})); // SET A NEW SECRET
 
 // Using mustache via Hogan
 app.set('view engine', 'mustache');
