@@ -4,12 +4,10 @@ A template express webapp using Origami components
 Defaults
 ---
 
-* Uses Hogan
+* Uses Hogan-express
 * A 'static' folder for assets
 * Hogan template for layout with partials header, head, footer, body
 * Compression enbaled
-* Cookie parser enabled
-* Secure session cookies enabled
 * Set CORS header to allow requests from all domains
 
 To use
