@@ -1,5 +1,5 @@
 {
-"directory": "src",
+"directory": "app",
 "registry": {
 "search": [
   "http://registry.origami.ft.com",
