@@ -9,14 +9,14 @@ module.exports = function(grunt) {
           loadPath: './app'
         },
         files: {
-          './static/bundle.css': './app/scss/main.scss'
+          './static/bundle.css': './app/main/scss/main.scss'
         }
       }
     },
     browserify: {
       dist: {
         files: {
-          './static/bundle.js': ['./app/js/main.js'],
+          './static/bundle.js': ['./app/main/js/main.js'],
         },
         options: {
           transform: ['debowerify', 'textrequireify']
