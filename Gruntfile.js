@@ -6,17 +6,17 @@ module.exports = function(grunt) {
       docs: {
         options: {
           style: 'compressed',
-          loadPath: './src'
+          loadPath: './app'
         },
         files: {
-          './static/bundle.css': './src/scss/main.scss'
+          './static/bundle.css': './app/scss/main.scss'
         }
       }
     },
     browserify: {
       dist: {
         files: {
-          './static/bundle.js': ['./src/js/main.js'],
+          './static/bundle.js': ['./app/js/main.js'],
         },
         options: {
           transform: ['debowerify', 'textrequireify']
@@ -25,11 +25,11 @@ module.exports = function(grunt) {
     },
     watch: {
       sass: {
-        files: ['./src/scss/**'],
+        files: ['./app/scss/**'],
         tasks: ['sass']
       },
       js: {
-        files: ['./src/js/**'],
+        files: ['./app/js/**'],
         tasks: ['browserify']
       }
     },
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
             src: '**/*',
             dest: './static/o-ft-header/img/',
             expand: true,
-            cwd: './src/o-ft-header/img'
+            cwd: './app/o-ft-header/img'
           }
         ]
       }
