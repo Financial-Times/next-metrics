@@ -27,8 +27,6 @@ if (fs.existsSync(devEnvPath)) {
 
 // Express config
 exports.PORT = process.env.PORT || 5000;
-exports.COOKIE_SECRET = 'fq3h489qd2-kfj3fja;oaamr92[';
-exports.COOKIE_AGE = 3600;
 
 // Application constants
 exports.VERSION = pkg.version;
