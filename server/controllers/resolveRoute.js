@@ -55,15 +55,10 @@ function getServiceVersion (path, service) {
 // And an entry to the cache? At some point...
 
 // Load balance against the pool for given service
-function selectNode (nodeList) {
-	var nodeNum = Math.ceil((Math.random() * nodeList.length) - 1);
-	l(nodeNum);
-	return nodeList[nodeNum];
-}
-
 function getHost (serviceVersion) {
-	var node = selectNode(serviceVersion.nodes);
-	return node;
+	var nodeNum = Math.ceil((Math.random() * serviceVersion.nodes.length) - 1);
+	l(nodeNum);
+	return serviceVersion.nodes[nodeNum];
 }
 
 // Make the outbound request streaming it to the output
