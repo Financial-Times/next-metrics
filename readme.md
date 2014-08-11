@@ -1,30 +1,19 @@
-A template express webapp using Origami components
+A stab at creating an hhtp router
 ===
-
-Defaults
----
-
-* Uses Hogan-express
-* A 'static' folder for assets
-* Hogan template for layout with partials header, head, footer, body
-* Compression enbaled
-* Set CORS header to allow requests from all domains
 
 To use
 ---
 
-    http://git.svc.ft.com:8080/scm/strat_p/template-origami-express-app.git
-    cd template-origami-express-app/
+    http://git.svc.ft.com:8080/scm/strat_p/next-router.git
+    cd next-router/
     npm install
-    bower install
-    grunt
 
 To run locally
 ---
 
-As above, plus, 
+Do something like
 
-    node webapp/app.js
+	nodemon server/app.js
 
 To deploy
 ---
@@ -33,12 +22,3 @@ As above, plus
 
     heroku create {mySensibleAppName}
     git push heroku master
-
-Remember to commit your static directory and run `grunt` if you update the CSS.
-=======
-
-Config options
----
-
-* Open `./webapp/config.js`
-* Add a values for `COOKIE_SECRET` and `COOKIE_AGE`
