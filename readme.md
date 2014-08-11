@@ -1,4 +1,4 @@
-A stab at creating an hhtp router
+A stab at creating an http router
 ===
 
 To use
