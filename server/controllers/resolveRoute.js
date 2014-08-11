@@ -6,7 +6,7 @@ var l = console.log;
 
 // Validate the routing map
 
-// Initialise an in-memory cache for paths that have been previously resolved
+// Initialise an in-memory cache for paths that have been previously resolved (memoization perhaps)
 
 // Create static route maps for each service based on the proportion of traffic each may have specified
 
@@ -55,16 +55,23 @@ function getServiceVersion (path, service) {
 // And an entry to the cache? At some point...
 
 // Load balance against the pool for given service
+function selectNode (nodeList) {
+	var nodeNum = Math.ceil((Math.random() * nodeList.length) - 1);
+	l(nodeNum);
+	return nodeList[nodeNum];
+}
+
 function getHost (serviceVersion) {
-	return serviceVersion.nodes[0];
+	var node = selectNode(serviceVersion.nodes);
+	return node;
 }
 
 // Make the outbound request streaming it to the output
 var request = require('request');
 function streamResponse (req, res, serviceVersion) {
-	var host;
-	host = getHost(serviceVersion);
-	request('http://' + host).pipe(res);
+	var host = getHost(serviceVersion);
+	l(host);
+	request('http://' + host + req.path).pipe(res);
 }
 
 // Handle requests and attempt to resolve them

@@ -1,19 +1,21 @@
 'use strict';
 
 var routeProfiles = [{
-	name: "mostpopular",
-	path: "mostpopular", // A regex to match the high level traffic (possibly use a service to resolve a page to a type of thing and route accordingly.)
+	name: "badger",
+	path: "badger", // A regex to match the high level traffic (possibly use a service to resolve a page to a type of thing and route accordingly.)
 	desc: "A service that creates perfectly formed badgers",
 	versions: {
 		"#123": {
 			nodes: [
-				"mostpopular.sp.ft-static.com"
+				"next-router-test-app-badger-1.herokuapp.com",
+				"next-router-test-app-badger-2.herokuapp.com"
 			],
 			isPrimary: true  // Indicates which service is the default to receive traffic
 		},
 		"#234": {
 			nodes: [
-				"ft-popular-content-test.herokuapp.com"
+				"next-router-test-app-bodger-1.herokuapp.com",
+				"next-router-test-app-bodger-2.herokuapp.com"
 			],
 			filters: {
 				//"load": 5%, // take this percentage of...
