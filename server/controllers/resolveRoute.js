@@ -3,6 +3,9 @@
 // Load the routing map into memory
 var serviceProfiles = require('../serviceProfiles.js');
 var l = console.log;
+var _ = require('lodash');
+
+
 
 // Validate the routing map
 
@@ -46,8 +49,65 @@ function getService (path, profiles) {
 // Check to see if requestor has been here before and direct accordingly
 
 // Iterate over header/cookie filters for each version, the first matching rules wins
-function getServiceVersion (path, service) {
-	return service.versions['#123'];
+function getServiceVersion (req, service) {
+	// Iterate over the versions looking for filters
+	var serviceMatch = _.find(service.versions, function (version, serviceName) {
+		l('service name', serviceName);
+		// Check filters that are present for a match
+		if (version.filters) {
+			var filterMatch = parseFilters(req, version.filters);
+			l('filter hit return', filterMatch);
+			if (filterMatch) {
+				return serviceName;
+			} else {
+				return false;
+			}
+		} 
+	});
+
+	l('service match', serviceMatch);
+
+	if (serviceMatch) {
+		return serviceMatch;
+	} else {
+		return service.versions['#123'];	
+	}
+}
+
+
+function parseFilters (req, filterList) {
+	var filterHit = _.find(filterList, function (filter, key) {
+		// Header filter
+		if (key.indexOf('http.') === 0) {
+			var headerMatch = testHeader({
+				req: req,
+				filterVal: filter,
+				fiterName: key
+			});
+			l('filter hit', headerMatch);
+			return headerMatch;
+		}
+	});
+	return filterHit;
+}
+
+
+// Test the headers for a specific value
+function testHeader (data) {
+	var headerField = data.fiterName.split('.')[1];
+	var headerVal = data.req.header(headerField);
+	var headerFilter = new RegExp(data.filterVal);
+
+	// If a header with the specified name exisits...
+	if (headerVal && headerFilter.test(headerVal)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function testCookie (cookieRule, cookies) {
+	return false;
 }
 
 // If no rules match fall through to the proportional traffic rules
@@ -75,7 +135,7 @@ function routeResolver (req, res, next) {
 	var serviceVersion;
 
 	if (service) {
-		serviceVersion = getServiceVersion(req.path, service);
+		serviceVersion = getServiceVersion(req, service);
 		streamResponse(req, res, serviceVersion);
 		//res.json(service);
 	} else {
