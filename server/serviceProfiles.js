@@ -12,6 +12,12 @@ var routeProfiles = [{
 			],
 			isPrimary: true  // Indicates which service is the default to receive traffic
 		},
+		"#345": {
+			nodes: [
+				"next-router-test-app-badger-3.herokuapp.com",
+				"next-router-test-app-badger-4.herokuapp.com"
+			]
+		},
 		"#234": {
 			nodes: [
 				"next-router-test-app-bodger-1.herokuapp.com",
@@ -21,7 +27,9 @@ var routeProfiles = [{
 				//"load": 5%, // take this percentage of...
 				"http.User-Agent": "Nexus 4", // this regex pattern to match against the  user agent
 				"rateLimitTo": 10, //  request p/sec
-				"http.Cookie": "AYSC", // a regex to test against the cookie value
+				"http.Cookie": {
+					"cookieconsent": "seen"
+				}, // a regex to test against the cookie value
 				"geo.country": "uk",
 				"deny": "all",
 				"access": "129.412.12.32"

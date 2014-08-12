@@ -29,7 +29,7 @@ function getService (path, profiles) {
 		var reg = new RegExp(currentService.path);		
 		var matches = reg.test(path);
 
-		if (matches > 0) {
+		if (matches) {
 			serviceProfile = currentService;
 			return true;
 		} else {
@@ -72,8 +72,15 @@ function getServiceVersion (req, service) {
 
 function parseFilters (req, filterList) {
 	var filterHit = _.find(filterList, function (filter, key) {
-		// Header filter
-		if (key.indexOf('http.') === 0) {
+		// Header filters
+		// Cookies are a special case because the value of the Cookie header is a string if name/value pairs
+		if (key.indexOf('http.Cookie') === 0) {
+			var cookieMatch = testCookies({
+				req: req,
+				filters: filter
+			});
+			return cookieMatch;
+		} else if (key.indexOf('http.') === 0) {
 			var headerMatch = testHeader({
 				req: req,
 				filterVal: filter,
@@ -83,6 +90,36 @@ function parseFilters (req, filterList) {
 		}
 	});
 	return filterHit;
+}
+
+function testCookies (data) {
+	// Split to name/value pairs
+	var cookies = data.req.header('Cookie').split('; ');
+
+	// We need a map of the cookies so fun our filters against
+	var cookieMap = {};
+	cookies.forEach(function (cookieString) {
+		var cookie = cookieString.split('=');
+		cookieMap[cookie[0]] = cookie[1];
+	});
+
+	// Find the first cookie filter name that matches a cookie name
+	var cookieMatch = _.find(cookieMap, function (cookieVal, cookieName) {
+		var filterMatch = _.find(data.filters, function (filterVal, filterName) {
+			// The regex we want to apply
+			var filterReg = new RegExp(filterVal);
+
+			// The result of the regex test, ie test the filter specified in the profile against the value in the request
+			var filterTest = filterReg.test(cookieVal);
+			if (cookieName === filterName && filterTest) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+		return filterMatch;
+	});
+	return cookieMatch;
 }
 
 
