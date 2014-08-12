@@ -44,6 +44,15 @@ function getService (path, profiles) {
 	}
 }
 
+// Figure out which service is the default
+function getDefaultServiceVersion (versions) {
+	var defaultService = _.find(versions, function (service) {
+		var isPrimary = service.isPrimary ? true : false;
+		return isPrimary;
+	});
+	return defaultService;
+} 
+
 // Check to see if requestor has been here before and direct accordingly
 
 // Iterate over header/cookie filters for each version, the first matching rules wins
@@ -65,7 +74,7 @@ function getServiceVersion (req, service) {
 	if (serviceMatch) {
 		return serviceMatch;
 	} else {
-		return service.versions['#123'];	
+		return getDefaultServiceVersion(service.versions);
 	}
 }
 
