@@ -21,7 +21,7 @@ var routeProfiles = [{
 				//"load": 5%, // take this percentage of...
 				"http.User-Agent": "Nexus 4", // this regex pattern to match against the  user agent
 				"rateLimitTo": 10, //  request p/sec
-				"http.cookieValue": "thing", // a regex to test against the cookie value
+				"http.Cookie": "AYSC", // a regex to test against the cookie value
 				"geo.country": "uk",
 				"deny": "all",
 				"access": "129.412.12.32"
