@@ -44,6 +44,7 @@ function getService (path, profiles) {
 	}
 }
 
+
 // Figure out which service is the default
 function getDefaultServiceVersion (versions) {
 	var defaultService = _.find(versions, function (service) {
@@ -79,6 +80,7 @@ function getServiceVersion (req, service) {
 }
 
 
+// Iterate over all the filter types, this just returns true if any filter matches
 function parseFilters (req, filterList) {
 	// Find the first matching filter
 	var filterHit = _.find(filterList, function (filter, key) {
@@ -103,6 +105,7 @@ function parseFilters (req, filterList) {
 	return filterHit;
 }
 
+
 function createMapFromArray (array, delimiter) {
 	var map = {};
 	array.forEach(function (arrayVal) {
@@ -112,6 +115,7 @@ function createMapFromArray (array, delimiter) {
 	return map;
 }
 
+// Cookies need extra parsing because them come in as a big old string
 function testCookies (data) {
 	// Split to name/value pairs
 	var cookies = data.req.header('Cookie').split('; ');
@@ -160,8 +164,6 @@ function testHeader (data) {
 
 // If no rules match fall through to the proportional traffic rules
 
-// And an entry to the cache? At some point...
-
 // Load balance against the pool for given service
 function getHost (serviceVersion) {
 	// Basic round robin type stuff
@@ -184,7 +186,6 @@ function routeResolver (req, res) {
 	if (service) {
 		serviceVersion = getServiceVersion(req, service);
 		streamResponse(req, res, serviceVersion);
-		//res.json(service);
 	} else {
 		res.send(404, 'No ting init');	
 	}
