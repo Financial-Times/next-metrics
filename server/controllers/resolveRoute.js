@@ -13,7 +13,8 @@ var _ = require('lodash');
 
 // Create static route maps base on filters?
 
-// Create routing pools based on hosts in the routing file, these will maintain the state of each node in the pool (polling __gtg for each)
+// Create routing pools based on hosts in the routing file, these will maintain the state of each node 
+// in the pool (polling __gtg for each)
 
 
 // When resolving a route
@@ -58,8 +59,11 @@ function getDefaultServiceVersion (versions) {
 
 // Iterate over header/cookie filters for each version, the first matching rules wins
 function getServiceVersion (req, service) {
+	// Generate to loadmap
+	var loadMap = defineLoadDistribution(service.versions);
+
 	// Iterate over the versions looking for filters
-	var serviceMatch = _.find(service.versions, function (version, serviceName) {
+	var versionMatch = _.find(service.versions, function (version, serviceName) {
 		// Check filters that are present for a match
 		if (version.filters) {
 			var filterMatch = parseFilters(req, version.filters);
@@ -72,13 +76,42 @@ function getServiceVersion (req, service) {
 	});
 
 	// Return the matched service version otherwise the default
-	if (serviceMatch) {
-		return serviceMatch;
+	if (versionMatch) {
+		return versionMatch;
 	} else {
-		return getDefaultServiceVersion(service.versions);
+		return _.sample(loadMap, 1)[0];
 	}
 }
 
+// returns an array with 100 elements each representing 1% load
+function defineLoadDistribution (versions) {
+	var totalLoad = 100;
+	var loadMap = [];
+
+	// Parse the versions looking for load allocations
+	var versionsWithLoadDefinition = _.filter(versions, function (version) {
+		if (version.filters && version.filters.load) {
+			return true;
+		}
+	});
+
+	// For each allocation add an entries into the map
+	_.each(versionsWithLoadDefinition, function (version) {
+		for (var i = 0; i < version.filters.load; i++) {
+			totalLoad--;
+			loadMap.push(version);
+		}
+	});
+
+	// For the remainder of the load add the default service versions
+	var defaultVersion = getDefaultServiceVersion(versions);
+
+	for (var j = 0; j < totalLoad; j++) {
+		loadMap.push(defaultVersion);
+	}
+
+	return loadMap;
+}
 
 // Iterate over all the filter types, this just returns true if any filter matches
 function parseFilters (req, filterList) {
@@ -164,17 +197,11 @@ function testHeader (data) {
 
 // If no rules match fall through to the proportional traffic rules
 
-// Load balance against the pool for given service
-function getHost (serviceVersion) {
-	// Basic round robin type stuff
-	var nodeNum = Math.ceil((Math.random() * serviceVersion.nodes.length) - 1);
-	return serviceVersion.nodes[nodeNum];
-}
 
 // Make the outbound request streaming it to the output
 var request = require('request');
 function streamResponse (req, res, serviceVersion) {
-	var host = getHost(serviceVersion);
+	var host = _.sample(serviceVersion.nodes, 1)[0];
 	request('http://' + host + req.path).pipe(res);
 }
 
