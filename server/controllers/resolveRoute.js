@@ -5,8 +5,6 @@ var serviceProfiles = require('../serviceProfiles.js');
 var l = console.log;
 var _ = require('lodash');
 
-
-
 // Validate the routing map
 
 // Initialise an in-memory cache for paths that have been previously resolved (memoization perhaps)
@@ -52,11 +50,9 @@ function getService (path, profiles) {
 function getServiceVersion (req, service) {
 	// Iterate over the versions looking for filters
 	var serviceMatch = _.find(service.versions, function (version, serviceName) {
-		l('service name', serviceName);
 		// Check filters that are present for a match
 		if (version.filters) {
 			var filterMatch = parseFilters(req, version.filters);
-			l('filter hit return', filterMatch);
 			if (filterMatch) {
 				return serviceName;
 			} else {
@@ -65,8 +61,7 @@ function getServiceVersion (req, service) {
 		} 
 	});
 
-	l('service match', serviceMatch);
-
+	// Return the matched service version otherwise th default
 	if (serviceMatch) {
 		return serviceMatch;
 	} else {
@@ -84,7 +79,6 @@ function parseFilters (req, filterList) {
 				filterVal: filter,
 				fiterName: key
 			});
-			l('filter hit', headerMatch);
 			return headerMatch;
 		}
 	});
@@ -98,16 +92,12 @@ function testHeader (data) {
 	var headerVal = data.req.header(headerField);
 	var headerFilter = new RegExp(data.filterVal);
 
-	// If a header with the specified name exisits...
+	// If a header with the specified name exists...
 	if (headerVal && headerFilter.test(headerVal)) {
 		return true;
 	} else {
 		return false;
 	}
-}
-
-function testCookie (cookieRule, cookies) {
-	return false;
 }
 
 // If no rules match fall through to the proportional traffic rules
@@ -117,7 +107,6 @@ function testCookie (cookieRule, cookies) {
 // Load balance against the pool for given service
 function getHost (serviceVersion) {
 	var nodeNum = Math.ceil((Math.random() * serviceVersion.nodes.length) - 1);
-	l(nodeNum);
 	return serviceVersion.nodes[nodeNum];
 }
 
@@ -125,7 +114,6 @@ function getHost (serviceVersion) {
 var request = require('request');
 function streamResponse (req, res, serviceVersion) {
 	var host = getHost(serviceVersion);
-	l(host);
 	request('http://' + host + req.path).pipe(res);
 }
 
