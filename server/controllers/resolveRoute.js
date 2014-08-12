@@ -61,7 +61,7 @@ function getServiceVersion (req, service) {
 		} 
 	});
 
-	// Return the matched service version otherwise th default
+	// Return the matched service version otherwise the default
 	if (serviceMatch) {
 		return serviceMatch;
 	} else {
@@ -71,9 +71,11 @@ function getServiceVersion (req, service) {
 
 
 function parseFilters (req, filterList) {
+	// Find the first matching filter
 	var filterHit = _.find(filterList, function (filter, key) {
 		// Header filters
-		// Cookies are a special case because the value of the Cookie header is a string if name/value pairs
+		// Cookies are a special case because the value of the Cookie header is a string of name/value pairs
+		// and so need extra parsing
 		if (key.indexOf('http.Cookie') === 0) {
 			var cookieMatch = testCookies({
 				req: req,
@@ -92,24 +94,29 @@ function parseFilters (req, filterList) {
 	return filterHit;
 }
 
+function createMapFromArray (array, delimiter) {
+	var map = {};
+	array.forEach(function (arrayVal) {
+		var splitData = arrayVal.split(delimiter);
+		map[splitData[0]] = splitData[1];
+	});
+	return map;
+}
+
 function testCookies (data) {
 	// Split to name/value pairs
 	var cookies = data.req.header('Cookie').split('; ');
 
-	// We need a map of the cookies so fun our filters against
-	var cookieMap = {};
-	cookies.forEach(function (cookieString) {
-		var cookie = cookieString.split('=');
-		cookieMap[cookie[0]] = cookie[1];
-	});
+	// We need a map of the cookies to test our filters against
+	var cookieMap = createMapFromArray(cookies, '=');
 
 	// Find the first cookie filter name that matches a cookie name
 	var cookieMatch = _.find(cookieMap, function (cookieVal, cookieName) {
 		var filterMatch = _.find(data.filters, function (filterVal, filterName) {
-			// The regex we want to apply
+			// Define the regex we want to apply
 			var filterReg = new RegExp(filterVal);
 
-			// The result of the regex test, ie test the filter specified in the profile against the value in the request
+			// Apply the regex test, ie test the filter specified in the profile against the value in the request
 			var filterTest = filterReg.test(cookieVal);
 			if (cookieName === filterName && filterTest) {
 				return true;
@@ -125,11 +132,16 @@ function testCookies (data) {
 
 // Test the headers for a specific value
 function testHeader (data) {
+	// The header names are prefixed with "http."
 	var headerField = data.fiterName.split('.')[1];
+
+	// Pull the header out of the request
 	var headerVal = data.req.header(headerField);
+
+	// Setup the regex using the string defined in the filter
 	var headerFilter = new RegExp(data.filterVal);
 
-	// If a header with the specified name exists...
+	// If a header with the specified name exists and the regex matches...
 	if (headerVal && headerFilter.test(headerVal)) {
 		return true;
 	} else {
@@ -143,6 +155,7 @@ function testHeader (data) {
 
 // Load balance against the pool for given service
 function getHost (serviceVersion) {
+	// Basic round robin type stuff
 	var nodeNum = Math.ceil((Math.random() * serviceVersion.nodes.length) - 1);
 	return serviceVersion.nodes[nodeNum];
 }
@@ -155,7 +168,7 @@ function streamResponse (req, res, serviceVersion) {
 }
 
 // Handle requests and attempt to resolve them
-function routeResolver (req, res, next) {
+function routeResolver (req, res) {
 	var service = getService(req.path, serviceProfiles.getProfiles());
 	var serviceVersion;
 
