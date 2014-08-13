@@ -23,5 +23,10 @@ app.use(middleware.allowCrossDomain);
 app.get('/__health', require('./controllers/health'));
 app.get('/__metrics', require('./controllers/metrics'));
 
-app.listen(config.PORT);
-console.log('Up and running on port', config.PORT);
+// when running inside another module (ie. the unit tests don't fire on a port)
+if (!module.parent) { 
+    app.listen(config.PORT);
+    console.log('Up and running on port', config.PORT);
+} else {
+    module.exports = app;
+}
