@@ -29,7 +29,7 @@ var debug = require('debug')('resolveRoute');
 function getService (path, profiles) {
     return _.first(profiles.filter(function (profile) {
         return RegExp(profile.path).test(path);		
-    }))
+    }));
 }
 
 
