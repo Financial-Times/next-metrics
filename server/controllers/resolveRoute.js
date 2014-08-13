@@ -139,6 +139,9 @@ function createMapFromArray (array, delimiter) {
 // Cookies need extra parsing because them come in as a big old string
 function testCookies (data) {
 	// Split to name/value pairs
+    
+    if (!data.req.header('Cookie')) return false;
+
 	var cookies = data.req.header('Cookie').split('; ');
 
 	// We need a map of the cookies to test our filters against
