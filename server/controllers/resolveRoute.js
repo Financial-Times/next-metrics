@@ -22,8 +22,10 @@ var debug = require('debug')('resolveRoute');
 // Determine which service should handle the traffic:
 // Check for a cache entry for previously resolved routes at the service level
 
-// Find first matching service profile for a given URL path
 
+/***
+  * Find first matching service profile for a given URL path
+  */
 function getService (path, profiles) {
     return _.first(profiles.filter(function (profile) {
         return RegExp(profile.path).test(path);		
