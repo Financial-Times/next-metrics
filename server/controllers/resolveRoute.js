@@ -4,6 +4,7 @@
 var serviceProfiles = require('../serviceProfiles.js');
 var l = console.log;
 var _ = require('lodash');
+var debug = require('debug')('resolveRoute');
 
 // Validate the routing map
 
@@ -21,29 +22,14 @@ var _ = require('lodash');
 // Determine which service should handle the traffic:
 // Check for a cache entry for previously resolved routes at the service level
 
-// Iterate over the services
+// Find first matching service profile for a given URL path
+
 function getService (path, profiles) {
-	var serviceProfile = false;
-
-	// Find a service path regex that matches against the current path
-	var serviceMatch = profiles.some(function (currentService) {
-		var reg = new RegExp(currentService.path);		
-		var matches = reg.test(path);
-
-		if (matches) {
-			serviceProfile = currentService;
-			return true;
-		} else {
-			return false;
-		}
-	});
-
-	if (serviceMatch !== false) {
-		return serviceProfile;
-	} else {
-		return false;
-	}
+    return _.first(profiles.filter(function (profile) {
+        return RegExp(profile.path).test(path);		
+    }))
 }
+
 
 
 // Figure out which service is the default
@@ -210,11 +196,12 @@ function routeResolver (req, res) {
 	var service = getService(req.path, serviceProfiles.getProfiles());
 	var serviceVersion;
 
+
 	if (service) {
 		serviceVersion = getServiceVersion(req, service);
 		streamResponse(req, res, serviceVersion);
 	} else {
-		res.send(404, 'No ting init');	
+		res.status(404).send('No ting init');	
 	}
 }
 
