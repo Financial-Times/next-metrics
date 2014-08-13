@@ -22,6 +22,9 @@
   },
   "devDependencies": {
     "grunt": "*",
-    "jshint": "*"
+    "jshint": "*",
+    "superagent": "^0.18.2",
+    "nock": "^0.44.2",
+    "mocha": "^1.21.4"
   }
 }
