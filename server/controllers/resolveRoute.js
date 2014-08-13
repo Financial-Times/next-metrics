@@ -1,7 +1,7 @@
 'use strict';
 // Initialisation processes
 // Load the routing map into memory
-var serviceProfiles = require('../serviceProfiles.js');
+var serviceProfiles = require('../serviceProfiles.js').getProfiles();
 var l = console.log;
 var _ = require('lodash');
 var debug = require('debug')('resolveRoute');
@@ -203,9 +203,7 @@ function streamResponse (req, res, serviceVersion) {
 function routeResolver (req, res) {
 	
     var service = services.filterByPath(req.path);
-
 	var serviceVersion;
-
 
 	if (service) {
 		serviceVersion = getServiceVersion(req, service);
@@ -215,7 +213,10 @@ function routeResolver (req, res) {
 	}
 }
 
-var services = new ServiceCollection(serviceProfiles.getProfiles())
+// Load the profiles in to a model 
+var services = new ServiceCollection(serviceProfiles)
 
 // Expose the routeResolver
 module.exports = routeResolver;
+
+
