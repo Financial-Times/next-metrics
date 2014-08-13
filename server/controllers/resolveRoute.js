@@ -22,14 +22,17 @@ var debug = require('debug')('resolveRoute');
 // Determine which service should handle the traffic:
 // Check for a cache entry for previously resolved routes at the service level
 
+var ServiceCollection = function (profiles) {
 
-/***
-  * Find first matching service profile for a given URL path
-  */
-function getService (path, profiles) {
-    return _.first(profiles.filter(function (profile) {
-        return RegExp(profile.path).test(path);		
-    }))
+    this.profiles = profiles;
+    
+    // Find first matching service profile for a given URL path
+    this.filterByPath = function (path) {
+        return _.first(this.profiles.filter(function (profile) {
+            return RegExp(profile.path).test(path);		
+        }))
+    }
+
 }
 
 
@@ -198,7 +201,9 @@ function streamResponse (req, res, serviceVersion) {
 
 // Handle requests and attempt to resolve them
 function routeResolver (req, res) {
-	var service = getService(req.path, serviceProfiles.getProfiles());
+	
+    var service = services.filterByPath(req.path);
+
 	var serviceVersion;
 
 
@@ -209,6 +214,8 @@ function routeResolver (req, res) {
 		res.status(404).send('No ting init');	
 	}
 }
+
+var services = new ServiceCollection(serviceProfiles.getProfiles())
 
 // Expose the routeResolver
 module.exports = routeResolver;
