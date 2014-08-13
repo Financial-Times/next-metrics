@@ -21,9 +21,11 @@ describe('Router', function() {
 
     describe('Service', function () {
 
-        it('Respond with a success when requesting a valid service', function (done) {
+        it('Respond with a success when requesting a valid service path', function (done) {
+            var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/badger').reply(200, '');
             request.get(host + '/badger').end(function (err, res) {
                     expect(res.status).to.equal(200);
+                    expect(mock.isDone()).to.be.true;
                     done();
             })
         })

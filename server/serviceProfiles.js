@@ -7,19 +7,9 @@ var routeProfiles = [{
 	versions: {
 		"#123": {
 			nodes: [
-				"next-router-test-app-badger-1.herokuapp.com",
-				"next-router-test-app-badger-2.herokuapp.com"
+				"next-router-test-app-badger-1.herokuapp.com"
 			],
 			isPrimary: true  // Indicates which service is the default to receive traffic
-		},
-		"#345": {
-			nodes: [
-				"next-router-test-app-badger-3.herokuapp.com",
-				"next-router-test-app-badger-4.herokuapp.com"
-			],
-			filters: {
-				load: 50 // percentage of load this should receive
-			}
 		},
 		"#234": {
 			nodes: [
