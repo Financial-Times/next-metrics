@@ -29,14 +29,21 @@ var Service = function (opts) {
     this.desc = opts.desc;
     this.versions = opts.versions;
 
-    this.resolve = function () {
-        // void :)        
+    // 
+    this.resolve = function (opts) {
+
+        // filter by version
+        return  _.first(_.filter(this.versions, function (version, id) {
+            version.id = id; // FIXME change the version object to an array
+            return opts.version === id;
+        }))
+        
     }  
 }
 
 var ServiceCollection = function (profiles) {
 
-    // profiles:Array[Service]
+    // Covert the json to a model, i.e. profiles:Array[Service]
     this.profiles = profiles.map(function (profile) {
         return new Service(profile);
     });
@@ -45,7 +52,7 @@ var ServiceCollection = function (profiles) {
     this.filterByPath = function (path) {
         return _.first(this.profiles.filter(function (profile) {
             return RegExp(profile.path).test(path);		
-        }))
+        }));
     }
 
 }
@@ -218,7 +225,18 @@ function routeResolver (req, res) {
     var service = services.filterByPath(req.path);
     
     if (service) {
-        service.resolve();
+
+        var f = service.resolve(
+            {
+                version: req.headers['x-version']
+            }
+
+        );
+
+        if (f) {
+            res.set('x-version', f.id);
+        }
+
     } else {
 		res.status(404).send('No ting init');	
     };
