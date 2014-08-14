@@ -30,7 +30,7 @@ var Service = function (opts) {
     this.versions = opts.versions;
 
     this.resolve = function () {
-        
+        // void :)        
     }  
 }
 
@@ -216,14 +216,19 @@ function streamResponse (req, res, serviceVersion) {
 function routeResolver (req, res) {
 	
     var service = services.filterByPath(req.path);
-	var serviceVersion;
-
-	if (service) {
-		serviceVersion = getServiceVersion(req, service);
-		streamResponse(req, res, serviceVersion);
-	} else {
+    
+    if (service) {
+        service.resolve();
+    } else {
 		res.status(404).send('No ting init');	
+    };
+
+    // TODO move all this to the service model
+	if (service) {
+		var serviceVersion = getServiceVersion(req, service);
+		streamResponse(req, res, serviceVersion);
 	}
+	
 }
 
 // Load the profiles in to a model 
