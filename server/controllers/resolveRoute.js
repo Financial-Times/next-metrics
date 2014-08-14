@@ -22,9 +22,24 @@ var debug = require('debug')('resolveRoute');
 // Determine which service should handle the traffic:
 // Check for a cache entry for previously resolved routes at the service level
 
+var Service = function (opts) {
+    
+    this.name = opts.name;
+    this.path = opts.path;
+    this.desc = opts.desc;
+    this.versions = opts.versions;
+
+    this.resolve = function () {
+        
+    }  
+}
+
 var ServiceCollection = function (profiles) {
 
-    this.profiles = profiles;
+    // profiles:Array[Service]
+    this.profiles = profiles.map(function (profile) {
+        return new Service(profile);
+    });
     
     // Find first matching service profile for a given URL path
     this.filterByPath = function (path) {
