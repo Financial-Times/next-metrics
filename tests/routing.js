@@ -38,6 +38,42 @@ describe('Router', function() {
             })
         })
 
+    });
+
+    describe('Filter', function () {
+    
+        it('by version number', function (done) {
+            var mock = nock('http://next-router-test-app-badger-1.herokuapp.com') .get('/badger') .reply(200, '');
+            request.get(host + '/badger')
+                   .set('x-version', '#234')
+                   .end(function (err, res) {
+                      expect(res.header['x-version']).to.equal('#234');
+                      expect(res.status).to.equal(200);
+                      done();
+            })
+        })
+        
+        it('by user-agent', function (done) {
+            var mock = nock('http://next-router-test-app-bodger-1.herokuapp.com').get('/badger').reply(200, '');
+            request.get(host + '/badger')
+                   .set('user-agent', 'Google Nexus 4.2')
+                   .end(function (err, res) {
+                      expect(res.header['x-version']).to.equal('#234');
+                      expect(res.status).to.equal(200);
+                      done();
+            })
+        })
+        
+        it('Respond with a not found message when a specified filter does not exist', function (done) {
+            var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/four-oh-four').reply(404, '');
+            request.get(host + '/four-oh-four')
+                   .set('x-version', '999')
+                   .end(function (err, res) {
+                      expect(res.status).to.equal(404);
+                      done();
+            })
+        })
+        
 
     });
 });

@@ -29,14 +29,34 @@ var Service = function (opts) {
     this.desc = opts.desc;
     this.versions = opts.versions;
 
-    this.resolve = function () {
-        // void :)        
+    //  
+    this.resolve = function (opts) {
+
+        // filter by user-agent
+        var versionByUa = _.filter(this.versions, function (version, id) {
+            if (!version.filters) return false; // FIXME some data validation standards would mean we don't have 
+                                                //       to litter if/else around. eg. version.filters === null
+            return RegExp(version.filters['http.User-Agent']).test(opts['http.ua']);
+        });
+
+        // filter by version
+        var versionById = _.filter(this.versions, function (version, id) {
+            version.id = id; // FIXME change the version object to an array
+            return opts.version === id;
+        })
+   
+        // form a union for all the matching filters
+        var filterResult = _.union(versionByUa, versionById);
+
+        // FIXME taking the firt matching item is simplistic, e.g. zuul has a 'priority' property
+        return  _.first(filterResult);
+
     }  
 }
 
 var ServiceCollection = function (profiles) {
 
-    // profiles:Array[Service]
+    // Covert the json to a model, i.e. var profiles:Array[Service]
     this.profiles = profiles.map(function (profile) {
         return new Service(profile);
     });
@@ -45,7 +65,7 @@ var ServiceCollection = function (profiles) {
     this.filterByPath = function (path) {
         return _.first(this.profiles.filter(function (profile) {
             return RegExp(profile.path).test(path);		
-        }))
+        }));
     }
 
 }
@@ -216,9 +236,21 @@ function streamResponse (req, res, serviceVersion) {
 function routeResolver (req, res) {
 	
     var service = services.filterByPath(req.path);
-    
+   
     if (service) {
-        service.resolve();
+
+        var f = service.resolve(
+            {
+                'version':  req.headers['x-version'],
+                'http.ua':  req.headers['user-agent']
+            }
+
+        );
+
+        if (f) {
+            res.set('x-version', f.id);
+        }
+
     } else {
 		res.status(404).send('No ting init');	
     };
