@@ -7,17 +7,11 @@ var _ = require('lodash');
 var debug = require('debug')('resolveRoute');
 
 // Validate the routing map
-
 // Initialise an in-memory cache for paths that have been previously resolved (memoization perhaps)
-
 // Create static route maps for each service based on the proportion of traffic each may have specified
-
 // Create static route maps base on filters?
-
 // Create routing pools based on hosts in the routing file, these will maintain the state of each node 
 // in the pool (polling __gtg for each)
-
-
 // When resolving a route
 // Determine which service should handle the traffic:
 // Check for a cache entry for previously resolved routes at the service level
@@ -31,27 +25,34 @@ var Service = function (opts) {
     this.desc = opts.desc;
     this.versions = opts.versions;
 
+    var self = this;
+
+    var filterVersionsByUa = function (ua) {
+        return _.filter(self.versions, function (version, id) {
+            if (!version.filters) return false; // FIXME some data validation standards would mean we don't have 
+                                                //       to litter if/else around. eg. version.filters === null
+            return RegExp(version.filters['http.User-Agent']).test(ua);
+        });
+    } 
+
+    var filterVersionsById = function (id) {
+        return _.filter(self.versions, function (version, key) {
+            version.id = key; // FIXME change the version object to an array
+            return id === key;
+        })
+    } 
+
     // Resolves a set of parameters to a given version of the service 
     this.resolve = function (opts) {
 
-        // filter by user-agent
-        var versionByUa = _.filter(this.versions, function (version, id) {
-            if (!version.filters) return false; // FIXME some data validation standards would mean we don't have 
-                                                //       to litter if/else around. eg. version.filters === null
-            return RegExp(version.filters['http.User-Agent']).test(opts['http.ua']);
-        });
-
-        // filter by version
-        var versionById = _.filter(this.versions, function (version, id) {
-            version.id = id; // FIXME change the version object to an array
-            return opts.version === id;
-        })
-   
         // form a union for all the matching filters
-        var filterResult = _.union(versionByUa, versionById);
+        var filterResult = _.union(
+            filterVersionsByUa(opts.ua),                // filter by user-agent
+            filterVersionsById(opts.version)            // filter by version
+        );
 
         // FIXME taking the firt matching item is simplistic, e.g. zuul has a 'priority' property
-        return  (filterResult) ? _.first(filterResult) : {};
+        return (filterResult) ? _.first(filterResult) : {};
 
     }  
 }
@@ -243,8 +244,8 @@ function routeResolver (req, res) {
 
         var version = service.resolve(
             {
-                'version':  req.headers['x-version'],
-                'http.ua':  req.headers['user-agent']
+                version:  req.headers['x-version'],
+                ua:  req.headers['user-agent']
             }
 
         );
