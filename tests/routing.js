@@ -29,5 +29,15 @@ describe('Router', function() {
                     done();
             })
         })
+        
+        it('Respond with a not found message when requesting an invalid service path', function (done) {
+            var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/four-oh-four').reply(404, '');
+            request.get(host + '/four-oh-four').end(function (err, res) {
+                    expect(res.status).to.equal(404);
+                    done();
+            })
+        })
+
+
     });
 });

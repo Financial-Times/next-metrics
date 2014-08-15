@@ -1,7 +1,7 @@
 'use strict';
 // Initialisation processes
 // Load the routing map into memory
-var serviceProfiles = require('../serviceProfiles.js');
+var serviceProfiles = require('../serviceProfiles.js').getProfiles();
 var l = console.log;
 var _ = require('lodash');
 var debug = require('debug')('resolveRoute');
@@ -22,17 +22,33 @@ var debug = require('debug')('resolveRoute');
 // Determine which service should handle the traffic:
 // Check for a cache entry for previously resolved routes at the service level
 
+var Service = function (opts) {
+    
+    this.name = opts.name;
+    this.path = opts.path;
+    this.desc = opts.desc;
+    this.versions = opts.versions;
 
-/***
-  * Find first matching service profile for a given URL path
-  */
-function getService (path, profiles) {
-    return _.first(profiles.filter(function (profile) {
-        return RegExp(profile.path).test(path);		
-    }));
+    this.resolve = function () {
+        // void :)        
+    }  
 }
 
+var ServiceCollection = function (profiles) {
 
+    // profiles:Array[Service]
+    this.profiles = profiles.map(function (profile) {
+        return new Service(profile);
+    });
+    
+    // Find first matching service profile for a given URL path
+    this.filterByPath = function (path) {
+        return _.first(this.profiles.filter(function (profile) {
+            return RegExp(profile.path).test(path);		
+        }))
+    }
+
+}
 
 // Figure out which service is the default
 function getDefaultServiceVersion (versions) {
@@ -198,17 +214,27 @@ function streamResponse (req, res, serviceVersion) {
 
 // Handle requests and attempt to resolve them
 function routeResolver (req, res) {
-	var service = getService(req.path, serviceProfiles.getProfiles());
-	var serviceVersion;
-
-
-	if (service) {
-		serviceVersion = getServiceVersion(req, service);
-		streamResponse(req, res, serviceVersion);
-	} else {
+	
+    var service = services.filterByPath(req.path);
+    
+    if (service) {
+        service.resolve();
+    } else {
 		res.status(404).send('No ting init');	
+    };
+
+    // TODO move all this to the service model
+	if (service) {
+		var serviceVersion = getServiceVersion(req, service);
+		streamResponse(req, res, serviceVersion);
 	}
+	
 }
+
+// Load the profiles in to a model 
+var services = new ServiceCollection(serviceProfiles)
 
 // Expose the routeResolver
 module.exports = routeResolver;
+
+
