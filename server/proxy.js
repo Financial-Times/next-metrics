@@ -1,29 +1,34 @@
 
-var httpProxy = require('http-proxy');
-var proxy = httpProxy.createProxyServer({});
-var router = require('../models/route.js');
+var httpProxy = require('http-proxy'),
+    proxy = httpProxy.createProxyServer(),
+    router = require('../models/route.js'),
+    http = require('http'),
+    debug = require('debug')('proxy'),
+    server = require('http').createServer(function(req, res) {
 
-// 1. figure our route
-// 2. give it to the proxy server
+        // 1. Acquire service version
+        var version = router(req, res);
 
-var server = require('http').createServer(function(req, res) {
-
-        var app = router(req, res);
-
-        if (app) { 
-            var url = 'http://' + app.nodes[0];
-            req.headers.host = app.nodes[0];
-            console.log('Proxying request to', url);
-            res.setHeader('x-version', app.id)
+        if (version) { 
+            
+            var node = version.nodes[0],
+                url = 'http://' + node;
+            
+            debug('Proxying request to: ' + node + req.url);
+            req.headers.host = node;
+            res.setHeader('x-version', version.id)
+            
+            // 2. Proxy to it
             proxy.proxyRequest(req, res, { 
                 target: url,
                 port: 80,
-                host: app.nodes[0]
+                host: node
             });
 
         } else {
             
-            console.log('Route not found', req.url);
+            // 3. Or failing that, we probably don't know about the route
+            debug('Route not found: ' + req.url);
             res.writeHead(404);
             res.end(); 
         }
