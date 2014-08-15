@@ -8,6 +8,10 @@ To use
     cd next-router/
     npm install
 
+To verify everything is tickety boo,
+
+    make test
+
 To run locally
 ---
 
