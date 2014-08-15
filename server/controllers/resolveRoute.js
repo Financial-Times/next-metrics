@@ -27,18 +27,31 @@ var Service = function (opts) {
 
     var self = this;
 
+    // Returns a list of versions that match a given user-agent
     var filterVersionsByUa = function (ua) {
-        return _.filter(self.versions, function (version, id) {
+        return _.filter(self.versions, function (version) {
             if (!version.filters) return false; // FIXME some data validation standards would mean we don't have 
                                                 //       to litter if/else around. eg. version.filters === null
             return RegExp(version.filters['http.User-Agent']).test(ua);
         });
     } 
 
+    // Returns a list of versions that match a given version identifier
     var filterVersionsById = function (id) {
         return _.filter(self.versions, function (version, key) {
             version.id = key; // FIXME change the version object to an array
             return id === key;
+        })
+    } 
+    
+    // Returns a list of versions that match a given an arbitrary list of x-headers
+    var filterVersionsByXHeader = function (headers) {
+        return _.filter(self.versions, function (version) {
+            if (!version.filters) return false; // FIXME see above
+            return _.some(version.filters['http.x-headers'], function (value, key) {
+                return RegExp(value).test(headers[key]);
+            })
+
         })
     } 
 
@@ -47,8 +60,11 @@ var Service = function (opts) {
 
         // form a union for all the matching filters
         var filterResult = _.union(
+
+            filterVersionsById(opts.version),           // filter by version
             filterVersionsByUa(opts.ua),                // filter by user-agent
-            filterVersionsById(opts.version)            // filter by version
+            filterVersionsByXHeader(opts.xHeaders)      // filter by cookies
+        
         );
 
         // FIXME taking the firt matching item is simplistic, e.g. zuul has a 'priority' property
@@ -244,10 +260,12 @@ function routeResolver (req, res) {
 
         var version = service.resolve(
             {
-                version:  req.headers['x-version'],
-                ua:  req.headers['user-agent']
+                version:    req.headers['x-version'],
+                ua:         req.headers['user-agent'],
+                xHeaders:   {
+                    'x-foo':    req.headers['x-foo']
+                }
             }
-
         );
 
         res.set('x-version', (version) ? version.id : '-');
