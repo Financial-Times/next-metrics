@@ -23,13 +23,15 @@ var debug = require('debug')('resolveRoute');
 // Check for a cache entry for previously resolved routes at the service level
 
 var Service = function (opts) {
-    
+   
+    // TODO - model validation, throw error if invalid service definition
+
     this.name = opts.name;
     this.path = opts.path;
     this.desc = opts.desc;
     this.versions = opts.versions;
 
-    //  
+    // Resolves a set of parameters to a given version of the service 
     this.resolve = function (opts) {
 
         // filter by user-agent
@@ -49,7 +51,7 @@ var Service = function (opts) {
         var filterResult = _.union(versionByUa, versionById);
 
         // FIXME taking the firt matching item is simplistic, e.g. zuul has a 'priority' property
-        return  _.first(filterResult);
+        return  (filterResult) ? _.first(filterResult) : {};
 
     }  
 }
@@ -239,7 +241,7 @@ function routeResolver (req, res) {
    
     if (service) {
 
-        var f = service.resolve(
+        var version = service.resolve(
             {
                 'version':  req.headers['x-version'],
                 'http.ua':  req.headers['user-agent']
@@ -247,9 +249,7 @@ function routeResolver (req, res) {
 
         );
 
-        if (f) {
-            res.set('x-version', f.id);
-        }
+        res.set('x-version', (version) ? version.id : '-');
 
     } else {
 		res.status(404).send('No ting init');	
