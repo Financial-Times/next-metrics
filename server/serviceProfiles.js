@@ -22,7 +22,11 @@ var routeProfiles = [{
 				"http.Cookie": {
 					"cookieconsent": "seen"
 				}, // a regex to test against the cookie value
-				"geo.country": "uk",
+				"http.x-headers": {
+                    "x-foo": 'hello',
+                    "x-boo": 'world'
+                },
+                "geo.country": "uk",
 				"deny": "all",
 				"access": "129.412.12.32"
 			}
