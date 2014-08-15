@@ -13,8 +13,7 @@ var routeProfiles = [{
 		},
 		"#234": {
 			nodes: [
-				"next-router-test-app-bodger-1.herokuapp.com",
-				"next-router-test-app-bodger-2.herokuapp.com"
+				"next-router-test-app-bodger-1.herokuapp.com"
 			],
 			filters: {
 				//"load": 5%, // take this percentage of...
