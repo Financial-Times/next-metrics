@@ -70,3 +70,34 @@ var Service = function (opts) {
 }
 
 module.exports = Service;
+
+
+//  TODO - move to service model
+function defineLoadDistribution (versions) {
+	var totalLoad = 100;
+	var loadMap = [];
+
+	// Parse the versions looking for load allocations
+	var versionsWithLoadDefinition = _.filter(versions, function (version) {
+		if (version.filters && version.filters.load) {
+			return true;
+		}
+	});
+
+	// For each allocation add an entries into the map
+	_.each(versionsWithLoadDefinition, function (version) {
+		for (var i = 0; i < version.filters.load; i++) {
+			totalLoad--;
+			loadMap.push(version);
+		}
+	});
+
+	// For the remainder of the load add the default service versions
+	var defaultVersion = getDefaultServiceVersion(versions);
+
+	for (var j = 0; j < totalLoad; j++) {
+		loadMap.push(defaultVersion);
+	}
+
+	return loadMap;
+}
