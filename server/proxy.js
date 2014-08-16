@@ -14,7 +14,7 @@ var httpProxy = require('http-proxy'),
             var node = version.nodes[0],
                 url = 'http://' + node;
             
-            debug('Proxying request to: ' + node + req.url);
+            debug('Proxying request to: ' + url + req.url);
             req.headers.host = node;
             res.setHeader('x-version', version.id)
             
