@@ -44,7 +44,7 @@ if (!module.parent) {
     var port = Number(process.env.PORT || 5050);
     server.listen(port, function () {
         console.log('Up and running on port', 5050);
-    }
+    })
 } else {
     module.exports = server;
 }
