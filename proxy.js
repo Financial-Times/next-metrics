@@ -1,7 +1,7 @@
 
 var httpProxy = require('http-proxy'),
     proxy = httpProxy.createProxyServer(),
-    router = require('../models/route.js'),
+    router = require('models/route.js'),
     http = require('http'),
     debug = require('debug')('proxy'),
     server = require('http').createServer(function(req, res) {
