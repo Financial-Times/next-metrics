@@ -41,8 +41,10 @@ proxy.on('error', function(e) {
 
 
 if (!module.parent) { 
-    server.listen(5050);
-    console.log('Up and running on port', 5050);
+    var port = Number(process.env.PORT || 5000);
+    server.listen(port, function () {
+        console.log('Up and running on port', 5050);
+    }
 } else {
     module.exports = server;
 }
