@@ -1,10 +1,10 @@
 
 var httpProxy = require('http-proxy'),
     proxy = httpProxy.createProxyServer(),
-    router = require('models/route.js'),
+    router = require('./models/route'),
     http = require('http'),
     debug = require('debug')('proxy'),
-    server = require('http').createServer(function(req, res) {
+    server = http.createServer(function(req, res) {
 
         // 1. Acquire service version
         var version = router(req, res);
@@ -38,6 +38,7 @@ var httpProxy = require('http-proxy'),
 proxy.on('error', function(e) {
     console.error(e);
 });
+
 
 if (!module.parent) { 
     server.listen(5050);
