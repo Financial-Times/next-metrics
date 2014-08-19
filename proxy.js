@@ -22,7 +22,8 @@ var httpProxy = require('http-proxy'),
             proxy.proxyRequest(req, res, { 
                 target: url,
                 port: 80,
-                host: node
+                host: node,
+                timeout: 5000 // FIXME Fairly arbitrary ATM - would like it to be 2000ms
             });
 
         } else {
