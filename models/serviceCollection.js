@@ -1,3 +1,5 @@
+'use strict';
+
 var Service = require('./service');
 var _ = require('lodash');
 
@@ -13,8 +15,8 @@ var ServiceCollection = function (profiles) {
         return _.first(this.profiles.filter(function (profile) {
             return RegExp(profile.path).test(path);		
         }));
-    }
+    };
 
-}
+};
 
 module.exports = ServiceCollection;
