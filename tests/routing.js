@@ -65,7 +65,7 @@ describe('Router', function() {
         })
         
         it('by x-headers', function (done) {
-            var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/badger').reply(200, '');
+            var mock = nock('http://next-router-test-app-bodger-1.herokuapp.com').get('/badger').reply(200, '');
             request.get(host + '/badger')
                    .set('x-foo', 'hello')
                    .end(function (err, res) {
@@ -76,8 +76,8 @@ describe('Router', function() {
         })
         
         it('Respond with a not found message when a specified filter does not exist', function (done) {
-            var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/four-oh-four').reply(404, '');
-            request.get(host + '/four-oh-four')
+            var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/badger').reply(404, '');
+            request.get(host + '/badger')
                    .set('x-version', '999')
                    .end(function (err, res) {
                       expect(res.status).to.equal(404);
