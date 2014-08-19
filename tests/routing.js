@@ -65,7 +65,7 @@ describe('Router', function() {
         })
         
         it('by x-headers', function (done) {
-            var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/badger').reply(200, '');
+            var mock = nock('http://next-router-test-app-bodger-1.herokuapp.com').get('/badger').reply(200, '');
             request.get(host + '/badger')
                    .set('x-foo', 'hello')
                    .end(function (err, res) {
