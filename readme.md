@@ -1,5 +1,4 @@
-A stab at creating an http router
-===
+An experimental router for Next ft.com
 
 To use
 ---
