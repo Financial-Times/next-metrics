@@ -37,6 +37,14 @@ describe('Router', function() {
                     done();
             })
         })
+        
+        it('Vary by service version', function (done) {
+            var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/badger').reply(200, '');
+            request.get(host + '/badger').end(function (err, res) {
+                    expect(res.headers.vary).to.contain('X-Version');
+                    done();
+            })
+        })
 
     });
 

@@ -3,8 +3,21 @@ var httpProxy = require('http-proxy'),
     proxy = httpProxy.createProxyServer(),
     router = require('./models/route'),
     http = require('http'),
-    debug = require('debug')('proxy'),
-    server = http.createServer(function(req, res) {
+    debug = require('debug')('proxy');
+
+    proxy.on('proxyRes', function(proxyReq, req, res, options) {
+        res.setHeader('Vary', 'Accept-Encoding, X-Version')
+    });
+
+    var server = http.createServer(function(req, res) {
+    
+        res.oldWriteHead = res.writeHead;
+        res.writeHead = function(statusCode, headers) {
+            var current = res.getHeader('Vary');
+            var vary = (current) ? current + ', X-Version' : 'X-Version'
+            res.setHeader('Vary', vary);
+            res.oldWriteHead(statusCode, headers);
+        }
 
         // 1. Acquire service version
         var version = router(req, res);
@@ -16,7 +29,7 @@ var httpProxy = require('http-proxy'),
             
             debug('Proxying request to: ' + url + req.url);
             req.headers.host = node;
-            res.setHeader('x-version', version.id)
+            res.setHeader('X-Version', version.id)
             
             // 2. Proxy to it
             proxy.proxyRequest(req, res, { 
