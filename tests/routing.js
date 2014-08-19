@@ -4,7 +4,7 @@ var request = require('superagent'),
     fs = require('fs'),
     nock = require('nock'),
     expect = require('chai').expect,
-    app = require('../server/proxy');
+    app = require('../proxy');
 
 describe('Router', function() {
   
