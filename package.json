@@ -14,7 +14,9 @@
   "dependencies": {
     "lodash": "^2.4.1",
     "debug": "^1.0.4",
-    "http-proxy": "^1.3.0"
+    "http-proxy": "^1.3.0",
+    "es6-promise": "~1.0.0",
+    "ft-poller": "0.0.3"
   },
   "devDependencies": {
     "jshint": "*",
