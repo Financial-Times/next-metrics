@@ -2,7 +2,7 @@
 
 var routeProfiles = [{
         name: "badger",
-        path: "bodger", // A regex to match the high level traffic (possibly use a service to resolve a page to a type of thing and route accordingly.)
+        path: "badger", // A regex to match the high level traffic (possibly use a service to resolve a page to a type of thing and route accordingly.)
         desc: "A service that creates perfectly formed badgers",
         versions: {
             "#123": {

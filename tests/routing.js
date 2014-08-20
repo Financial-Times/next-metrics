@@ -6,6 +6,7 @@ var request = require('superagent'),
     nock = require('nock'),
     expect = require('chai').expect,
     app = require('../proxy');
+    var mockProfiles = require('./mockProfileData.js').getProfiles();
 
 describe('Router', function() {
   
@@ -13,8 +14,7 @@ describe('Router', function() {
         server;
 
     before(function (done) {
-      var mock = nock('http://next-service-registry.herokuapp.com').get('/services').reply(200, '');
-      //require('./mockProfileData.js').getProfiles()
+      var mock = nock('http://next-service-registry.herokuapp.com').get('/services').reply(200, mockProfiles, {'Content-Type': 'application/json'});
       // FIXME figure out a better way to wait for the app to be ready than introducing a delay 
       setTimeout(function () {
           done();
