@@ -10,7 +10,14 @@ var httpProxy = require('http-proxy'),
     });
 
     var server = http.createServer(function(req, res) {
-    
+
+        // TODO - remove once we've benchmarked this. Don't merge this in to master.
+        if (req.url === '/loaderio-28c1d2e7ce3b0ee6755eed14f5116a82.txt') {
+            res.write('loaderio-28c1d2e7ce3b0ee6755eed14f5116a82');
+            res.end();
+            return;
+        }
+
         res.oldWriteHead = res.writeHead;
         res.writeHead = function(statusCode, headers) {
             var current = res.getHeader('Vary');
