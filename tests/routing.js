@@ -1,4 +1,4 @@
-/* global describe, it, beforeEach, afterEach, before */
+/* global describe, it, beforeEach, afterEach */
 'use strict';
 
 var request = require('superagent'),
@@ -8,10 +8,9 @@ var request = require('superagent'),
 
 var mockProfiles = require('./mockProfileData.js').getProfiles();
 var mock = nock('http://next-service-registry.herokuapp.com').get('/services').reply(200, mockProfiles, {'Content-Type': 'application/json'});
-var app = require('../proxy');
 
 describe('Router', function() {
-  
+    var app = require('../proxy');
     var host = 'http://localhost:5000',
         server;
 
@@ -24,7 +23,6 @@ describe('Router', function() {
     });
 
     describe('Service', function () {
-
         it('Respond with a success when requesting a valid service path', function (done) {
             var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/badger').reply(200, '');
             request.get(host + '/badger').end(function (err, res) {
