@@ -1,25 +1,19 @@
-/* global describe, it, beforeEach, afterEach */
+/* global describe, it, beforeEach, afterEach, before */
 'use strict';
+
 var request = require('superagent'),
     mocha = require('mocha'),
-    fs = require('fs'),
     nock = require('nock'),
-    expect = require('chai').expect,
-    app = require('../proxy');
-    var mockProfiles = require('./mockProfileData.js').getProfiles();
+    expect = require('chai').expect;
+
+var mockProfiles = require('./mockProfileData.js').getProfiles();
+var mock = nock('http://next-service-registry.herokuapp.com').get('/services').reply(200, mockProfiles, {'Content-Type': 'application/json'});
+var app = require('../proxy');
 
 describe('Router', function() {
   
     var host = 'http://localhost:5000',
         server;
-
-    before(function (done) {
-      var mock = nock('http://next-service-registry.herokuapp.com').get('/services').reply(200, mockProfiles, {'Content-Type': 'application/json'});
-      // FIXME figure out a better way to wait for the app to be ready than introducing a delay 
-      setTimeout(function () {
-          done();
-        }, 1000);
-    });
 
     beforeEach(function () {
         server = app.listen(5000);
