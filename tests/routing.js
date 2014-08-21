@@ -6,7 +6,7 @@ var request = require('superagent'),
     nock = require('nock'),
     expect = require('chai').expect;
 
-var mockProfiles = require('./mockProfileData.js').getProfiles();
+var mockProfiles = require('./fixtures/profile').getProfiles();
 var mock = nock('http://next-service-registry.herokuapp.com').get('/services').reply(200, mockProfiles, {'Content-Type': 'application/json'});
 
 describe('Router', function() {
