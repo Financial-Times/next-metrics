@@ -1,11 +1,5 @@
 'use strict';
-var ServiceCollection = require('./serviceCollection');
-var serviceProfiles = require('../server/serviceProfiles.js').getProfiles();
-
-var services = new ServiceCollection(serviceProfiles);
-
-var route = function (req, res) {
-	
+var route = function (req, res, services) {
     var url = require('url').parse(req.url);
     
     var service = services.filterByPath(url.path);
@@ -37,6 +31,6 @@ var route = function (req, res) {
 // Load the profiles in to a model 
 
 
-module.exports = function (req, res) {
-    return route(req, res);
+module.exports = function (req, res, services) {
+    return route(req, res, services);
 };

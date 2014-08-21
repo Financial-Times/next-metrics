@@ -30,3 +30,6 @@ exports.PORT = process.env.PORT || 5000;
 
 // Application constants
 exports.VERSION = pkg.version;
+
+// URL that provides profile data
+exports.SERVICE_PROFILE_URL = 'http://next-service-registry.herokuapp.com/services';
