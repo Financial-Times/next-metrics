@@ -21,7 +21,7 @@ describe('Router error', function () {
         //var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/badger').reply(503, '');
         request.get(host + '/badger').end(function (err, res) {
                 expect(res.status).to.equal(503);
-                expect(mock.isDone()).to.be.true;
+                expect(res.header['retry-after']).to.equal('10');
                 done();
         });
     });
