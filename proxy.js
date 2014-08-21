@@ -29,8 +29,7 @@ var server = http.createServer(function(req, res) {
     // If we have no service data then don't even try to route a request. Seriously don't.
     if (!services) {
         debug('No service profile data ' + req.url);
-        res.setHeader('Retry-After', '10');
-        res.writeHead(503);
+        res.writeHead(503, { 'Retry-After': '10' });
         res.end();
         return;
     }
