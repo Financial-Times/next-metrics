@@ -18,7 +18,7 @@ describe('Router', function() {
       // FIXME figure out a better way to wait for the app to be ready than introducing a delay 
       setTimeout(function () {
           done();
-        }, 500);
+        }, 1000);
     });
 
     beforeEach(function () {
