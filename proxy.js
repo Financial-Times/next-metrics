@@ -13,19 +13,27 @@ serviceProfiles.getServiceProfiles({
     }
 });
 
-
 // Setup the http servers
 var httpProxy = require('http-proxy'),
     proxy = httpProxy.createProxyServer(),
     router = require('./models/route'),
     http = require('http'),
-    debug = require('debug')('proxy');
+    debug = require('debug')('proxy'),
+    Interceptor = new require('./server/interceptor'),
+    intercept = new Interceptor();
+
 
 proxy.on('proxyRes', function(proxyReq, req, res, options) {
     res.setHeader('Vary', 'Accept-Encoding, X-Version');
 });
 
 var server = http.createServer(function(req, res) {
+    
+    // instrument the req & response object 
+    intercept.instrument(req, res);
+   
+    debug(intercept.toString()) // FIXME remove. this is just for illustration
+
     // If we have no service data then don't even try to route a request. Seriously don't.
     if (!services) {
         debug('No service profile data ' + req.url);
