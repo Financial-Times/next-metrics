@@ -14,8 +14,6 @@ serviceProfiles.getServiceProfiles({
     }
 });
 
-
-
 // Setup the http servers
 var httpProxy = require('http-proxy'),
     proxy = httpProxy.createProxyServer(),
@@ -25,17 +23,15 @@ var httpProxy = require('http-proxy'),
     Interceptor = new require('./server/interceptor'),
     intercept = new Interceptor();
 
-
 setInterval(function () {
     debug(intercept.toString()) // FIXME remove. this is just for illustration
     intercept.flush();
-}, 10000)
+}, 5000)
 
 
 proxy.on('proxyRes', function(proxyReq, req, res, options) {
     res.setHeader('Vary', 'Accept-Encoding, X-Version');
 });
-
 
 var server = http.createServer(function(req, res) {
 
@@ -82,7 +78,7 @@ var server = http.createServer(function(req, res) {
             target: url,
             port: 80,
             host: node,
-            timeout: 5000 // FIXME Fairly arbitrary ATM - would like it to be 2000ms
+            timeout: 1000 // FIXME Fairly arbitrary ATM - would like it to be 2000ms
         });
 
     } else {
@@ -99,6 +95,9 @@ proxy.on('error', function(e) {
     console.error(e);
 });
 
+intercept.instrumentProxy(proxy);
+intercept.instrumentServer(server);
+intercept.instrumentSystem();
 
 if (!module.parent) { 
     var port = Number(process.env.PORT || 5050);
