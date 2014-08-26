@@ -5,6 +5,7 @@ var ServiceCollection = require('./models/serviceCollection');
 var config = require('./server/config.js');
 var services = null;
 
+var nock = require('nock');
 var serviceProfiles = require('./server/serviceProfiles.js');
 serviceProfiles.getServiceProfiles({
     url: config.SERVICE_PROFILE_URL,
@@ -12,6 +13,8 @@ serviceProfiles.getServiceProfiles({
         services = new ServiceCollection(profileData);
     }
 });
+
+
 
 // Setup the http servers
 var httpProxy = require('http-proxy'),
@@ -24,10 +27,8 @@ var httpProxy = require('http-proxy'),
 
 
 setInterval(function () {
-
     debug(intercept.toString()) // FIXME remove. this is just for illustration
     intercept.flush();
-
 }, 10000)
 
 
@@ -37,7 +38,14 @@ proxy.on('proxyRes', function(proxyReq, req, res, options) {
 
 
 var server = http.createServer(function(req, res) {
-    
+
+    /* mock backend code for purpose of benchmarking
+     nock('http://next-router-test-app-badger-1.herokuapp.com')
+      .get('/badger')
+      .delayConnection(parseInt(Math.random(3000)*1000))
+      .reply(200, '');
+    */
+
     // instrument the req & response object 
     intercept.instrument(req, res);
 
