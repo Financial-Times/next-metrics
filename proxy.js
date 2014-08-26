@@ -23,16 +23,23 @@ var httpProxy = require('http-proxy'),
     intercept = new Interceptor();
 
 
+setInterval(function () {
+
+    debug(intercept.toString()) // FIXME remove. this is just for illustration
+    intercept.flush();
+
+}, 10000)
+
+
 proxy.on('proxyRes', function(proxyReq, req, res, options) {
     res.setHeader('Vary', 'Accept-Encoding, X-Version');
 });
+
 
 var server = http.createServer(function(req, res) {
     
     // instrument the req & response object 
     intercept.instrument(req, res);
-   
-    debug(intercept.toString()) // FIXME remove. this is just for illustration
 
     // If we have no service data then don't even try to route a request. Seriously don't.
     if (!services) {
