@@ -23,8 +23,9 @@ var httpProxy = require('http-proxy'),
     http = require('http'),
     debug = require('debug')('proxy'),
     Metrics = require('./lib/metrics'),
-    metrics = new Metrics({ flushEvery: 5000 });
-
+    metrics = new Metrics({ 
+        flushEvery: 5000
+    });
 
 proxy.on('proxyRes', function(proxyReq, req, res, options) {
     res.setHeader('Vary', 'Accept-Encoding, X-Version');
