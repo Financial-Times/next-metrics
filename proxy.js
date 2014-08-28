@@ -5,6 +5,8 @@ var ServiceCollection = require('./models/serviceCollection');
 var config = require('./server/config.js');
 var services = null;
 
+
+
 var nock = require('nock');
 var serviceProfiles = require('./server/serviceProfiles.js');
 serviceProfiles.getServiceProfiles({
@@ -20,13 +22,8 @@ var httpProxy = require('http-proxy'),
     router = require('./models/route'),
     http = require('http'),
     debug = require('debug')('proxy'),
-    Interceptor = new require('./server/interceptor'),
-    intercept = new Interceptor();
-
-setInterval(function () {
-    debug(intercept.toString()) // FIXME remove. this is just for illustration
-    intercept.flush();
-}, 5000)
+    Metrics = require('./lib/metrics'),
+    metrics = new Metrics({ flushEvery: 5000 });
 
 
 proxy.on('proxyRes', function(proxyReq, req, res, options) {
@@ -43,7 +40,8 @@ var server = http.createServer(function(req, res) {
     */
 
     // instrument the req & response object 
-    intercept.instrument(req, res);
+    metrics.instrument(req, { as: 'http.req' })
+    metrics.instrument(res, { as: 'http.res' });
 
     // If we have no service data then don't even try to route a request. Seriously don't.
     if (!services) {
@@ -95,9 +93,8 @@ proxy.on('error', function(e) {
     console.error(e);
 });
 
-intercept.instrumentProxy(proxy);
-intercept.instrumentServer(server);
-intercept.instrumentSystem();
+metrics.instrument(proxy, { 'as': 'http.proxy' });
+metrics.instrument(server, { 'as': 'http.server' });
 
 if (!module.parent) { 
     var port = Number(process.env.PORT || 5050);
