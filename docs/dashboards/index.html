@@ -1,0 +1,27 @@
+<style>
+    img { display: block; }
+    p {
+        margin-top: 1em;
+        font-size: 22px;
+    }
+    body { 
+        margin: 0 auto;
+        max-width: 600px;
+    }
+</style>
+
+<p>Status codes</p>
+<img src="https://www.hostedgraphite.com/28265677/graphite/render/?width=600&height=300&_salt=1408622527.972&bgcolor=FFFFFF&fgcolor=000000&target=next.router.http.res.status_*.count&from=-1h&nocache=true"/>
+
+<p>Pipes (i.e. number of requests made to backend)</p>
+<img src="https://www.hostedgraphite.com/28265677/graphite/render/?width=600&height=300&_salt=1408622527.972&bgcolor=FFFFFF&fgcolor=000000&target=next.router.http.req.pipe&from=-1h&nocache=true"/>
+
+<p>HTTP 2xx response times</p>
+<img src="https://www.hostedgraphite.com/28265677/graphite/render/?width=600&height=300&_salt=1408622527.972&bgcolor=FFFFFF&fgcolor=000000&target=movingAverage(next.router.http.res.status_2xx_response_time.mean,10)&target=next.router.http.res.status_2xx_response_time.m*&target=next.router.http.res.status_2xx_response_time.mean.stdDev&from=-1h&nocache=true"/>
+
+<!--
+<img src="https://www.hostedgraphite.com/28265677/graphite/render/?width=600&height=300&_salt=1408622527.972&bgcolor=FFFFFF&fgcolor=000000&target=movingAverage(test.system.load_average_1m,10)&target=test.system.load_average_1m&from=-1h&nocache=true"/>
+<img src="https://www.hostedgraphite.com/28265677/graphite/render/?width=600&height=300&_salt=1408622527.972&bgcolor=FFFFFF&fgcolor=000000&target=movingAverage(test.connections,10)&target=test.connections&from=-1h&nocache=true"/>
+<img src="https://www.hostedgraphite.com/28265677/graphite/render/?width=600&height=300&_salt=1408622527.972&bgcolor=FFFFFF&fgcolor=000000&target=test.system.mem_*&from=-1h&nocache=true"/>
+-->
+<!--<img src="https://www.hostedgraphite.com/28265677/graphite/render/?width=600&height=300&_salt=1408622527.972&bgcolor=FFFFFF&fgcolor=000000&target=test.bytes_read.sum&from=-1h&nocache=true"/>-->
