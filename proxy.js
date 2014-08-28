@@ -5,6 +5,9 @@ var ServiceCollection = require('./models/serviceCollection');
 var config = require('./server/config.js');
 var services = null;
 
+
+
+var nock = require('nock');
 var serviceProfiles = require('./server/serviceProfiles.js');
 serviceProfiles.getServiceProfiles({
     url: config.SERVICE_PROFILE_URL,
@@ -13,23 +16,44 @@ serviceProfiles.getServiceProfiles({
     }
 });
 
-
 // Setup the http servers
 var httpProxy = require('http-proxy'),
     proxy = httpProxy.createProxyServer(),
     router = require('./models/route'),
     http = require('http'),
-    debug = require('debug')('proxy');
+    debug = require('debug')('proxy'),
+    Metrics = require('./lib/metrics'),
+    metrics = new Metrics({ 
+        flushEvery: 5000
+    });
 
 proxy.on('proxyRes', function(proxyReq, req, res, options) {
     res.setHeader('Vary', 'Accept-Encoding, X-Version');
 });
 
 var server = http.createServer(function(req, res) {
+
+    /* mock backend code for purpose of benchmarking
+     nock('http://next-router-test-app-badger-1.herokuapp.com')
+      .get('/badger')
+      .delayConnection(parseInt(Math.random(3000)*1000))
+      .reply(200, '');
+    */
+
+    // instrument the req & response object 
+    metrics.instrument(req, { as: 'http.req' })
+    metrics.instrument(res, { as: 'http.res' });
+
     // If we have no service data then don't even try to route a request. Seriously don't.
     if (!services) {
         debug('No service profile data ' + req.url);
         res.writeHead(503, { 'Retry-After': '10' });
+        res.end();
+        return;
+    }
+
+    if (req.url === '/__gtg') {
+        res.writeHead(200, { 'Cache-Control': 'no-cache' });
         res.end();
         return;
     }
@@ -59,7 +83,7 @@ var server = http.createServer(function(req, res) {
             target: url,
             port: 80,
             host: node,
-            timeout: 5000 // FIXME Fairly arbitrary ATM - would like it to be 2000ms
+            timeout: 1000 // FIXME Fairly arbitrary ATM - would like it to be 2000ms
         });
 
     } else {
@@ -76,6 +100,8 @@ proxy.on('error', function(e) {
     console.error(e);
 });
 
+metrics.instrument(proxy, { 'as': 'http.proxy' });
+metrics.instrument(server, { 'as': 'http.server' });
 
 if (!module.parent) { 
     var port = Number(process.env.PORT || 5050);
