@@ -52,6 +52,12 @@ var server = http.createServer(function(req, res) {
         return;
     }
 
+    if (req.url === '/__gtg') {
+        res.writeHead(200, { 'Cache-Control': 'no-cache' });
+        res.end();
+        return;
+    }
+
     res.oldWriteHead = res.writeHead;
     res.writeHead = function(statusCode, headers) {
         var current = res.getHeader('Vary');
