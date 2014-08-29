@@ -1,6 +1,6 @@
 'use strict';
 
-var Service = require('./service');
+var Service = require('../service');
 var _ = require('lodash');
 
 var ServiceCollection = function (profiles) {

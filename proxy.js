@@ -1,7 +1,7 @@
 'use strict';
 
 // Poll for profile data, it will come in repeatedly
-var ServiceCollection = require('./models/serviceCollection');
+var ServiceCollection = require('./models/service/collection');
 var config = require('./server/config.js');
 var services = null;
 
