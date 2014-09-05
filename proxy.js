@@ -52,6 +52,7 @@ var server = http.createServer(function(req, res) {
         return;
     }
 
+    // Used by Varnish to determine readiness to serve traffic
     if (req.url === '/__gtg') {
         res.writeHead(200, { 'Cache-Control': 'no-cache' });
         res.end();
