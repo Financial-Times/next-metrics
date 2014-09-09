@@ -76,14 +76,14 @@ var server = http.createServer(function(req, res) {
             url = node;
         
         debug('Proxying request to: ' + url + req.url);
-        req.headers.host = node;
+
+        req.headers.host = node.replace('http://', '');
         res.setHeader('X-Version', version.id);
         
         // 2. Proxy to it
         proxy.proxyRequest(req, res, { 
             target: url,
             port: 80,
-            host: node,
             timeout: 1000 // FIXME Fairly arbitrary ATM - would like it to be 2000ms
         });
 
