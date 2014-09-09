@@ -1,7 +1,7 @@
 'use strict';
 
 // Poll for profile data, it will come in repeatedly
-var ServiceCollection = require('./models/serviceCollection');
+var ServiceCollection = require('./models/service/collection');
 var config = require('./server/config.js');
 var services = null;
 
@@ -73,7 +73,7 @@ var server = http.createServer(function(req, res) {
      if (version) { 
         
         var node = version.nodes[0],
-            url = 'http://' + node;
+            url = node;
         
         debug('Proxying request to: ' + url + req.url);
         req.headers.host = node;
