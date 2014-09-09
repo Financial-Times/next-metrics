@@ -3,6 +3,7 @@
 // Poll for profile data, it will come in repeatedly
 var ServiceCollection = require('./models/service/collection');
 var config = require('./server/config.js');
+var fs = require('fs');
 var services = null;
 
 
@@ -55,6 +56,14 @@ var server = http.createServer(function(req, res) {
     // Used by Varnish to determine readiness to serve traffic
     if (req.url === '/__gtg') {
         res.writeHead(200, { 'Cache-Control': 'no-cache' });
+        res.end();
+        return;
+    }
+    
+    // A landing/information page
+    if (req.url === '/') {
+        res.writeHead(200, { 'Cache-Control': 'no-cache' });
+        res.write(fs.readFileSync('views/index.html', { 'encoding': 'utf-8' }));
         res.end();
         return;
     }

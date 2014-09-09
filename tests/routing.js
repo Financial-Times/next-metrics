@@ -58,8 +58,10 @@ describe('Router', function() {
                     done();
             });
         });
-
+       
     });
+
+
 
     describe('Filter', function () {
     
@@ -111,4 +113,16 @@ describe('Router', function() {
         });
       
     });
+    
+    describe('Help', function () {
+        
+        it('Display an about page', function (done) {
+            request.get(host + '/').end(function (err, res) {
+                    expect(res.status).to.equal(200);
+                    done();
+            });
+        });
+
+    });
+
 });
