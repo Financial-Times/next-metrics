@@ -73,7 +73,7 @@ var server = http.createServer(function(req, res) {
      if (version) { 
         
         var node = version.nodes[0],
-            url = 'http://' + node;
+            url = node;
         
         debug('Proxying request to: ' + url + req.url);
         req.headers.host = node;

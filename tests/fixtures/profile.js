@@ -7,13 +7,13 @@ var routeProfiles = [{
         versions: {
             "#123": {
                 nodes: [
-                    "next-router-test-app-badger-1.herokuapp.com"
+                    "http://next-router-test-app-badger-1.herokuapp.com"
                 ],
                 isPrimary: true // Indicates which service is the default to receive traffic
             },
             "#234": {
                 nodes: [
-                    "next-router-test-app-bodger-1.herokuapp.com"
+                    "http://next-router-test-app-bodger-1.herokuapp.com"
                 ],
                 filters: {
                     //"load": 5%, // take this percentage of...
@@ -39,7 +39,7 @@ var routeProfiles = [{
         versions: {
             "#123": {
                 nodes: [
-                    "newsfeed.ft.com"
+                    "http://newsfeed.ft.com"
                 ],
                 isPrimary: true // Indicates which service is the default to receive traffic
             }
