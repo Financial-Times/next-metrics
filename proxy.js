@@ -18,7 +18,7 @@ serviceProfiles.getServiceProfiles({
 });
 
 // Setup the http servers
-var httpProxy = require('http-proxy'),
+var httpProxy = require('./http-proxy'),
     proxy = httpProxy.createProxyServer(),
     router = require('./models/route'),
     http = require('http'),
