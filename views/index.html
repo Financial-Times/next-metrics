@@ -29,7 +29,7 @@
 
 <section class="about">
 
-<h1>FT Next Router</h1>
+<h1>FT Next Routing layer</h1>
 
 <p>
     The FT Next Router is really two components working together - a CDN (fastly) and a
@@ -47,13 +47,20 @@
     to based on the URL pattern and several other HTTP headers.
 </p>
 <p>
+    It's designed to allow lots of small services to be plugged in and out quickly. 
+</p>    
+<p>
     The rules under which the router operates are stored in the
     <a href="http://next-service-registry.herokuapp.com/">next service registry</a>.
 </p>
 <p>
+    You can updated and deploy the router configuration with the <a
+        href="https://github.com/Financial-Times/next-router">next-router</a>
+    library. The project README contains more detail about the concepts the router used.
+</p>
+<p>
     Currently the router is experimental and can be switched on with an X-Router header, 
 </p>
-
 <pre>
 curl -is
      -H 'X-FT-Secret: HoratioBottomley'
