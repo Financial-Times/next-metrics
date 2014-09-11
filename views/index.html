@@ -1,23 +1,48 @@
 <style>
     body {
-        margin: 40px auto;
-        max-width: 640px; 
+        margin-bottom: 20%;
     }
-    h1 {
-        font-weight: normal;
+    h1 { 
         font-size: 2em;
     }
-    a { color: blue; }
+    h1, h2 {
+        font-weight: normal;
+    }
+    pre {
+        border-left: 1px solid #999;
+        padding: 10px 20px;
+        line-height: 18px;
+        font-size: 13px;
+        margin-left: -20px;
+    }
+    a {
+        color: blue;
+    }
+    .about {
+        margin: 40px auto;
+        max-width: 640px;
+    }
     p {
         font-size: 18px;
-        line-height: 28px;
     }
 </style>
+
+<section class="about">
 
 <h1>FT Next Router</h1>
 
 <p>
-    The router is a <strong>smart proxy server</strong> that determines where incoming HTTP
+    The FT Next Router is really two components working together - a CDN (fastly) and a
+    proxy server (written in node).
+</p>
+<p>
+    Below explains their relative responsibilities.
+</p>
+
+<h2>Router</h2>
+
+<p>
+    The router is a <strong>proxy server</strong> that determines where incoming HTTP
     requests to <a href="http://next.ft.com">next.ft.com</a> should be directed
     to based on the URL pattern and several other HTTP headers.
 </p>
@@ -25,3 +50,79 @@
     The rules under which the router operates are stored in the
     <a href="http://next-service-registry.herokuapp.com/">next service registry</a>.
 </p>
+<p>
+    Currently the router is experimental and can be switched on with an X-Router header, 
+</p>
+
+<pre>
+curl -is
+     -H 'X-FT-Secret: HoratioBottomley'
+     <b>-H 'X-Router: true'</b> 
+     http://next.ft.com/
+</pre>
+<h2>CDN</h2>
+<p>
+The router is fronted by a CDN that provides <b>authorisation, regional load balancing</b> and <b>caching</b>.
+</p>
+<p>
+You can edit, test and deploy the CDN configuration with the <a href="https://github.com/Financial-Times/next-fastly-deploy">next-fastly-deploy library</a>.
+</p>
+<h3>Authorisation</h3>
+<p>
+    As a temporary measure the service is protected by a simple secret, which
+    must be sent on every request.
+</p>
+<pre>
+curl -is 
+     <b>-H 'X-FT-Secret: HoratioBottomley'</b>
+     http://next.ft.com/__gtg
+</pre>
+<p>
+    When the service is fully operational it will authenticate against the FT membership service.
+    </p>
+
+<h3>Regions</h3>
+<p>
+    Using the Fastly geoip lookup we can switch between the Europe and US
+    backends based on the user's location or, optionally, a header to override it, 
+</p>
+<pre>
+curl -is
+     -H 'X-FT-Secret: HoratioBottomley' 
+     <b>-H 'X-FT-Region: us'</b>
+     http://next.ft.com/__gtg
+</pre>
+<p>You should see the following in the response, telling you which backend the request has been fetched from,</p>
+<pre>
+X-Ft-Backend-Region: us
+</pre>
+
+<h3>Editions</h3>
+<p>
+All the resources on next.ft.com can be editionalised under a single URL.
+</p>
+<pre>
+curl -is
+     -H 'X-FT-Secret: HoratioBottomley'
+     -H 'X-FT-Region: us' 
+     <b>-H 'X-FT-Edition: india'</b>
+     http://next.ft.com/__gtg
+</pre>
+<p>
+You should see your specified edition and the cache variation instruction in the response,
+</p>
+<pre>
+X-Ft-Edition: india
+Vary: X-FT-Edition
+</pre>
+<p>
+    This mean things
+    like - navigation, ancillary content like 'most read' can be customised for
+    different audiences and we can loose
+    the 'intl' prefix the currently exists on all non-UK pages.
+</p>
+<p>
+Also note that regions are decoupled from editions. In the above example we send the UK edition to visitor from the US. 
+</p>
+
+</section>
