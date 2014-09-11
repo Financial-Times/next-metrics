@@ -25,6 +25,11 @@
     p {
         font-size: 18px;
     }
+    .summary {
+        background-color: #ffd;
+        padding: 5px;
+        margin-left: -5px;
+    }
 </style>
 
 <section class="about">
@@ -41,7 +46,7 @@
 
 <h2>Router</h2>
 
-<p>
+<p class="summary">
     The router is a <strong>proxy server</strong> that determines where incoming HTTP
     requests to <a href="http://next.ft.com">next.ft.com</a> should be directed
     to based on the URL pattern and several other HTTP headers.
@@ -68,7 +73,7 @@ curl -is
      http://next.ft.com/
 </pre>
 <h2>CDN</h2>
-<p>
+<p class="summary">
 The router is fronted by a CDN that provides <b>authorisation, regional load balancing</b> and <b>caching</b>.
 </p>
 <p>
