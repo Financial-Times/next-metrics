@@ -63,7 +63,7 @@ var Service = function (opts) {
         
         );
 
-        // FIXME taking the firt matching item is simplistic, e.g. zuul has a 'priority' property
+        // FIXME taking the first matching item is simplistic, e.g. zuul has a 'priority' property
         return (!_.isEmpty(filterResult)) ? _.first(filterResult) : getDefaultServiceVersion(this.versions);
 
     };

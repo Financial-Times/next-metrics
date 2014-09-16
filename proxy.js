@@ -6,9 +6,6 @@ var config = require('./server/config.js');
 var fs = require('fs');
 var services = null;
 
-
-
-var nock = require('nock');
 var serviceProfiles = require('./server/serviceProfiles.js');
 serviceProfiles.getServiceProfiles({
     url: config.SERVICE_PROFILE_URL,
@@ -42,7 +39,7 @@ var server = http.createServer(function(req, res) {
     */
 
     // instrument the req & response object 
-    metrics.instrument(req, { as: 'http.req' })
+    metrics.instrument(req, { as: 'http.req' });
     metrics.instrument(res, { as: 'http.res' });
 
     // If we have no service data then don't even try to route a request. Seriously don't.
