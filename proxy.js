@@ -1,8 +1,9 @@
 'use strict';
 
 // Poll for profile data, it will come in repeatedly
-var ServiceCollection = require('./models/serviceCollection');
+var ServiceCollection = require('./models/service/collection');
 var config = require('./server/config.js');
+var fs = require('fs');
 var services = null;
 
 
@@ -52,8 +53,17 @@ var server = http.createServer(function(req, res) {
         return;
     }
 
+    // Used by Varnish to determine readiness to serve traffic
     if (req.url === '/__gtg') {
         res.writeHead(200, { 'Cache-Control': 'no-cache' });
+        res.end();
+        return;
+    }
+    
+    // A landing/information page
+    if (req.url === '/') {
+        res.writeHead(200, { 'Cache-Control': 'no-cache' });
+        res.write(fs.readFileSync('views/index.html', { 'encoding': 'utf-8' }));
         res.end();
         return;
     }
@@ -72,17 +82,17 @@ var server = http.createServer(function(req, res) {
      if (version) { 
         
         var node = version.nodes[0],
-            url = 'http://' + node;
+            url = node;
         
         debug('Proxying request to: ' + url + req.url);
-        req.headers.host = node;
+
+        req.headers.host = node.replace('http://', '');
         res.setHeader('X-Version', version.id);
         
         // 2. Proxy to it
         proxy.proxyRequest(req, res, { 
             target: url,
             port: 80,
-            host: node,
             timeout: 1000 // FIXME Fairly arbitrary ATM - would like it to be 2000ms
         });
 
