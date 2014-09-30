@@ -117,7 +117,7 @@ describe('Router', function() {
     describe('Help', function () {
         
         it('Display an about page', function (done) {
-            request.get(host + '/').end(function (err, res) {
+            request.get(host + '/__about').end(function (err, res) {
                     expect(res.status).to.equal(200);
                     done();
             });
