@@ -58,7 +58,7 @@ var server = http.createServer(function(req, res) {
     }
     
     // A landing/information page
-    if (req.url === '/') {
+    if (req.url === '/__about') {
         res.writeHead(200, { 'Cache-Control': 'no-cache' });
         res.write(fs.readFileSync('views/index.html', { 'encoding': 'utf-8' }));
         res.end();
