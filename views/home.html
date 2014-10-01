@@ -1,6 +1,13 @@
 <html>
     <head>
-        <link rel="stylesheet" href="//build.origami.ft.com/bundles/css?modules=o-fonts@^1.4.1">
+        <link rel="stylesheet" href="//build.origami.ft.com/bundles/css?modules=o-fonts@^1.4.1"/>
+        <link rel="stylesheet" href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script>
+            window.addEventListener('load', function () {
+                document.getElementById('n').className = 'animated tada';
+            })
+        </script>
         <style>
             p {
                 font-family: FinancierDisplay, Georgia, serif;
@@ -10,11 +17,14 @@
             }
             a {
                 text-decoration: none;
-                color: #505050;
+                color: #303030;
+            }
+            a:hover {
+                color: blue;
             }
         </style>
     </head>
     <p>
-        <a href="/search?q=page:Front%20page">next.ft.com</a>
+        <a href="/search?q=page:Front%20page" id="n">next.ft.com</a>
     </p>
 </html>
