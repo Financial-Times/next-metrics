@@ -98,7 +98,7 @@ var server = http.createServer(function(req, res) {
         proxy.proxyRequest(req, res, { 
             target: url,
             port: 80,
-            timeout: 5000 // FIXME Fairly arbitrary ATM - would like it to be 2000ms
+            timeout: 10000 // FIXME Fairly arbitrary ATM - would like it to be 2000ms
         });
 
     } else {
