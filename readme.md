@@ -3,7 +3,7 @@ An experimental router for Next ft.com
 To use
 ---
 
-    http://git.svc.ft.com:8080/scm/strat_p/next-router.git
+    git clone git@github.com:Financial-Times/next-router.git
     cd next-router/
     npm install
 
