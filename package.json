@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "jshint": "*",
-    "superagent": "^0.18.2",
+    "superagent": "https://github.com/Financial-Times/superagent/archive/bower.tar.gz",
     "mocha": "^1.21.4",
     "chai": "^1.9.1"
   }
