@@ -16,7 +16,7 @@ To run locally
 
 Do something like,
 
-    export DEBUG=proxy; nodemon server/proxy.js
+    export DEBUG=proxy; nodemon proxy.js
 
 Then this will proxy your request to the correct service version, Eg
 
