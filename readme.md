@@ -25,6 +25,10 @@ Then this will proxy your request to the correct service version, Eg
 
 Note the `x-version` header in the response is differing per user-agent.
 
+If you've got the [service registry](http://git.svc.ft.com:8080/projects/STRAT_P/repos/next-service-registry/) running locally on `localhost:5050` you can run **next-proxy** with it with:
+
+export REGISTRY='http://localhost:5000/services'; export DEBUG=proxy; nodemon proxy.js
+
 To deploy
 ---
 
