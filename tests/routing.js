@@ -34,11 +34,21 @@ describe('Router', function() {
         });
         
         it('Respond with a not found message when requesting an invalid service path', function (done) {
+            var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/four-oh-four').reply(404, '');
             request.get(host + '/four-oh-four').end(function (err, res) {
                     expect(res.status).to.equal(404);
                     done();
             });
         });
+
+	it('Supports paths specified as arrays', function(done) {
+            var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/squirrel').reply(200, '');
+            request.get(host + '/squirrel').end(function (err, res) {
+                    expect(res.status).to.equal(200);
+                    expect(mock.isDone()).to.be.true;
+                    done();
+            });
+	});
         
         it('Vary by service version', function (done) {
             var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/badger').reply(200, '');
