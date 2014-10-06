@@ -113,7 +113,6 @@ describe('Router', function() {
 
 	it('Routes for the home page', function(done) {
             var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/').reply(200, '');
-	    console.log(host);
             request.get(host + '/').end(function (err, res) {
                     expect(res.status).to.equal(200);
                     expect(mock.isDone()).to.be.true;
