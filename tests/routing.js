@@ -110,6 +110,16 @@ describe('Router', function() {
                       done();
             });
         });
+
+	it('Routes for the home page', function(done) {
+            var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/').reply(200, '');
+	    console.log(host);
+            request.get(host + '/').end(function (err, res) {
+                    expect(res.status).to.equal(200);
+                    expect(mock.isDone()).to.be.true;
+                    done();
+            });
+	});
         
         it('Respond with a not found message when a specified filter does not exist', function (done) {
             var mock = nock('http://next-router-test-app-badger-1.herokuapp.com').get('/badger').reply(404, '');

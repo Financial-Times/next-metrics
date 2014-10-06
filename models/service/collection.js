@@ -13,9 +13,9 @@ var ServiceCollection = function (profiles) {
     // Find first matching service profile for a given URL path
     this.filterByPath = function (path) {
         return _.first(this.profiles.filter(function (profile) {
-		var paths = Array.isArray(profile.path) ? profile.path: [profile.path];
-		return _.first(paths, function(path) {
-			return RegExp(profile.path).test(path);
+		var pathsRegEx = Array.isArray(profile.path) ? profile.path: [profile.path];
+		return _.find(pathsRegEx, function(pathRegEx) {
+			return RegExp(pathRegEx).test(path);
 		});
         }));
     };
