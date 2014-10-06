@@ -17,7 +17,10 @@ var Service = function (opts) {
     // TODO - model validation, throw error if invalid service definition
 
     this.name = opts.name;
+
+    // TODO - Remove this (deprecated)
     this.path = opts.path;
+    this.paths = opts.paths;
     this.desc = opts.desc;
     this.versions = opts.versions;
 
