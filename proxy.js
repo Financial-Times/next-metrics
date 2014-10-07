@@ -65,14 +65,6 @@ var server = http.createServer(function(req, res) {
         return;
     }
     
-    // A landing/information page
-    if (req.url === '/') {
-        res.writeHead(200, { 'Cache-Control': 'cache' });
-        res.write(fs.readFileSync('views/home.html', { 'encoding': 'utf-8' }));
-        res.end();
-        return;
-    }
-
     res.oldWriteHead = res.writeHead;
     res.writeHead = function(statusCode, headers) {
         var current = res.getHeader('Vary');
