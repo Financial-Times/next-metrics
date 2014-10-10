@@ -1,7 +1,6 @@
 'use strict';
 var route = function (req, res, services) {
     var url = require('url').parse(req.url);
-    
     var service = services.filterByPath(url.path);
 
     if (service) {
@@ -16,8 +15,9 @@ var route = function (req, res, services) {
             }
         );
 
-        // Annotate the response with the version we are going to proxy
-        //res.set('x-version', (version) ? version.id : '-');
+	if (process.env[service.name]) {
+		version.nodes = ['http://localhost:' + process.env[service.name]];
+	}
 
         return (version) ? version : false;
 

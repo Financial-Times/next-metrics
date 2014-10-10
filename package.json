@@ -2,7 +2,7 @@
   "name": "next-router",
   "version": "0.0.0",
   "description": "",
-  "main": "app/server.js",
+  "main": "proxy.js",
   "scripts": {
     "test": "make test"
   },
@@ -12,14 +12,14 @@
   "author": "The Dude",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^2.4.1",
     "debug": "^1.0.4",
-    "http-proxy": "^1.3.0",
     "es6-promise": "~1.0.0",
     "ft-poller": "0.0.3",
+    "http-proxy": "^1.3.0",
+    "lodash": "^2.4.1",
     "metrics": "^0.1.8",
-    "scarlet": "^2.0.20",
-    "nock": "^0.44.2"
+    "nock": "^0.44.2",
+    "scarlet": "^2.0.20"
   },
   "devDependencies": {
     "jshint": "*",
