@@ -34,7 +34,7 @@ Cli
 
 To install the CLI install `next-router` globally:-
 
-    npm install -g git://github.com/Financial-Times/next-router.git#cli --verbose
+    npm install -g git://github.com/Financial-Times/next-router.git#cli
 
 To deploy
 ---
