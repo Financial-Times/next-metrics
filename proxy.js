@@ -113,7 +113,7 @@ metrics.instrument(server, { 'as': 'http.server' });
 if (!module.parent) { 
     var port = Number(process.env.PORT || 5050);
     server.listen(port, function () {
-        console.log('Up and running on port', process.env.PORT);
+        console.log('Up and running on port', process.env.PORT || 5050);
     });
 } else {
     module.exports = server;
