@@ -45,6 +45,15 @@ As above, plus
     git push heroku master
 
 
+Localhost
+---
+
+Add this line to your `/etc/hosts` if you want to share your cookies across domains,
+
+    127.0.0.1   local.ft.com
+
+The router will be available on [local.ft.com:5050](http://local.ft.com:5050).
+
 About 
 ---
 
