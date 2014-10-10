@@ -6,6 +6,9 @@
   "scripts": {
     "test": "make test"
   },
+  "bin": {
+    "next-router": "./bin/cli.sh"
+  },
   "keywords": [
     "webapp"
   ],

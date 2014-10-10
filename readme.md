@@ -29,6 +29,13 @@ If you've got the [service registry](http://git.svc.ft.com:8080/projects/STRAT_P
 
     export REGISTRY='http://localhost:5000/services'; export DEBUG=proxy; nodemon proxy.js
 
+Cli
+---
+
+To install the CLI install `next-router` globally:-
+
+    npm install -g git://github.com/Financial-Times/next-router.git#cli
+
 To deploy
 ---
 
