@@ -1,33 +1,17 @@
 {
-  "name": "next-router",
-  "version": "0.0.0",
-  "description": "",
-  "main": "proxy.js",
-  "scripts": {
-    "test": "make test"
-  },
-  "bin": {
-    "next-router": "./bin/cli.sh"
-  },
-  "keywords": [
-    "webapp"
-  ],
-  "author": "The Dude",
-  "license": "ISC",
+  "name": "next-metrics",
+  "version": "0.0.1",
+  "main": "lib/metrics.js",
   "dependencies": {
     "debug": "^1.0.4",
-    "es6-promise": "~1.0.0",
-    "ft-poller": "0.0.3",
-    "http-proxy": "^1.3.0",
     "lodash": "^2.4.1",
     "metrics": "^0.1.8",
-    "nock": "^0.44.2",
     "scarlet": "^2.0.20"
   },
   "devDependencies": {
+    "chai": "^1.9.1",
+    "express": "^4.10.2",
     "jshint": "*",
-    "superagent": "https://github.com/Financial-Times/superagent/archive/bower.tar.gz",
-    "mocha": "^1.21.4",
-    "chai": "^1.9.1"
+    "mocha": "^1.21.4"
   }
 }
