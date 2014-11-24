@@ -12,7 +12,11 @@ Drop in metrics for Next Express JS applications, sent to Graphite.
 
 Create an instance of the Metrics object, 
 
-    var Metrics = require('../lib/metrics')({
+    var Metrics = require('../lib/metrics');
+   
+Initialise it,
+
+    Metrics.init({
         app: 'example',
         flushEvery: 5000
     });
