@@ -5,10 +5,18 @@ var app         = express();
 var Metrics     = require('../lib/metrics');
 
 // Only do this once per application
-Metrics.init({ app: 'example', flushEvery: 5000 });
+
+// have made this bigger as render metrics requires me to physically refresh the page a bunch of times
+Metrics.init({ app: 'example', flushEvery: 10000 });
 
 // Test that we can set metrics inside other routes 
 app.get('/route', require('./route'));
+
+// setup swig
+var swig = require('swig');
+app.engine('html', swig.renderFile);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
 
 // Instrument the req, res objects
 app.get('/', function (req, res) {
@@ -20,11 +28,22 @@ app.get('/', function (req, res) {
     var status = statii[Math.floor(Math.random()*statii.length)];
 
     var responseTime = (Math.random()*2)*1000;
-    
+
     setTimeout(function () {
         res.status(status).send('hello');
     }, responseTime);
 })
+
+
+
+app.get('/render', function(req, res){
+
+    Metrics.instrument(res, { as: 'express.http.res' });
+
+
+    res.render('test', {});
+
+});
 
 
 var port = Number(process.env.PORT || 5005);
