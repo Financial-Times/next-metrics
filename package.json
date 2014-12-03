@@ -4,6 +4,7 @@
   "main": "lib/metrics.js",
   "dependencies": {
     "debug": "^1.0.4",
+    "ft-api-client": "https://github.com/Financial-Times/ft-api-client/archive/emit-events.tar.gz",
     "lodash": "^2.4.1",
     "metrics": "^0.1.8",
     "scarlet": "^2.0.20"
@@ -12,6 +13,7 @@
     "chai": "^1.9.1",
     "express": "^4.10.2",
     "jshint": "*",
-    "mocha": "^1.21.4"
+    "mocha": "^1.21.4",
+    "nock": "^0.51.0"
   }
 }

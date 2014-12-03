@@ -3,12 +3,25 @@
 var express     = require('express');
 var app         = express();
 var Metrics     = require('../lib/metrics');
+var ft          = require('ft-api-client')(process.env.apikey, {});
 
 // Only do this once per application
 Metrics.init({ app: 'example', flushEvery: 5000 });
 
 // Test that we can set metrics inside other routes 
 app.get('/route', require('./route'));
+
+Metrics.instrument(ft, { as: 'ft-api-client' });
+
+app.get('/ft-api-route', function (req, res) {
+    ft 
+        .search('Climate change')
+        .then(function (article) {
+            res.send(article)
+        }, function (err) {
+            res.send(err)
+        });
+});
 
 // Instrument the req, res objects
 app.get('/', function (req, res) {
