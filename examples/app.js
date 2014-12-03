@@ -36,12 +36,18 @@ app.get('/', function (req, res) {
 
 
 
-app.get('/render', function(req, res){
+app.get('/render/:count?', function(req, res){
 
     Metrics.instrument(res, { as: 'express.http.res' });
 
+    var data = [];
+    var count = req.params.count ? parseInt(req.params.count,10) : 0;
+    for(var i= 0; i<count; i++){
+        data.push(i);
+    }
 
-    res.render('test', {});
+
+    res.render('test', {data:data});
 
 });
 
