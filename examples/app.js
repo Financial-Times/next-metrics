@@ -60,7 +60,7 @@ app.get('/render/:count?', function(req, res){
     }
 
 
-    res.render('test', {data:data});
+    res.render('folder/test', {data:data});
 
 });
 
