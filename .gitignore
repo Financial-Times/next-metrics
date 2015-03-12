@@ -13,3 +13,4 @@ template-origami-express.sublime-project
 template-origami-express.sublime-workspace
 .sass-cache
 node_modules
+.idea/
