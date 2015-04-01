@@ -1,3 +1,4 @@
-integration-test:
-	@export HOSTEDGRAPHITE_APIKEY=1234; export DEBUG=graphite; node examples/app.js
+test:
+	next-build-tools verify;
+	export DEBUG=graphite; node examples/app.js
 
