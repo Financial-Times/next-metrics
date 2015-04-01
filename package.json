@@ -1,6 +1,6 @@
 {
   "name": "next-metrics",
-  "version": "1.5.0",
+  "version": "0.0.0",
   "main": "lib/metrics.js",
   "dependencies": {
     "debug": "^1.0.4",
@@ -15,6 +15,9 @@
     "express": "^4.10.2",
     "jshint": "*",
     "mocha": "^1.21.4",
-    "nock": "^0.51.0"
+    "next-build-tools": "^1.20.1",
+    "nock": "^0.51.0",
+    "npm-prepublish": "^1.2.0",
+    "origami-build-tools": "^2.13.0"
   }
 }
