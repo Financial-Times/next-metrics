@@ -1,5 +1,5 @@
 {
-  "name": "ft-next-metrics",
+  "name": "next-metrics",
   "version": "0.0.0",
   "main": "lib/metrics.js",
   "dependencies": {
