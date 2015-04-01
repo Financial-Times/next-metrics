@@ -5,3 +5,12 @@ node_js:
 - '0.10'
 before_deploy:
 - npm-prepublish --verbose
+deploy:
+  provider: npm
+  email: matt@mattandre.ws
+  api_key:
+    secure: T+jI9Ou9KwZ3/m9ENbifmsHLxzwLG72Ag+qcG+JnUawGvs5NU0ZazZggTsm+OiKfUvAp70+E6m4g/XPIwtcsiBcXG/XWCReMAuaEShsrfsogywNMfzRXRHtLfQIQ3mdS+ozNPwghFFCZcolTSQqIwWs/APfZG7TODotFMtwVp0A=
+  on:
+    all_branches: true
+    tags: true
+    repo: Financial-Times/next-metrics
