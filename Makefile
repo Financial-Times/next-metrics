@@ -1,7 +1,9 @@
+
 install:
 	origami-build-tools install
+
 test:
-	next-build-tools verify;
+	mocha --reporter spec -i tests/graphite
 
 integration-test:
 	export DEBUG=graphite; node examples/app.js
