@@ -3,12 +3,12 @@
 
 var Graphite	= require('../../lib/graphite/client');
 var expect		= require('chai').expect;
-var Mitm		= require("mitm");	// 'man in the middle' socket proxy
+var mitm		= require("mitm");	// 'man in the middle' socket proxy
 
 describe('Session Service', function() {
 
 	beforeEach(function () {
-		this.mitm = Mitm();
+		this.mitm = mitm();
 	});
 
 	afterEach(function () {
