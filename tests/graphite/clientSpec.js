@@ -11,8 +11,8 @@ describe('Session Service', function() {
 	beforeEach(function () {
 		this.mitm = mitm();
 		this.mitm.on("connect", function(socket, opts) {
-			if (opts.host !== "carbon.hostedgraphite.com") socket.bypass()
-		})
+			if (opts.host !== "carbon.hostedgraphite.com") socket.bypass();
+		});
 	});
 
 	afterEach(function () {
@@ -20,7 +20,7 @@ describe('Session Service', function() {
 	});
 
 	it('Send metrics to Graphite', function (done) {
-		var ft = sinon.useFakeTimers(new Date('Mon, 15 Jun 2015 20:12:01 UTC').getTime());
+		sinon.useFakeTimers(new Date('Mon, 15 Jun 2015 20:12:01 UTC').getTime());
 		this.mitm.on("connection", function(socket) {
 			socket.on('data', function (d) {
 				expect(d.toString('utf-8')).to.equal("k.p.a 1 1434399121\nk.p.b 2 1434399121\n");
