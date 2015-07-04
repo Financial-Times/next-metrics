@@ -7,6 +7,7 @@
     "ft-api-client": "https://github.com/Financial-Times/ft-api-client/archive/emit-events.tar.gz",
     "lodash": "^2.4.1",
     "metrics": "^0.1.8",
+    "mocha": "^2.2.4",
     "scarlet": "^2.0.20",
     "swig": "^1.4.2"
   },
@@ -14,10 +15,11 @@
     "chai": "^1.9.1",
     "express": "^4.10.2",
     "jshint": "*",
-    "mocha": "^1.21.4",
-    "next-build-tools": "^1.20.1",
+    "mitm": "^1.1.0",
+    "next-build-tools": "^2.1.1",
     "nock": "^0.51.0",
     "npm-prepublish": "^1.2.0",
-    "origami-build-tools": "^2.13.0"
+    "origami-build-tools": "^2.13.0",
+    "sinon": "^1.15.4"
   }
 }
