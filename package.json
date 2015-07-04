@@ -19,6 +19,7 @@
     "next-build-tools": "^2.1.1",
     "nock": "^0.51.0",
     "npm-prepublish": "^1.2.0",
-    "origami-build-tools": "^2.13.0"
+    "origami-build-tools": "^2.13.0",
+    "sinon": "^1.15.4"
   }
 }
