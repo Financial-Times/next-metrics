@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "main": "lib/metrics.js",
   "dependencies": {
+    "debounce": "^1.0.0",
     "debug": "^1.0.4",
     "ft-api-client": "https://github.com/Financial-Times/ft-api-client/archive/emit-events.tar.gz",
     "lodash": "^2.4.1",
