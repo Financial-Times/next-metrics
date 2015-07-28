@@ -1,9 +1,10 @@
 
 install:
-	origami-build-tools install
+	npm install origami-build-tools
+	obt install
 
 test:
-	next-build-tools verify --skip-layout-checks
+	nbt verify --skip-layout-checks --skip-dotenv-check
 	mocha --reporter spec -i tests/graphite
 
 integration-test:
