@@ -9,7 +9,7 @@ deploy:
   provider: npm
   email: strategic.products@ft.com
   api_key:
-    secure: OjGKMTDFb9SJx39NRMg+Vj0wJ/dnY9DXGqh2MsuRRbFEA4hBHutphnTvXBiOEE8r4fZ12osrC2+Zo2/oerJMZEYvL+pkpwQSNon4597znNzXcg6l7TbXZhW0a2plPPNXkUhH+B2BQp5n4/a9CGjmueinoHeXbdqeqMDTrVn+4/8=
+    secure: XasmdIfN8P49WV6ok0yuqGMg2e8d2n6u8R5Q/Yrp7IEWE2DT11ajzPy8vEhMpTT5tLs4J/bsOl5Y5CSgC3+DMNtCooQLakZqpv+7ZSwbrnHa6lsnZ6IwCWpLi9jRfkVZnKh99yNhjr5ZlZXCnj2mQgn9ZAd07+P2t6UA49gcrNY=
   on:
     tags: true
     repo: Financial-Times/next-metrics
