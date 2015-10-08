@@ -9,7 +9,6 @@
     "lodash": "^2.4.1",
     "metrics": "^0.1.8",
     "mocha": "^2.2.4",
-    "scarlet": "^2.0.20",
     "swig": "^1.4.2"
   },
   "devDependencies": {
