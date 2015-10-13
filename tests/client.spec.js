@@ -1,7 +1,7 @@
 'use strict';
 /*global describe, it, beforeEach, afterEach*/
 
-var Graphite	= require('../../lib/graphite/client');
+var Graphite	= require('../lib/graphite/client');
 var expect		= require('chai').expect;
 var mitm		= require("mitm");	// 'man in the middle' socket proxy
 var sinon		= require("sinon");
