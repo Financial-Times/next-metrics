@@ -35,6 +35,10 @@ describe('Http metrics', function() {
 		app.post('/503', (req, res) => {
 			res.sendStatus(503);
 		});
+
+		app.get('/__health', (req, res) => {
+			res.sendStatus(200);
+		});
 	});
 
 	after(() => clock.restore());
@@ -85,6 +89,21 @@ describe('Http metrics', function() {
 									});
 							});
 					});
+			});
+	});
+
+	it('Silo dev url metrics', function (done) {
+		request(app)
+			.get('/__health')
+			.end(() => {
+					clock.tick(100);
+					expect(metrics.graphite.log.args[0][0]['express.http.req.count']).to.equal(0);
+					expect(metrics.graphite.log.args[0][0]['express.http.req.dev.count']).to.equal(1);
+					expect(metrics.graphite.log.args[0][0]['express.default_route_GET.res.status.200.count']).to.equal(0);
+					expect(metrics.graphite.log.args[0][0]['express.default_route_GET.res.status.200.time.mean']).not.to.exist;
+					expect(metrics.graphite.log.args[0][0]['express.dev.res.status.200.count']).to.equal(1);
+					expect(metrics.graphite.log.args[0][0]['express.dev.res.status.200.time.mean']).to.equal(0);
+					done();
 			});
 	});
 
