@@ -6,7 +6,7 @@ var expect		= require('chai').expect;
 var mitm		= require("mitm");	// 'man in the middle' socket proxy
 var sinon		= require("sinon");
 
-describe('Session Service', function() {
+describe('Logging to graphite', function() {
 
 	beforeEach(function () {
 		this.mitm = mitm();
@@ -32,3 +32,11 @@ describe('Session Service', function() {
 	});
 
 });
+
+
+// metrics.init({ app: name, flushEvery: 40000 });
+// 	app.use(function(req, res, next) {
+// 		metrics.instrument(req, { as: 'express.http.req' });
+// 		metrics.instrument(res, { as: 'express.http.res' });
+// 		next();
+// 	});
