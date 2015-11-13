@@ -1,6 +1,6 @@
 {
   "name": "next-metrics",
-  "version": "0.0.0",
+  "version": "1.18.0",
   "main": "lib/metrics.js",
   "dependencies": {
     "debounce": "^1.0.0",
