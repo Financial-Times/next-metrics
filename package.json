@@ -3,23 +3,22 @@
   "version": "1.19.1",
   "main": "lib/metrics.js",
   "dependencies": {
-    "debounce": "^1.0.0",
     "debug": "^1.0.4",
-    "ft-api-client": "https://github.com/Financial-Times/ft-api-client/archive/emit-events.tar.gz",
     "lodash": "^2.4.1",
-    "metrics": "^0.1.8",
-    "mocha": "^2.2.4",
-    "swig": "^1.4.2"
+    "metrics": "^0.1.8"
   },
   "devDependencies": {
     "chai": "^1.9.1",
     "express": "^4.13.3",
+    "ft-api-client": "https://github.com/Financial-Times/ft-api-client/archive/emit-events.tar.gz",
     "jshint": "*",
     "mitm": "^1.1.0",
+    "mocha": "^2.4.5",
     "next-build-tools": "^5.10.4",
     "nock": "^0.51.0",
     "npm-prepublish": "^1.2.0",
     "sinon": "^1.15.4",
-    "supertest": "^1.1.0"
+    "supertest": "^1.1.0",
+    "swig": "^1.4.2"
   }
 }
