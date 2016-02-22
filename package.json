@@ -1,6 +1,6 @@
 {
   "name": "next-metrics",
-  "version": "1.20.2",
+  "version": "1.20.3",
   "main": "lib/metrics.js",
   "dependencies": {
     "debug": "^1.0.4",
