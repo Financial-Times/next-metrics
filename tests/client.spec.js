@@ -27,7 +27,7 @@ describe('Logging to graphite', function() {
 				done();
 			});
 		});
-		var g = new Graphite({ apiKey: 'k.', prefix: 'p.', noLog: false });
+		var g = new Graphite({ apiKey: 'k.', prefix: 'p.', noLog: false, host:'carbon.hostedgraphite.com' });
 		g.log({ a: 1, b: 2, c: null });
 	});
 
