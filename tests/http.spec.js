@@ -85,6 +85,7 @@ describe('Http metrics', function() {
 										expect(metrics.graphite.log.args[0][0]['express.default_route_GET.res.status.200.time.mean']).to.equal(0);
 										expect(metrics.graphite.log.args[0][0]['express.default_route_PUT.res.status.404.time.mean']).to.equal(0);
 										expect(metrics.graphite.log.args[0][0]['express.default_route_POST.res.status.503.time.mean']).to.equal(0);
+										expect(metrics.graphite.log.args[0][0]['express.default_route_POST.res.status.503.time.95th']).to.equal(0);
 										done();
 									});
 							});
@@ -103,6 +104,7 @@ describe('Http metrics', function() {
 					expect(metrics.graphite.log.args[0][0]['express.default_route_GET.res.status.200.time.mean']).not.to.exist;
 					expect(metrics.graphite.log.args[0][0]['express.dev.res.status.200.count']).to.equal(1);
 					expect(metrics.graphite.log.args[0][0]['express.dev.res.status.200.time.mean']).to.equal(0);
+
 					done();
 			});
 	});
