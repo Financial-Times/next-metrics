@@ -12,7 +12,7 @@
     "express": "^4.13.3",
     "ft-api-client": "https://github.com/Financial-Times/ft-api-client/archive/emit-events.tar.gz",
     "jshint": "*",
-    "mitm": "^1.1.0",
+    "mitm": "1.2.0",
     "mocha": "^2.4.5",
     "next-build-tools": "^5.10.4",
     "nock": "^0.51.0",
