@@ -56,7 +56,8 @@ The Metrics object takes the following options,
 * app (required) - A string containing the application name, Eg. router, dobi,
   engels ...
 * flushEvery (required) - A number indicating how frequently you want the
-  metrics pushed to Graphite.
+  metrics pushed to Graphite, or `false` if you want to do it manually
+  (i.e. using `.flush()`)
 
 ## Instrumentation
 
