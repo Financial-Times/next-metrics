@@ -14,3 +14,5 @@ template-origami-express.sublime-workspace
 .sass-cache
 node_modules
 .idea/
+.editorconfig
+.eslintrc.js
