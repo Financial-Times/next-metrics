@@ -1,7 +1,7 @@
 {
   "name": "next-metrics",
-  "version": "1.25.4",
-  "main": "lib/metrics.js",
+  "version": "1.32.3",
+  "main": "index.js",
   "dependencies": {
     "debug": "^1.0.4",
     "lodash": "^2.4.1",
@@ -9,12 +9,13 @@
   },
   "devDependencies": {
     "chai": "^1.9.1",
+    "eslint": "^2.11.0",
     "express": "^4.13.3",
     "ft-api-client": "https://github.com/Financial-Times/ft-api-client/archive/emit-events.tar.gz",
     "jshint": "*",
-    "mitm": "^1.1.0",
+    "lintspaces-cli": "^0.1.1",
+    "mitm": "1.2.0",
     "mocha": "^2.4.5",
-    "next-build-tools": "^5.10.4",
     "nock": "^0.51.0",
     "npm-prepublish": "^1.2.0",
     "sinon": "^1.15.4",

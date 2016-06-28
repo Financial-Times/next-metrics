@@ -4,16 +4,16 @@ Drop in metrics for Next Express JS applications, sent to Graphite.
 ## Goals
 
 - Drop in instrumentation for standard parts of the applications - express,
-  ft-api-client etc. 
+  ft-api-client etc.
 - Push data to Graphite.
 - Allow for [arbitrary metrics](https://github.com/mikejihbe/metrics) to be added.
 
 ## Usage
 
-Create an instance of the Metrics object, 
+Create an instance of the Metrics object,
 
     var Metrics = require('next-metrics');
-   
+
 Initialise it,
 
     Metrics.init({
@@ -28,6 +28,8 @@ Instrument the response object,
         res.send('hello')
     }
 
+To allocate the response's metrics to a separate bucket to all other responses set `res.nextMetricsName = 'name_of_bucket'`
+
 Add a counter for an arbitrary event in the application,
 
     var server = app.listen(port, function () {
@@ -36,7 +38,7 @@ Add a counter for an arbitrary event in the application,
 
 See the [example app](./examples/app.js) for more information.
 
-## Configuration 
+## Configuration
 
 The library requires your key to
 [hostedgraphite.com](http://www.hostedgraphite.com) to be set in the
@@ -52,23 +54,24 @@ To obtain a key you provision the hostedgraphite addon against a personal app.
 The Metrics object takes the following options,
 
 * app (required) - A string containing the application name, Eg. router, dobi,
-  engels ... 
+  engels ...
 * flushEvery (required) - A number indicating how frequently you want the
-  metrics pushed to Graphite. 
+  metrics pushed to Graphite, or `false` if you want to do it manually
+  (i.e. using `.flush()`)
 
 ## Instrumentation
 
 The libary _understands_ certain types of objects within our set of
 applications. This saves everyone implementing boilerplate metrics code and
-avoids different applications inventing their own core measurements. 
+avoids different applications inventing their own core measurements.
 
 For example, to instrument an Express response object put this inside one of
-your route handlers, 
+your route handlers,
 
     Metrics.instrument(res, { as: 'express.http.res' });
 
 The first argument is the object you want instrumenting, and the second
-argument specifies what type of object it is. 
+argument specifies what type of object it is.
 
 ## Metrics
 
@@ -76,7 +79,7 @@ Data is logged in the form of Graphite keys (dots denote hierarchy),
 
     <api-key>.<environment>.<application>.<dyno>.<metric> <value>
 
-Eg, 
+Eg,
 
     d3fe0b06-9e43-11e3-b429-00144feab7de.localhost.example._.system.mem_process_heapUsed 16213144
     d3fe0b06-9e43-11e3-b429-00144feab7de.localhost.example._.http.res.status_2xx_response_time.mean 758.5
