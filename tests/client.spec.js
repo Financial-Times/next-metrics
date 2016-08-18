@@ -11,7 +11,7 @@ describe('Logging to graphite', function() {
 	beforeEach(function () {
 		this.mitm = mitm();
 		this.mitm.on("connect", function(socket, opts) {
-			if (opts.host !== "carbon.hostedgraphite.com") socket.bypass();
+			if (opts.host !== "test.host.com") socket.bypass();
 		});
 	});
 
@@ -27,7 +27,15 @@ describe('Logging to graphite', function() {
 				done();
 			});
 		});
-		var g = new Graphite({ apiKey: 'k.', prefix: 'p.', noLog: false });
+		var g = new Graphite({
+			destinations: [{
+				port: 2003,
+				host: 'test.host.com',
+				key: 'k.'
+			}],
+			prefix: 'p.',
+			noLog: false
+		});
 		g.log({ a: 1, b: 2, c: null });
 	});
 
