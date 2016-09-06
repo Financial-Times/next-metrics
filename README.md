@@ -42,12 +42,22 @@ See the [example app](./examples/app.js) for more information.
 
 The library requires your key to
 [hostedgraphite.com](http://www.hostedgraphite.com) to be set in the
-environment,
+environment, this will send metrics to both hostedgraphite and FT's internal Graphite (using the same API key):
 
     export HOSTEDGRAPHITE_APIKEY=...
 
+To specify different API keys for hosted vs internal Graphite:
+
+    export HOSTEDGRAPHITE_APIKEY=...
+    export FT_GRAPHITE_APIKEY=...
+
+If you _only_ want to send metrics to FT's internal Graphite, you can set `HOSTEDGRAPHITE_APIKEY` to `false` and only set an internal API key:
+
+    export HOSTEDGRAPHITE_APIKEY=false
+    export FT_GRAPHITE_APIKEY=...
+
 Do not use the production key on you localhost as you will fill up the Graphite
-production enviroment account with you local data.
+production environment account with you local data.
 
 To obtain a key you provision the hostedgraphite addon against a personal app.
 
