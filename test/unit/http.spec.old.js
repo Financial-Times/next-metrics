@@ -1,7 +1,10 @@
 'use strict';
 /*global describe, it, before, after, beforeEach, afterEach*/
 
-const Metrics	= require('../lib/metrics');
+// TODO this should be moved to use the newer test format.
+// See files in test/unit
+
+const Metrics	= require('../../lib/metrics');
 const expect		= require('chai').expect;
 const sinon		= require("sinon");
 const request = require('supertest');

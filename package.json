@@ -16,8 +16,10 @@
     "lintspaces-cli": "^0.1.1",
     "mitm": "1.2.0",
     "mocha": "^2.4.5",
+    "mockery": "^2.0.0",
     "nock": "^0.51.0",
     "npm-prepublish": "^1.2.0",
+    "nyc": "^10.0.0",
     "sinon": "^1.15.4",
     "supertest": "^1.1.0",
     "swig": "^1.4.2"
