@@ -1,3 +1,5 @@
+'use strict';
+
 const Metrics = require('./lib/metrics');
 
 module.exports = new Metrics();
