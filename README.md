@@ -68,6 +68,8 @@ The Metrics object takes the following options,
 * flushEvery (required) - A number indicating how frequently you want the
   metrics pushed to Graphite, or `false` if you want to do it manually
   (i.e. using `.flush()`)
+* hostedApiKey (optional) - The API key for hostedgraphite. This defaults to the environment variable `HOSTEDGRAPHITE_APIKEY`, but this configuration overrides that. Set to `false` to disable hostedgraphite.
+* ftApiKey (optional) - The API key for the FT's internal Graphite. This defaults to the environment variable `FT_GRAPHITE_APIKEY`, but this configuration overrides that. Set to `false` to disable internal Graphite.
 
 ## Instrumentation
 
