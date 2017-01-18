@@ -189,7 +189,7 @@ describe('lib/metrics', () => {
 			it('throws an error', () => {
 				assert.throws(() => {
 					instance.init(options);
-				}, 'No HOSTEDGRAPHITE_APIKEY is set. Please set a false one if you are on localhost.');
+				}, 'No HOSTEDGRAPHITE_APIKEY is set. Please explicitly set to false if you don\'t wish to use Hosted Graphite.');
 			});
 
 		});
