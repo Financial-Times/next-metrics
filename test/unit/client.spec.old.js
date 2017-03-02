@@ -1,7 +1,10 @@
 'use strict';
 /*global describe, it, beforeEach, afterEach*/
 
-var Graphite	= require('../lib/graphite/client');
+// TODO this should be moved to use the newer test format.
+// See files in test/unit
+
+var Graphite	= require('../../lib/graphite/client');
 var expect		= require('chai').expect;
 var mitm		= require("mitm");	// 'man in the middle' socket proxy
 var sinon		= require("sinon");
