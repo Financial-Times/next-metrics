@@ -21,10 +21,12 @@
     "npm-prepublish": "^1.2.0",
     "nyc": "^10.0.0",
     "sinon": "^1.15.4",
+    "sinon-as-promised": "^4.0.3",
+    "sinon-chai": "^2.10.0",
     "supertest": "^1.1.0",
     "swig": "^1.4.2"
   },
   "engines": {
-    "node": "4.4.5"
+    "node": "6.10.3"
   }
 }
