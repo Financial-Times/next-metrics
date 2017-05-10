@@ -2,13 +2,16 @@
 
 const assert = require('chai').assert;
 const mockery = require('mockery');
+const sinon = require("sinon");
 
 describe('lib/metrics', () => {
+	let clock;
 	let Graphite;
 	let metrics;
 	let Metrics;
 
 	beforeEach(() => {
+		clock = sinon.useFakeTimers(new Date('Mon, 15 Jun 2015 20:12:01 UTC').getTime());
 		metrics = require('../mock/metrics.mock');
 		mockery.registerMock('metrics', metrics);
 
@@ -16,6 +19,10 @@ describe('lib/metrics', () => {
 		mockery.registerMock('../lib/graphite/client', Graphite);
 
 		Metrics = require('../../../lib/metrics');
+	});
+
+	afterEach(() => {
+		clock.restore();
 	});
 
 	it('exports a function', () => {
