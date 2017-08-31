@@ -197,7 +197,7 @@ describe('Fetch', () => {
 					'fetch.blogs.response.status_500.count': 1,
 					'fetch.blogs.response.status_5xx.count': 1
 				});
-				done()
+				done();
 			}, 10);
 		}, 10);
 	});
