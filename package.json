@@ -8,6 +8,7 @@
     "metrics": "^0.1.8"
   },
   "devDependencies": {
+    "@financial-times/n-gage": "^1.8.25",
     "chai": "^1.9.1",
     "eslint": "^2.11.0",
     "express": "^4.13.3",
@@ -28,5 +29,10 @@
   },
   "engines": {
     "node": "^6.10.3"
+  },
+  "scripts": {
+    "precommit": "node_modules/.bin/secret-squirrel",
+    "commitmsg": "node_modules/.bin/secret-squirrel-commitmsg",
+    "prepush": "make verify -j3"
   }
 }
