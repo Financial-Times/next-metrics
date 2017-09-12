@@ -6,11 +6,11 @@
 
 const Metrics	= require('../../lib/metrics');
 const expect		= require('chai').expect;
-const sinon		= require("sinon");
+const sinon		= require('sinon');
 const request = require('supertest');
 const express = require('express');
 
-describe('Http metrics', function() {
+describe('Http metrics', function () {
 	let app;
 	let clock;
 	let metrics;
@@ -21,7 +21,7 @@ describe('Http metrics', function() {
 		metrics.init({ app: 'test', flushEvery: 100 });
 		app = express();
 
-		app.use(function(req, res, next) {
+		app.use(function (req, res, next) {
 
 			metrics.instrument(req, { as: 'express.http.req' });
 			metrics.instrument(res, { as: 'express.http.res' });

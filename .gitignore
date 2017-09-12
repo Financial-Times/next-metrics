@@ -18,3 +18,4 @@ node_modules
 .eslintrc.js
 coverage
 .nyc_output
+*.env*

@@ -2,7 +2,7 @@
 
 const assert = require('chai').assert;
 const mockery = require('mockery');
-const sinon = require("sinon");
+const sinon = require('sinon');
 
 describe('lib/metrics', () => {
 	let clock;
