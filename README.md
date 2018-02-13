@@ -55,8 +55,8 @@ If you _only_ want to send metrics to FT's internal Graphite, you can set `HOSTE
 	export HOSTEDGRAPHITE_APIKEY=false
 	export FT_GRAPHITE_APIKEY=...
 
-Do not use the production key on you localhost as you will fill up the Graphite
-production environment account with you local data.
+Do not use the production key on your localhost as you will fill up the Graphite
+production environment account with your local data.
 
 To obtain a key you provision the hostedgraphite addon against a personal app.
 
@@ -87,7 +87,7 @@ Data is logged in the form of Graphite keys (dots denote hierarchy),
 
 	<api-key>.<environment>.<application>.<dyno>.<metric> <value>
 
-Eg,
+E.g.,
 
 	d3fe0b06-9e43-11e3-b429-00144feab7de.localhost.example._.system.mem_process_heapUsed 16213144
 	d3fe0b06-9e43-11e3-b429-00144feab7de.localhost.example._.http.res.status_2xx_response_time.mean 758.5
