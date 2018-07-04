@@ -138,10 +138,6 @@ describe('lib/metrics/system/process', () => {
 					assert.strictEqual(returnValue['system.process.uptime'], 12345);
 				});
 
-				it('has a `system.process.version.full` property set to `process.version`', () => {
-					assert.strictEqual(returnValue['system.process.version.full'], process.version);
-				});
-
 				it('has a `system.process.version.major` property set to the major Node.js version', () => {
 					assert.strictEqual(returnValue['system.process.version.major'], instance.nodeVersion.major);
 				});
