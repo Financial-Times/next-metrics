@@ -45,11 +45,3 @@ describe('Logging to graphite', function () {
 	});
 
 });
-
-
-// metrics.init({ app: name, flushEvery: 40000 });
-// 	app.use(function(req, res, next) {
-// 		metrics.instrument(req, { as: 'express.http.req' });
-// 		metrics.instrument(res, { as: 'express.http.res' });
-// 		next();
-// 	});
