@@ -1,71 +1,69 @@
+# Next Metrics
 
-Drop in metrics for Next Express JS applications, sent to Graphite.
-
-## Goals
-
-- Drop in instrumentation for standard parts of the applications - express, ft-api-client etc.
-- Push data to Graphite.
-- Allow for [arbitrary metrics](https://github.com/mikejihbe/metrics) to be added.
+A library for sending metrics to Graphite, that also provides drop in instrumentation for standard parts of Next applications e.g. [Express](https://expressjs.com/).
 
 ## Usage
 
-Create an instance of the Metrics object,
+## Getting started
 
-	var Metrics = require('next-metrics');
+Create an instance of the Metrics object:
 
-Initialise it,
+```javascript
+const metrics = require('next-metrics');
+```
 
-	Metrics.init({
-		app: 'example',
-		flushEvery: 5000
-	});
+Initialise it:
 
-Instrument the response object,
+```javascript
+metrics.init({
+    app: 'example',
+    flushEvery: 5000
+});
+```
 
-	app.get('/', function (req, res) {
-		Metrics.instrument(res, { as: 'express.http.res' });
-		res.send('hello')
-	}
+Instrument the response object:
+
+```javascript
+app.get('/', function (req, res) {
+    metrics.instrument(res, { as: 'express.http.res' });
+    res.send('hello')
+}
+```
 
 To allocate the response's metrics to a separate bucket to all other responses set `res.nextMetricsName = 'name_of_bucket'`
 
 Add a counter for an arbitrary event in the application,
 
-	var server = app.listen(port, function () {
-		Metrics.count('express.start', 1);
-	})
+```javascript
+var server = app.listen(port, function () {
+    metrics.count('express.start', 1);
+})
+```
 
 See the [example app](./examples/app.js) for more information.
 
 ## Configuration
 
-The library requires your key to
-[hostedgraphite.com](http://www.hostedgraphite.com) to be set in the
-environment, this will send metrics to both hostedgraphite and FT's internal Graphite (using the same API key):
+To use this libary you need to set an environment variable `FT_GRAPHITE_APIKEY`.
+This library will automatically pick up that environment variable and use it
+to authenticate with FT's internal Graphite server when sending metrics.
 
-	export HOSTEDGRAPHITE_APIKEY=...
+This library will only send metrics when it is running in production
+(`NODE_ENV=production`).
 
-To specify different API keys for hosted vs internal Graphite:
+If you don't want to send metrics from an app in production, you must explicitly
+set the value of `FT_GRAPHITE_APIKEY` to `false`.
 
-	export HOSTEDGRAPHITE_APIKEY=...
-	export FT_GRAPHITE_APIKEY=...
+_Note: Don't use the production FT Graphite API key on your `localhost` as you will fill up FT's internal Graphite server with your local data!_
 
-If you _only_ want to send metrics to FT's internal Graphite, you can set `HOSTEDGRAPHITE_APIKEY` to `false` and only set an internal API key:
+The `Metrics.init` method takes the following options:
 
-	export HOSTEDGRAPHITE_APIKEY=false
-	export FT_GRAPHITE_APIKEY=...
-
-Do not use the production key on your localhost as you will fill up the Graphite
-production environment account with your local data.
-
-To obtain a key you provision the hostedgraphite addon against a personal app.
-
-The Metrics object takes the following options,
-
-* app (required) - A string containing the application name, Eg. router, dobi, engels ...
-* flushEvery (required) - A number indicating how frequently you want the metrics pushed to Graphite, or `false` if you want to do it manually (i.e. using `.flush()`)
-* hostedApiKey (optional) - The API key for hostedgraphite. This defaults to the environment variable `HOSTEDGRAPHITE_APIKEY`, but this configuration overrides that. Set to `false` to disable hostedgraphite.
-* ftApiKey (optional) - The API key for the FT's internal Graphite. This defaults to the environment variable `FT_GRAPHITE_APIKEY`, but this configuration overrides that. Set to `false` to disable internal Graphite.
+* `app` (required) - `string` - Application name e.g. router
+* `flushEvery` (required) - `integer|boolean` - Specify how frequently you want metrics pushed to Graphite, or `false` if you want to do it manually with `.flush()`
+* `forceGraphiteLogging` (optional) - `boolean` - Set to `true` if you want to log metrics to Graphite from code running in a non-production environment (when `NODE_ENV != production`)
+* `platform` (optional, default: heroku) - `string` - Specify a custom platform name in the [Graphite key](#metrics)
+* `instance` (optional, default: dynamically generated string) - `string|boolean` - Specify a custom instance name in the [Graphite key](#metrics), or set to `false` to omit it
+* `useDefaultAggregators` (optional, default: true) - `boolean` - Set to `false` if you want to disable default aggregators
 
 ## Instrumentation
 
@@ -73,24 +71,29 @@ The libary _understands_ certain types of objects within our set of
 applications. This saves everyone implementing boilerplate metrics code and
 avoids different applications inventing their own core measurements.
 
-For example, to instrument an Express response object put this inside one of
-your route handlers,
+For example, to instrument an Express response object, put this inside one of
+your route handlers:
 
-	Metrics.instrument(res, { as: 'express.http.res' });
+```javascript
+metrics.instrument(res, { as: 'express.http.res' });
+```
 
-The first argument is the object you want instrumenting, and the second
+The first argument is the object you want to instrument, and the second
 argument specifies what type of object it is.
 
-## Metrics
+## Metrics
 
-Data is logged in the form of Graphite keys (dots denote hierarchy),
+Data is logged in the form of Graphite keys (dots denote hierarchy):
 
-	<api-key>.<environment>.<application>.<dyno>.<metric> <value>
+```
+<platform>.<application>.<instance>.<metric>   <value>
+```
 
-E.g.,
+e.g.
 
-	d3fe0b06-9e43-11e3-b429-00144feab7de.localhost.example._.system.mem_process_heapUsed 16213144
-	d3fe0b06-9e43-11e3-b429-00144feab7de.localhost.example._.http.res.status_2xx_response_time.mean 758.5
-	d3fe0b06-9e43-11e3-b429-00144feab7de.localhost.example._.http.res.status_2xx_response_time.stdDev 727.61
+```
+heroku.ads-api.web_1_process_cluster_worker_1_EU.express.concept_GET.res.status.200.time.sum 325.6
+heroku.ads-api.web_1_process_cluster_worker_1_EU.system.process.mem_process_heapUsed 16213144
+```
 
-Access to graphite is available through the 'ft-next-router-v002' Heroku dashboard.
+You can view data in [Graphite](http://graphite.ft.com/), or in a more user-friendly UI through [Grafana](http://grafana.ft.com).
