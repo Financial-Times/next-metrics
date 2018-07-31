@@ -26,8 +26,8 @@ Instrument the response object:
 ```javascript
 app.get('/', function (req, res) {
     metrics.instrument(res, { as: 'express.http.res' });
-    res.send('hello')
-}
+    res.send('hello');
+});
 ```
 
 To allocate the response's metrics to a separate bucket to all other responses set `res.nextMetricsName = 'name_of_bucket'`
@@ -37,7 +37,7 @@ Add a counter for an arbitrary event in the application,
 ```javascript
 var server = app.listen(port, function () {
     metrics.count('express.start', 1);
-})
+});
 ```
 
 See the [example app](./examples/app.js) for more information.
