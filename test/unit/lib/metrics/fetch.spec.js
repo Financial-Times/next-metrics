@@ -1,6 +1,5 @@
 const chai = require('chai');
 const sinon = require('sinon');
-require('sinon-as-promised');
 const sinonChai = require('sinon-chai');
 
 const Fetch = require('../../../../lib/metrics/fetch');
@@ -8,19 +7,22 @@ const Fetch = require('../../../../lib/metrics/fetch');
 chai.use(sinonChai);
 const should = chai.should();
 
-const fetchStub = sinon.stub()
-	.resolves({
-		status: 200
-	});
 
 describe('Fetch', () => {
+
+	let fetchStub;
+
 	beforeEach(() => {
+		fetchStub = sinon.stub()
+			.resolves({
+				status: 200
+			});
+
 		global.fetch = fetchStub;
 	});
 
 	afterEach(() => {
 		global.fetch = undefined;
-		fetchStub.reset();
 	});
 
 	it('should be able to instrument', () => {

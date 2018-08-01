@@ -33,11 +33,11 @@ describe('Logging to graphite', function () {
 			});
 		});
 		const g = new Graphite({
-			destinations: [{
+			destination: {
 				port: 2003,
 				host: 'test.host.com',
 				key: 'k.'
-			}],
+			},
 			prefix: 'p.',
 			noLog: false
 		});
@@ -45,11 +45,3 @@ describe('Logging to graphite', function () {
 	});
 
 });
-
-
-// metrics.init({ app: name, flushEvery: 40000 });
-// 	app.use(function(req, res, next) {
-// 		metrics.instrument(req, { as: 'express.http.req' });
-// 		metrics.instrument(res, { as: 'express.http.res' });
-// 		next();
-// 	});
