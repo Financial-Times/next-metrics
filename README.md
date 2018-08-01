@@ -44,9 +44,10 @@ See the [example app](./examples/app.js) for more information.
 
 ### Configuration
 
-To use this libary you need to set an environment variable `FT_GRAPHITE_APIKEY`.
-This library will automatically pick up that environment variable and use it
-to authenticate with FT's internal Graphite server when sending metrics.
+To use this libary you need to set an environment variable named
+`FT_GRAPHITE_APIKEY`. This library will automatically pick up that
+environment variable and use it to authenticate with FT's internal
+Graphite server when sending metrics.
 
 This library will only send metrics when it is running in production
 (`NODE_ENV=production`).
