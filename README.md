@@ -71,7 +71,8 @@ The `Metrics.init` method takes the following options:
 Typically you'll only want a single instance of the [`Metrics`](https://github.com/Financial-Times/next-metrics/blob/master/lib/metrics.js)
 class to be used by your application. Because of this, when you
 require `next-metrics`, the default export from the module is an
-instance of `Metrics`, which effectively acts as a singleton.
+instance of [`Metrics`](https://github.com/Financial-Times/next-metrics/blob/master/lib/metrics.js),
+which effectively acts as a singleton.
 
 If you have a custom use case, this module exposes a couple of internal
 classes that might help you out:
