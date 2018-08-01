@@ -4,7 +4,7 @@ A library for sending metrics to Graphite, that also provides drop in instrument
 
 ## Usage
 
-## Getting started
+### Getting started
 
 Create an instance of the Metrics object:
 
@@ -42,7 +42,7 @@ var server = app.listen(port, function () {
 
 See the [example app](./examples/app.js) for more information.
 
-## Configuration
+### Configuration
 
 To use this libary you need to set an environment variable `FT_GRAPHITE_APIKEY`.
 This library will automatically pick up that environment variable and use it
@@ -64,6 +64,62 @@ The `Metrics.init` method takes the following options:
 * `platform` (optional, default: heroku) - `string` - Specify a custom platform name in the [Graphite key](#metrics)
 * `instance` (optional, default: dynamically generated string) - `string|boolean` - Specify a custom instance name in the [Graphite key](#metrics), or set to `false` to omit it
 * `useDefaultAggregators` (optional, default: true) - `boolean` - Set to `false` if you want to disable default aggregators
+
+### Custom use cases
+
+Typically you'll only want a single instance of the [`Metrics`](https://github.com/Financial-Times/next-metrics/blob/master/lib/metrics.js)
+class to be used by your application. Because of this, when you
+require `next-metrics`, the default export from the module is an
+instance of `Metrics`, which effectively acts as a singleton.
+
+If you have a custom use case, this module exposes a couple of internal
+classes that might help you out:
+
+```javascript
+// Create your own instance of Metrics
+const { Metrics } = require('next-metrics');
+
+const metrics = new Metrics;
+
+metrics.init({
+    platform: 'custom-platform',
+    app: 'some-app',
+    instance: false,
+    useDefaultAggregators: false,
+    flushEvery: false,
+    forceGraphiteLogging: true
+});
+
+metrics.count('some_filename.size', 2454589);
+metrics.count('some_filename.gzip_size', 45345);
+
+metrics.flush();
+
+// Send raw metrics directly to a Graphite server
+const { GraphiteClient } = require('next-metrics');
+
+const graphite = new GraphiteClient({
+    destination: {
+        port: 2003,
+        host: 'some.host.com',
+        key: 'some-api-key'
+    },
+    prefix: 'some_prefix.',
+    noLog: false,
+});
+
+graphite.log({
+    'build.time': 536,
+    'build.count': 1,
+});
+```
+
+You can also access the [list of Next services](https://github.com/Financial-Times/next-metrics/blob/master/lib/metrics/services.js) that are used for sending
+`fetch` metrics to Graphite:
+
+```javascript
+const { services } = require('next-metrics');
+```
 
 ## Instrumentation
 
