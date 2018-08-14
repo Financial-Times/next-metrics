@@ -44,11 +44,11 @@ describe('lib/metrics', () => {
 				useDefaultAggregators: false
 			};
 			originalEnv = {
-				FT_GRAPHITE_UUID : process.env.FT_GRAPHITE_UUID,
+				FT_GRAPHITE_APP_UUID : process.env.FT_GRAPHITE_APP_UUID,
 				NODE_ENV: process.env.NODE_ENV
 			};
 
-			delete process.env.FT_GRAPHITE_UUID;
+			delete process.env.FT_GRAPHITE_APP_UUID;
 
 			process.env.NODE_ENV = 'test';
 
@@ -56,15 +56,15 @@ describe('lib/metrics', () => {
 		});
 
 		afterEach(() => {
-			process.env.FT_GRAPHITE_UUID = originalEnv.FT_GRAPHITE_UUID;
+			process.env.FT_GRAPHITE_APP_UUID = originalEnv.FT_GRAPHITE_APP_UUID;
 			process.env.NODE_ENV = originalEnv.NODE_ENV;
 		});
 
-		describe('when the FT_GRAPHITE_UUID environment variable is set and NODE_ENV is "production"', () => {
+		describe('when the FT_GRAPHITE_APP_UUID environment variable is set and NODE_ENV is "production"', () => {
 
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
-				process.env.FT_GRAPHITE_UUID = 'mock-hosted-uuid-env';
+				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
 				instance.init(options);
 			});
 
@@ -81,22 +81,22 @@ describe('lib/metrics', () => {
 
 		});
 
-		describe('when the FT_GRAPHITE_UUID environment variable is empty and NODE_ENV is "production"', () => {
+		describe('when the FT_GRAPHITE_APP_UUID environment variable is empty and NODE_ENV is "production"', () => {
 
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
-				process.env.FT_GRAPHITE_UUID= '';
+				process.env.FT_GRAPHITE_APP_UUID= '';
 			});
 
 			it('an error should be thrown', () => {
 				assert.throws(() => {
 					instance.init(options);
-				}, 'next-metrics: The environment variable FT_GRAPHITE_UUID must be explicitly set to \'false\' if you don\'t wish to send metrics to FT\'s internal Graphite');
+				}, 'next-metrics: The environment variable FT_GRAPHITE_APP_UUID must be explicitly set to \'false\' if you don\'t wish to send metrics to FT\'s internal Graphite');
 			});
 
 		});
 
-		describe('when the FT_GRAPHITE_UUID environment variable is not set and NODE_ENV is "production"', () => {
+		describe('when the FT_GRAPHITE_APP_UUID environment variable is not set and NODE_ENV is "production"', () => {
 
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
@@ -105,15 +105,15 @@ describe('lib/metrics', () => {
 			it('an error should be thrown', () => {
 				assert.throws(() => {
 					instance.init(options);
-				}, 'next-metrics: The environment variable FT_GRAPHITE_UUID must be explicitly set to \'false\' if you don\'t wish to send metrics to FT\'s internal Graphite');
+				}, 'next-metrics: The environment variable FT_GRAPHITE_APP_UUID must be explicitly set to \'false\' if you don\'t wish to send metrics to FT\'s internal Graphite');
 			});
 
 		});
 
-		describe('when the FT_GRAPHITE_UUID environment variable is set to "false"', () => {
+		describe('when the FT_GRAPHITE_APP_UUID environment variable is set to "false"', () => {
 
 			beforeEach(() => {
-				process.env.FT_GRAPHITE_UUID = 'false';
+				process.env.FT_GRAPHITE_APP_UUID = 'false';
 				instance.init(options);
 			});
 
@@ -129,15 +129,15 @@ describe('lib/metrics', () => {
 			});
 			it('an info message should be logged that explains that metric logging is disabled', () => {
 				assert.calledOnce(nLogger.default.info);
-				assert.equal(nLogger.default.info.firstCall.args[0], 'next-metrics: FT_GRAPHITE_UUID is set to \'false\', metrics will not be sent to FT\'s internal Graphite');
+				assert.equal(nLogger.default.info.firstCall.args[0], 'next-metrics: FT_GRAPHITE_APP_UUID is set to \'false\', metrics will not be sent to FT\'s internal Graphite');
 			});
 
 		});
 
-		describe('when the FT_GRAPHITE_UUID environment variable is set in a non-production environment', () => {
+		describe('when the FT_GRAPHITE_APP_UUID environment variable is set in a non-production environment', () => {
 
 			beforeEach(() => {
-				process.env.FT_GRAPHITE_UUID = 'mock-hosted-uuid-env';
+				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
 				instance.init(options);
 			});
 
@@ -154,7 +154,7 @@ describe('lib/metrics', () => {
 
 		});
 
-		describe('when the FT_GRAPHITE_UUID environment variable is not set in a non-production environment', () => {
+		describe('when the FT_GRAPHITE_APP_UUID environment variable is not set in a non-production environment', () => {
 
 			beforeEach(() => {
 				instance.init(options);
