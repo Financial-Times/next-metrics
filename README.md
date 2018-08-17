@@ -45,7 +45,7 @@ See the [example app](./examples/app.js) for more information.
 ### Configuration
 
 To use this libary you need to set an environment variable named
-`FT_GRAPHITE_APIKEY`. This library will automatically pick up that
+`FT_GRAPHITE_APIKEY` or `HOSTEDGRAPHITE_APIKEY`. This library will automatically pick up that
 environment variable and use it to authenticate with FT's internal
 Graphite server when sending metrics.
 
@@ -53,7 +53,7 @@ This library will only send metrics when it is running in production
 (`NODE_ENV=production`).
 
 If you don't want to send metrics from an app in production, you must explicitly
-set the value of `FT_GRAPHITE_APIKEY` to `false`.
+set the value of `FT_GRAPHITE_APIKEY` or `HOSTEDGRAPHITE_APIKEY` to `false`.
 
 _Note: Don't use the production FT Graphite API key on your `localhost` as you will fill up FT's internal Graphite server with your local data!_
 
@@ -65,6 +65,18 @@ The `Metrics.init` method takes the following options:
 * `platform` (optional, default: heroku) - `string` - Specify a custom platform name in the [Graphite key](#metrics)
 * `instance` (optional, default: dynamically generated string) - `string|boolean` - Specify a custom instance name in the [Graphite key](#metrics), or set to `false` to omit it
 * `useDefaultAggregators` (optional, default: true) - `boolean` - Set to `false` if you want to disable default aggregators
+
+### Checking configuration
+
+Configuration errors are logged using [`n-logger`](https://github.com/Financial-Times/n-logger).
+It depends on your app configuration, but in most cases, for an app running
+in production the logs will be sent to Splunk.
+
+The `Metrics` class exposes a `hasValidConfiguration` boolean property which
+you can use to determine if an instance of `Metrics` is correctly configured
+to talk to FT Graphite. You might find it useful to check this property
+after calling the `Metrics.init` method. See '[Custom use cases](#custom-use-cases)'
+for more information on the `Metrics` class.
 
 ### Custom use cases
 

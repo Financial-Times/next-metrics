@@ -45,10 +45,12 @@ describe('lib/metrics', () => {
 			};
 			originalEnv = {
 				FT_GRAPHITE_APIKEY: process.env.FT_GRAPHITE_APIKEY,
+				HOSTEDGRAPHITE_APIKEY: process.env.HOSTEDGRAPHITE_APIKEY,
 				NODE_ENV: process.env.NODE_ENV
 			};
 
 			delete process.env.FT_GRAPHITE_APIKEY;
+			delete process.env.HOSTEDGRAPHITE_APIKEY;
 
 			process.env.NODE_ENV = 'test';
 
@@ -57,6 +59,7 @@ describe('lib/metrics', () => {
 
 		afterEach(() => {
 			process.env.FT_GRAPHITE_APIKEY = originalEnv.FT_GRAPHITE_APIKEY;
+			process.env.HOSTEDGRAPHITE_APIKEY = originalEnv.HOSTEDGRAPHITE_APIKEY;
 			process.env.NODE_ENV = originalEnv.NODE_ENV;
 		});
 
@@ -81,17 +84,39 @@ describe('lib/metrics', () => {
 
 		});
 
+		describe('when the HOSTEDGRAPHITE_APIKEY environment variable is set and NODE_ENV is "production"', () => {
+
+			beforeEach(() => {
+				process.env.NODE_ENV = 'production';
+				process.env.HOSTEDGRAPHITE_APIKEY = 'mock-hosted-key-env';
+				instance.init(options);
+			});
+
+			it('a Graphite client should be instantiated with an options object', () => {
+				assert.calledOnce(Graphite);
+				assert.isObject(Graphite.firstCall.args[0]);
+			});
+			it('the Graphite API key should be passed to the Graphite client (opts.destination.key)', () => {
+				assert.equal(Graphite.firstCall.args[0].destination.key, 'mock-hosted-key-env');
+			});
+			it('metric logging should be enabled for the Graphite client (opts.noLog)', () => {
+				assert.isFalse(Graphite.firstCall.args[0].noLog);
+			});
+
+		});
+
 		describe('when the FT_GRAPHITE_APIKEY environment variable is empty and NODE_ENV is "production"', () => {
 
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
 				process.env.FT_GRAPHITE_APIKEY = '';
+				instance.init(options);
 			});
 
-			it('an error should be thrown', () => {
-				assert.throws(() => {
-					instance.init(options);
-				}, 'next-metrics: The environment variable FT_GRAPHITE_APIKEY must be explicitly set to \'false\' if you don\'t wish to send metrics to FT\'s internal Graphite');
+			it('an error message with the event NEXT_METRICS_INVALID_PRODUCTION_CONFIG should be logged', () => {
+				assert.calledOnce(nLogger.default.error);
+				assert.isObject(nLogger.default.error.firstCall.args[0]);
+				assert.equal(nLogger.default.error.firstCall.args[0].event, 'NEXT_METRICS_INVALID_PRODUCTION_CONFIG');
 			});
 
 		});
@@ -100,12 +125,13 @@ describe('lib/metrics', () => {
 
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
+				instance.init(options);
 			});
 
-			it('an error should be thrown', () => {
-				assert.throws(() => {
-					instance.init(options);
-				}, 'next-metrics: The environment variable FT_GRAPHITE_APIKEY must be explicitly set to \'false\' if you don\'t wish to send metrics to FT\'s internal Graphite');
+			it('an error message with the event NEXT_METRICS_INVALID_PRODUCTION_CONFIG should be logged', () => {
+				assert.calledOnce(nLogger.default.error);
+				assert.isObject(nLogger.default.error.firstCall.args[0]);
+				assert.equal(nLogger.default.error.firstCall.args[0].event, 'NEXT_METRICS_INVALID_PRODUCTION_CONFIG');
 			});
 
 		});
@@ -127,9 +153,10 @@ describe('lib/metrics', () => {
 			it('metric logging should be disabled for the Graphite client (opts.noLog)', () => {
 				assert.isTrue(Graphite.firstCall.args[0].noLog);
 			});
-			it('an info message should be logged that explains that metric logging is disabled', () => {
+			it('an info message with the event NEXT_METRICS_DISABLED should be logged', () => {
 				assert.calledOnce(nLogger.default.info);
-				assert.equal(nLogger.default.info.firstCall.args[0], 'next-metrics: FT_GRAPHITE_APIKEY is set to \'false\', metrics will not be sent to FT\'s internal Graphite');
+				assert.isObject(nLogger.default.info.firstCall.args[0]);
+				assert.equal(nLogger.default.info.firstCall.args[0].event, 'NEXT_METRICS_DISABLED');
 			});
 
 		});
