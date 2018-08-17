@@ -66,6 +66,18 @@ The `Metrics.init` method takes the following options:
 * `instance` (optional, default: dynamically generated string) - `string|boolean` - Specify a custom instance name in the [Graphite key](#metrics), or set to `false` to omit it
 * `useDefaultAggregators` (optional, default: true) - `boolean` - Set to `false` if you want to disable default aggregators
 
+### Checking configuration
+
+Configuration errors are logged using [`n-logger`](https://github.com/Financial-Times/n-logger).
+It depends on your app configuration, but in most cases, for an app running
+in production the logs will be sent to Splunk.
+
+The `Metrics` class exposes a `hasValidConfiguration` boolean property which
+you can use to determine if an instance of `Metrics` is correctly configured
+to talk to FT Graphite. You might find it useful to check this property
+after calling the `Metrics.init` method. See '[Custom use cases](#custom-use-cases)'
+for more information on the `Metrics` class.
+
 ### Custom use cases
 
 Typically you'll only want a single instance of the [`Metrics`](https://github.com/Financial-Times/next-metrics/blob/master/lib/metrics.js)

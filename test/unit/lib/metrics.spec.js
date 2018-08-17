@@ -110,12 +110,13 @@ describe('lib/metrics', () => {
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
 				process.env.FT_GRAPHITE_APIKEY = '';
+				instance.init(options);
 			});
 
-			it('an error should be thrown', () => {
-				assert.throws(() => {
-					instance.init(options);
-				}, 'next-metrics: The environment variable FT_GRAPHITE_APIKEY or HOSTEDGRAPHITE_APIKEY must be explicitly set to \'false\' if you don\'t wish to send metrics to FT\'s internal Graphite');
+			it('an error message with the event NEXT_METRICS_INVALID_PRODUCTION_CONFIG should be logged', () => {
+				assert.calledOnce(nLogger.default.error);
+				assert.isObject(nLogger.default.error.firstCall.args[0]);
+				assert.equal(nLogger.default.error.firstCall.args[0].event, 'NEXT_METRICS_INVALID_PRODUCTION_CONFIG');
 			});
 
 		});
@@ -124,12 +125,13 @@ describe('lib/metrics', () => {
 
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
+				instance.init(options);
 			});
 
-			it('an error should be thrown', () => {
-				assert.throws(() => {
-					instance.init(options);
-				}, 'next-metrics: The environment variable FT_GRAPHITE_APIKEY or HOSTEDGRAPHITE_APIKEY must be explicitly set to \'false\' if you don\'t wish to send metrics to FT\'s internal Graphite');
+			it('an error message with the event NEXT_METRICS_INVALID_PRODUCTION_CONFIG should be logged', () => {
+				assert.calledOnce(nLogger.default.error);
+				assert.isObject(nLogger.default.error.firstCall.args[0]);
+				assert.equal(nLogger.default.error.firstCall.args[0].event, 'NEXT_METRICS_INVALID_PRODUCTION_CONFIG');
 			});
 
 		});
@@ -151,9 +153,10 @@ describe('lib/metrics', () => {
 			it('metric logging should be disabled for the Graphite client (opts.noLog)', () => {
 				assert.isTrue(Graphite.firstCall.args[0].noLog);
 			});
-			it('an info message should be logged that explains that metric logging is disabled', () => {
+			it('an info message with the event NEXT_METRICS_DISABLED should be logged', () => {
 				assert.calledOnce(nLogger.default.info);
-				assert.equal(nLogger.default.info.firstCall.args[0], 'next-metrics: FT_GRAPHITE_APIKEY or HOSTEDGRAPHITE_APIKEY is set to \'false\', metrics will not be sent to FT\'s internal Graphite');
+				assert.isObject(nLogger.default.info.firstCall.args[0]);
+				assert.equal(nLogger.default.info.firstCall.args[0].event, 'NEXT_METRICS_DISABLED');
 			});
 
 		});
