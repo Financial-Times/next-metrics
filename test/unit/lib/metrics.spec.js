@@ -45,12 +45,10 @@ describe('lib/metrics', () => {
 			};
 			originalEnv = {
 				FT_GRAPHITE_APIKEY: process.env.FT_GRAPHITE_APIKEY,
-				HOSTEDGRAPHITE_APIKEY: process.env.HOSTEDGRAPHITE_APIKEY,
 				NODE_ENV: process.env.NODE_ENV
 			};
 
 			delete process.env.FT_GRAPHITE_APIKEY;
-			delete process.env.HOSTEDGRAPHITE_APIKEY;
 
 			process.env.NODE_ENV = 'test';
 
@@ -59,7 +57,6 @@ describe('lib/metrics', () => {
 
 		afterEach(() => {
 			process.env.FT_GRAPHITE_APIKEY = originalEnv.FT_GRAPHITE_APIKEY;
-			process.env.HOSTEDGRAPHITE_APIKEY = originalEnv.HOSTEDGRAPHITE_APIKEY;
 			process.env.NODE_ENV = originalEnv.NODE_ENV;
 		});
 
@@ -68,27 +65,6 @@ describe('lib/metrics', () => {
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
 				process.env.FT_GRAPHITE_APIKEY = 'mock-hosted-key-env';
-				instance.init(options);
-			});
-
-			it('a Graphite client should be instantiated with an options object', () => {
-				assert.calledOnce(Graphite);
-				assert.isObject(Graphite.firstCall.args[0]);
-			});
-			it('the Graphite API key should be passed to the Graphite client (opts.destination.key)', () => {
-				assert.equal(Graphite.firstCall.args[0].destination.key, 'mock-hosted-key-env');
-			});
-			it('metric logging should be enabled for the Graphite client (opts.noLog)', () => {
-				assert.isFalse(Graphite.firstCall.args[0].noLog);
-			});
-
-		});
-
-		describe('when the HOSTEDGRAPHITE_APIKEY environment variable is set and NODE_ENV is "production"', () => {
-
-			beforeEach(() => {
-				process.env.NODE_ENV = 'production';
-				process.env.HOSTEDGRAPHITE_APIKEY = 'mock-hosted-key-env';
 				instance.init(options);
 			});
 
