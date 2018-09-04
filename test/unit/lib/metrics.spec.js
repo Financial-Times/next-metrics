@@ -44,11 +44,11 @@ describe('lib/metrics', () => {
 				useDefaultAggregators: false
 			};
 			originalEnv = {
-				FT_GRAPHITE_APIKEY: process.env.FT_GRAPHITE_APIKEY,
+				FT_GRAPHITE_APP_UUID: process.env.FT_GRAPHITE_APP_UUID,
 				NODE_ENV: process.env.NODE_ENV
 			};
 
-			delete process.env.FT_GRAPHITE_APIKEY;
+			delete process.env.FT_GRAPHITE_APP_UUID;
 
 			process.env.NODE_ENV = 'test';
 
@@ -56,15 +56,15 @@ describe('lib/metrics', () => {
 		});
 
 		afterEach(() => {
-			process.env.FT_GRAPHITE_APIKEY = originalEnv.FT_GRAPHITE_APIKEY;
+			process.env.FT_GRAPHITE_APP_UUID = originalEnv.FT_GRAPHITE_APP_UUID;
 			process.env.NODE_ENV = originalEnv.NODE_ENV;
 		});
 
-		describe('when the FT_GRAPHITE_APIKEY environment variable is set and NODE_ENV is "production"', () => {
+		describe('when the FT_GRAPHITE_APP_UUID environment variable is set and NODE_ENV is "production"', () => {
 
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
-				process.env.FT_GRAPHITE_APIKEY = 'mock-hosted-key-env';
+				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
 				instance.init(options);
 			});
 
@@ -73,7 +73,7 @@ describe('lib/metrics', () => {
 				assert.isObject(Graphite.firstCall.args[0]);
 			});
 			it('the Graphite API key should be passed to the Graphite client (opts.destination.key)', () => {
-				assert.equal(Graphite.firstCall.args[0].destination.key, 'mock-hosted-key-env');
+				assert.equal(Graphite.firstCall.args[0].destination.key, 'mock-hosted-uuid-env');
 			});
 			it('metric logging should be enabled for the Graphite client (opts.noLog)', () => {
 				assert.isFalse(Graphite.firstCall.args[0].noLog);
@@ -81,11 +81,11 @@ describe('lib/metrics', () => {
 
 		});
 
-		describe('when the FT_GRAPHITE_APIKEY environment variable is empty and NODE_ENV is "production"', () => {
+		describe('when the FT_GRAPHITE_APP_UUID environment variable is empty and NODE_ENV is "production"', () => {
 
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
-				process.env.FT_GRAPHITE_APIKEY = '';
+				process.env.FT_GRAPHITE_APP_UUID = '';
 				instance.init(options);
 			});
 
@@ -97,7 +97,7 @@ describe('lib/metrics', () => {
 
 		});
 
-		describe('when the FT_GRAPHITE_APIKEY environment variable is not set and NODE_ENV is "production"', () => {
+		describe('when the FT_GRAPHITE_APP_UUID environment variable is not set and NODE_ENV is "production"', () => {
 
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
@@ -112,10 +112,10 @@ describe('lib/metrics', () => {
 
 		});
 
-		describe('when the FT_GRAPHITE_APIKEY environment variable is set to "false"', () => {
+		describe('when the FT_GRAPHITE_APP_UUID environment variable is set to "false"', () => {
 
 			beforeEach(() => {
-				process.env.FT_GRAPHITE_APIKEY = 'false';
+				process.env.FT_GRAPHITE_APP_UUID = 'false';
 				instance.init(options);
 			});
 
@@ -137,10 +137,10 @@ describe('lib/metrics', () => {
 
 		});
 
-		describe('when the FT_GRAPHITE_APIKEY environment variable is set in a non-production environment', () => {
+		describe('when the FT_GRAPHITE_APP_UUID environment variable is set in a non-production environment', () => {
 
 			beforeEach(() => {
-				process.env.FT_GRAPHITE_APIKEY = 'mock-hosted-key-env';
+				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
 				instance.init(options);
 			});
 
@@ -157,7 +157,7 @@ describe('lib/metrics', () => {
 
 		});
 
-		describe('when the FT_GRAPHITE_APIKEY environment variable is not set in a non-production environment', () => {
+		describe('when the FT_GRAPHITE_APP_UUID environment variable is not set in a non-production environment', () => {
 
 			beforeEach(() => {
 				instance.init(options);

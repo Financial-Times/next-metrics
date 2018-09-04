@@ -45,7 +45,7 @@ See the [example app](./examples/app.js) for more information.
 ### Configuration
 
 To use this libary you need to set an environment variable named
-`FT_GRAPHITE_APIKEY`. This library will automatically pick up that
+`FT_GRAPHITE_APP_UUID`. This library will automatically pick up that
 environment variable and use it to authenticate with FT's internal
 Graphite server when sending metrics.
 
@@ -53,7 +53,7 @@ This library will only send metrics when it is running in production
 (`NODE_ENV=production`).
 
 If you don't want to send metrics from an app in production, you must explicitly
-set the value of `FT_GRAPHITE_APIKEY` to `false`.
+set the value of `FT_GRAPHITE_APP_UUID` to `false`.
 
 _Note: Don't use the production FT Graphite API key on your `localhost` as you will fill up FT's internal Graphite server with your local data!_
 
@@ -116,7 +116,7 @@ const graphite = new GraphiteClient({
     destination: {
         port: 2003,
         host: 'some.host.com',
-        key: 'some-api-key'
+        key: 'some-app-specific-id'
     },
     prefix: 'some_prefix.',
     noLog: false,
