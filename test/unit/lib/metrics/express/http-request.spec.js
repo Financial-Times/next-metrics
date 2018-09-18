@@ -13,6 +13,4 @@ describe('lib/metrics/express/http-request', () => {
 		assert.isFunction(HttpRequest);
 	});
 
-	it('has tests');
-
 });
