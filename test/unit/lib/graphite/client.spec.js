@@ -12,7 +12,4 @@ describe('lib/graphite/client', () => {
 	it('exports a function', () => {
 		assert.isFunction(Graphite);
 	});
-
-	it('has tests');
-
 });

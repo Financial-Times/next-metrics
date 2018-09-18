@@ -22,7 +22,6 @@ describe('Http metrics', function () {
 		app = express();
 
 		app.use(function (req, res, next) {
-
 			metrics.instrument(req, { as: 'express.http.req' });
 			metrics.instrument(res, { as: 'express.http.res' });
 			next();
@@ -46,11 +45,12 @@ describe('Http metrics', function () {
 		app.get('/__health', (req, res) => {
 			res.sendStatus(200);
 		});
-		sinon.spy(metrics.graphite, 'log');
+
+		sinon.spy(metrics.graphites[0], 'log');
 	});
 
 	afterEach(function () {
-		metrics.graphite.log.restore();
+		metrics.graphites[0].log.restore();
 		clock.restore();
 	});
 
@@ -62,7 +62,7 @@ describe('Http metrics', function () {
 					.get('/200')
 					.end(() => {
 						clock.tick(100);
-						expect(metrics.graphite.log.args[0][0]['express.http.req.count']).to.equal(2);
+						expect(metrics.graphites[0].log.args[0][0]['express.http.req.count']).to.equal(2);
 						done();
 					});
 			});
@@ -82,13 +82,13 @@ describe('Http metrics', function () {
 									.post('/503')
 									.end(() => {
 										clock.tick(100);
-										expect(metrics.graphite.log.args[0][0]['express.default_route_GET.res.status.200.count']).to.equal(2);
-										expect(metrics.graphite.log.args[0][0]['express.default_route_PUT.res.status.404.count']).to.equal(1);
-										expect(metrics.graphite.log.args[0][0]['express.default_route_POST.res.status.503.count']).to.equal(1);
-										expect(metrics.graphite.log.args[0][0]['express.default_route_GET.res.status.200.time.mean']).to.equal(0);
-										expect(metrics.graphite.log.args[0][0]['express.default_route_PUT.res.status.404.time.mean']).to.equal(0);
-										expect(metrics.graphite.log.args[0][0]['express.default_route_POST.res.status.503.time.mean']).to.equal(0);
-										expect(metrics.graphite.log.args[0][0]['express.default_route_POST.res.status.503.time.95th']).to.equal(0);
+										expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.count']).to.equal(2);
+										expect(metrics.graphites[0].log.args[0][0]['express.default_route_PUT.res.status.404.count']).to.equal(1);
+										expect(metrics.graphites[0].log.args[0][0]['express.default_route_POST.res.status.503.count']).to.equal(1);
+										expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.time.mean']).to.equal(0);
+										expect(metrics.graphites[0].log.args[0][0]['express.default_route_PUT.res.status.404.time.mean']).to.equal(0);
+										expect(metrics.graphites[0].log.args[0][0]['express.default_route_POST.res.status.503.time.mean']).to.equal(0);
+										expect(metrics.graphites[0].log.args[0][0]['express.default_route_POST.res.status.503.time.95th']).to.equal(0);
 										done();
 									});
 							});
@@ -101,12 +101,12 @@ describe('Http metrics', function () {
 			.get('/__health')
 			.end(() => {
 					clock.tick(100);
-					expect(metrics.graphite.log.args[0][0]['express.http.req.count']).to.equal(0);
-					expect(metrics.graphite.log.args[0][0]['express.http.req.dev.count']).to.equal(1);
-					expect(metrics.graphite.log.args[0][0]['express.default_route_GET.res.status.200.count']).not.to.exist;
-					expect(metrics.graphite.log.args[0][0]['express.default_route_GET.res.status.200.time.mean']).not.to.exist;
-					expect(metrics.graphite.log.args[0][0]['express.dev.res.status.200.count']).to.equal(1);
-					expect(metrics.graphite.log.args[0][0]['express.dev.res.status.200.time.mean']).to.equal(0);
+					expect(metrics.graphites[0].log.args[0][0]['express.http.req.count']).to.equal(0);
+					expect(metrics.graphites[0].log.args[0][0]['express.http.req.dev.count']).to.equal(1);
+					expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.count']).not.to.exist;
+					expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.time.mean']).not.to.exist;
+					expect(metrics.graphites[0].log.args[0][0]['express.dev.res.status.200.count']).to.equal(1);
+					expect(metrics.graphites[0].log.args[0][0]['express.dev.res.status.200.time.mean']).to.equal(0);
 					done();
 			});
 	});
@@ -116,10 +116,10 @@ describe('Http metrics', function () {
 			.get('/200?name=highway_61')
 			.end(() => {
 					clock.tick(100);
-					expect(metrics.graphite.log.args[0][0]['express.highway_61_GET.res.status.200.count']).to.equal(1);
-					expect(metrics.graphite.log.args[0][0]['express.highway_61_GET.res.status.200.time.mean']).to.exist;
-					expect(metrics.graphite.log.args[0][0]['express.default_route_GET.res.status.200.count']).to.not.exist;
-					expect(metrics.graphite.log.args[0][0]['express.default_route_GET.res.status.200.time.mean']).not.to.exist;
+					expect(metrics.graphites[0].log.args[0][0]['express.highway_61_GET.res.status.200.count']).to.equal(1);
+					expect(metrics.graphites[0].log.args[0][0]['express.highway_61_GET.res.status.200.time.mean']).to.exist;
+					expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.count']).to.not.exist;
+					expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.time.mean']).not.to.exist;
 					done();
 			});
 	});
