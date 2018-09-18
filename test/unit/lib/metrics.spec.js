@@ -48,12 +48,12 @@ describe('lib/metrics', () => {
 
 			originalEnv = {
 				FT_GRAPHITE_APP_UUID: process.env.FT_GRAPHITE_APP_UUID,
-				FT_GRAPHITE_APIKEY: process.env.FT_GRAPHITE_APIKEY,
+				HOSTEDGRAPHITE_APIKEY: process.env.HOSTEDGRAPHITE_APIKEY,
 				NODE_ENV: process.env.NODE_ENV
 			};
 
 			delete process.env.FT_GRAPHITE_APP_UUID;
-			delete process.env.FT_GRAPHITE_APIKEY;
+			delete process.env.HOSTEDGRAPHITE_APIKEY;
 
 			process.env.NODE_ENV = 'test';
 			process.env.DYNO = 'web.1';
@@ -65,7 +65,7 @@ describe('lib/metrics', () => {
 
 		afterEach(() => {
 			process.env.FT_GRAPHITE_APP_UUID = originalEnv.FT_GRAPHITE_APP_UUID;
-			process.env.FT_GRAPHITE_APIKEY = originalEnv.FT_GRAPHITE_APIKEY;
+			process.env.HOSTEDGRAPHITE_APIKEY = originalEnv.HOSTEDGRAPHITE_APIKEY;
 			process.env.NODE_ENV = originalEnv.NODE_ENV;
 		});
 
@@ -100,12 +100,12 @@ describe('lib/metrics', () => {
 
 		});
 
-		describe('when the FT_GRAPHITE_APP_UUID and FT_GRAPHITE_APIKEY environment variable is set and NODE_ENV is "production"', () => {
+		describe('when the FT_GRAPHITE_APP_UUID and HOSTEDGRAPHITE_APIKEY environment variable is set and NODE_ENV is "production"', () => {
 
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
 				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
-				process.env.FT_GRAPHITE_APIKEY = 'mock-hosted-apikey-env';
+				process.env.HOSTEDGRAPHITE_APIKEY = 'mock-hosted-apikey-env';
 				instance.init(options);
 			});
 
