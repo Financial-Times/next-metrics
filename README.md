@@ -59,7 +59,7 @@ _Note: Don't use the production FT Graphite API key on your `localhost` as you w
 
 The `Metrics.init` method takes the following options:
 
-* `app` (required) - `string` - Application name e.g. router
+* [DEPRECATED] `app` (required) - `string` - Application name e.g. router
 * `flushEvery` (required) - `integer|boolean` - Specify how frequently you want metrics pushed to Graphite, or `false` if you want to do it manually with `.flush()`
 * `forceGraphiteLogging` (optional) - `boolean` - Set to `true` if you want to log metrics to Graphite from code running in a non-production environment (when `NODE_ENV != production`)
 * `platform` (optional, default: heroku) - `string` - Specify a custom platform name in the [Graphite key](#metrics)
@@ -156,14 +156,14 @@ argument specifies what type of object it is.
 Data is logged in the form of Graphite keys (dots denote hierarchy):
 
 ```
-<platform>.<application>.<instance>.<metric>   <value>
+<team>.<platform>.<application>.<instance>.<metric>   <value>
 ```
 
 e.g.
 
 ```
-heroku.ads-api.web_1_process_cluster_worker_1_EU.express.concept_GET.res.status.200.time.sum 325.6
-heroku.ads-api.web_1_process_cluster_worker_1_EU.system.process.mem_process_heapUsed 16213144
+next.heroku.ads-api.web_1_process_cluster_worker_1_EU.express.concept_GET.res.status.200.time.sum 325.6
+next.heroku.ads-api.web_1_process_cluster_worker_1_EU.system.process.mem_process_heapUsed 16213144
 ```
 
 You can view data in [Graphite](http://graphite.ft.com/), or in a more user-friendly UI through [Grafana](http://grafana.ft.com).
