@@ -24,14 +24,14 @@ verify-coverage:
 # Test tasks
 # ----------
 
-test: verify test-unit-coverage verify-coverage
+test: verify unit-test-coverage verify-coverage
 	@$(DONE)
 
-test-unit:
+unit-test:
 	@NODE_ENV=test mocha test/unit --recursive
 	@$(DONE)
 
-test-unit-coverage:
+unit-test-coverage:
 	@NODE_ENV=test nyc --reporter=text --reporter=html node_modules/.bin/_mocha test/unit --recursive
 	@$(DONE)
 
