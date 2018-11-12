@@ -59,12 +59,12 @@ _Note: Don't use the production FT Graphite API key on your `localhost` as you w
 
 The `Metrics.init` method takes the following options:
 
-* [DEPRECATED] `app` (required) - `string` - Application name e.g. router
 * `flushEvery` (required) - `integer|boolean` - Specify how frequently you want metrics pushed to Graphite, or `false` if you want to do it manually with `.flush()`
 * `forceGraphiteLogging` (optional) - `boolean` - Set to `true` if you want to log metrics to Graphite from code running in a non-production environment (when `NODE_ENV != production`)
-* `platform` (optional, default: heroku) - `string` - Specify a custom platform name in the [Graphite key](#metrics)
 * `instance` (optional, default: dynamically generated string) - `string|boolean` - Specify a custom instance name in the [Graphite key](#metrics), or set to `false` to omit it
 * `useDefaultAggregators` (optional, default: true) - `boolean` - Set to `false` if you want to disable default aggregators
+* [DEPRECATED] `app` (required) - `string` - Application name e.g. router
+* [DEPRECATED] `platform` (optional, default: heroku) - `string` - Specify a custom platform name in the [Graphite key](#metrics)
 
 ### Checking configuration
 

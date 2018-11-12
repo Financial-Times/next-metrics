@@ -40,9 +40,7 @@ describe('lib/metrics', () => {
 
 		beforeEach(() => {
 			options = {
-				app: 'front-page',
 				useDefaultAggregators: false,
-				platform: 'heroku',
 				instance: 'web_1_process_cluster_worker_1_EU',
 			};
 
@@ -188,6 +186,38 @@ describe('lib/metrics', () => {
 			});
 			it('metric logging should be disabled for the Graphite client (opts.noLog)', () => {
 				assert.isTrue(Graphite.firstCall.args[0].noLog);
+			});
+
+		});
+
+		describe('when `app` option is passed to Metrics#init', () => {
+
+			beforeEach(() => {
+				process.env.NODE_ENV = 'production';
+				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
+				instance.init({ ...options, app: 'front-page' });
+			});
+
+			it('a warn message with the event NEXT_METRICS_DEPRECATED_OPTION_APP should be logged', () => {
+				assert.calledOnce(nLogger.default.warn);
+				assert.isObject(nLogger.default.warn.firstCall.args[0]);
+				assert.equal(nLogger.default.warn.firstCall.args[0].event, 'NEXT_METRICS_DEPRECATED_OPTION_APP');
+			});
+
+		});
+
+		describe('when `platform` option is passed to Metrics#init', () => {
+
+			beforeEach(() => {
+				process.env.NODE_ENV = 'production';
+				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
+				instance.init({ ...options, platform: 'heroku' });
+			});
+
+			it('a warn message with the event NEXT_METRICS_DEPRECATED_OPTION_PLATFORM should be logged', () => {
+				assert.calledOnce(nLogger.default.warn);
+				assert.isObject(nLogger.default.warn.firstCall.args[0]);
+				assert.equal(nLogger.default.warn.firstCall.args[0].event, 'NEXT_METRICS_DEPRECATED_OPTION_PLATFORM');
 			});
 
 		});
