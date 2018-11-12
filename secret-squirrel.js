@@ -1,14 +1,12 @@
 module.exports = {
 	files: {
-		allow: [
-			'TODO'
-		],
+		allow: [],
 		allowOverrides: []
 	},
 	strings: {
 		deny: [],
 		denyOverrides: [
-			'd3fe0b06-9e43-11e3-b429-00144feab7de' // README.md:96|97|98
+			'63134cae-192b-42be-90b8-c56724a3972d' // lib/metrics.js:74
 		]
 	}
 };

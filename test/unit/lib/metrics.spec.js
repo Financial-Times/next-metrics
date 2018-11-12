@@ -81,12 +81,8 @@ describe('lib/metrics', () => {
 				assert.equal(Graphite.firstCall.args[0].destination.host, 'graphitev2.ft.com');
 			});
 
-			it('the Graphite API key should be passed to the Graphite client (opts.destination.key)', () => {
-				assert.equal(Graphite.firstCall.args[0].destination.key, 'mock-hosted-uuid-env');
-			});
-
 			it('the correct prefix should be passed to the Graphite client (opts.prefix)', () => {
-				assert.equal(Graphite.firstCall.args[0].prefix, '.web_1_process_cluster_worker_1_EU.');
+				assert.equal(Graphite.firstCall.args[0].prefix, 'mock-hosted-uuid-env.web_1_process_cluster_worker_1_EU.');
 			});
 
 			it('metric logging should be enabled for the Graphite client (opts.noLog)', () => {
