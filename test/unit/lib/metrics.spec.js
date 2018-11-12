@@ -48,12 +48,10 @@ describe('lib/metrics', () => {
 
 			originalEnv = {
 				FT_GRAPHITE_APP_UUID: process.env.FT_GRAPHITE_APP_UUID,
-				HOSTEDGRAPHITE_APIKEY: process.env.HOSTEDGRAPHITE_APIKEY,
 				NODE_ENV: process.env.NODE_ENV
 			};
 
 			delete process.env.FT_GRAPHITE_APP_UUID;
-			delete process.env.HOSTEDGRAPHITE_APIKEY;
 
 			process.env.NODE_ENV = 'test';
 			process.env.DYNO = 'web.1';
@@ -65,7 +63,6 @@ describe('lib/metrics', () => {
 
 		afterEach(() => {
 			process.env.FT_GRAPHITE_APP_UUID = originalEnv.FT_GRAPHITE_APP_UUID;
-			process.env.HOSTEDGRAPHITE_APIKEY = originalEnv.HOSTEDGRAPHITE_APIKEY;
 			process.env.NODE_ENV = originalEnv.NODE_ENV;
 		});
 
@@ -96,43 +93,6 @@ describe('lib/metrics', () => {
 
 			it('metric logging should be enabled for the Graphite client (opts.noLog)', () => {
 				assert.isFalse(Graphite.firstCall.args[0].noLog);
-			});
-
-		});
-
-		describe('when the FT_GRAPHITE_APP_UUID and HOSTEDGRAPHITE_APIKEY environment variable is set and NODE_ENV is "production"', () => {
-
-			beforeEach(() => {
-				process.env.NODE_ENV = 'production';
-				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
-				process.env.HOSTEDGRAPHITE_APIKEY = 'mock-hosted-apikey-env';
-				instance.init(options);
-			});
-
-			it('two Graphite clients should be instantiated', () => {
-				assert.calledTwice(Graphite);
-				assert.isObject(Graphite.firstCall.args[0]);
-				assert.isObject(Graphite.secondCall.args[0]);
-			});
-
-			it('the Graphite hosts should be passed to the Graphite clients correctly', () => {
-				assert.equal(Graphite.firstCall.args[0].destination.host, 'graphitev2.ft.com');
-				assert.equal(Graphite.secondCall.args[0].destination.host, 'graphite.ft.com');
-			});
-
-			it('the correct prefixes should be passed to the Graphite clients (opts.prefix)', () => {
-				assert.equal(Graphite.firstCall.args[0].prefix, '.web_1_process_cluster_worker_1_EU.');
-				assert.equal(Graphite.secondCall.args[0].prefix, '.heroku.front-page.web_1_process_cluster_worker_1_EU.');
-			});
-
-			it('the Graphite API keys should be passed to the Graphite clients (opts.destination.key)', () => {
-				assert.equal(Graphite.firstCall.args[0].destination.key, 'mock-hosted-uuid-env');
-				assert.equal(Graphite.secondCall.args[0].destination.key, 'mock-hosted-apikey-env');
-			});
-
-			it('metric logging should be enabled for the Graphite clients (opts.noLog)', () => {
-				assert.isFalse(Graphite.firstCall.args[0].noLog);
-				assert.isFalse(Graphite.secondCall.args[0].noLog);
 			});
 
 		});
