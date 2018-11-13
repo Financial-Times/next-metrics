@@ -35,8 +35,7 @@ describe('Logging to graphite', function () {
 		const g = new Graphite({
 			destination: {
 				port: 2003,
-				host: 'test.host.com',
-				key: 'k.'
+				host: 'test.host.com'
 			},
 			prefix: 'p.',
 			noLog: false

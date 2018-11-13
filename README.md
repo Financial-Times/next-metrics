@@ -115,8 +115,7 @@ const { GraphiteClient } = require('next-metrics');
 const graphite = new GraphiteClient({
     destination: {
         port: 2003,
-        host: 'some.host.com',
-        key: 'some-app-specific-id'
+        host: 'some.host.com'
     },
     prefix: 'some_prefix.',
     noLog: false,
