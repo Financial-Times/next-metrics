@@ -24,14 +24,14 @@ verify-coverage:
 # Test tasks
 # ----------
 
-test: verify test-unit-coverage verify-coverage
+test: verify unit-test-coverage verify-coverage
 	@$(DONE)
 
-test-unit:
-	@NODE_ENV=test mocha test/unit --recursive
+unit-test:
+	@NODE_ENV=test mocha test/unit --recursive || echo "NOTE: Unit tests must be run under Node v6.x due to mitm dev dependency (TODO: Fix this - see README for more details)"
 	@$(DONE)
 
-test-unit-coverage:
+unit-test-coverage:
 	@NODE_ENV=test nyc --reporter=text --reporter=html node_modules/.bin/_mocha test/unit --recursive
 	@$(DONE)
 

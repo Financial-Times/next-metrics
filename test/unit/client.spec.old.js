@@ -28,15 +28,14 @@ describe('Logging to graphite', function () {
 	it('Send metrics to Graphite', function (done) {
 		this.mitm.on('connection', function (socket) {
 			socket.on('data', function (d) {
-				expect(d.toString('utf-8')).to.equal('k.p.a 1 1434399121\nk.p.b 2 1434399121\n');
+				expect(d.toString('utf-8')).to.equal('p.a 1 1434399121\np.b 2 1434399121\n');
 				done();
 			});
 		});
 		const g = new Graphite({
 			destination: {
 				port: 2003,
-				host: 'test.host.com',
-				key: 'k.'
+				host: 'test.host.com'
 			},
 			prefix: 'p.',
 			noLog: false

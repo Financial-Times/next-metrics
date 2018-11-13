@@ -18,7 +18,7 @@ describe('Http metrics', function () {
 	beforeEach(function () {
 		clock = sinon.useFakeTimers();
 		metrics = new Metrics();
-		metrics.init({ app: 'test', flushEvery: 100 });
+		metrics.init({ flushEvery: 100 });
 		app = express();
 
 		app.use(function (req, res, next) {

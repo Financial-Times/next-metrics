@@ -59,12 +59,12 @@ _Note: Don't use the production FT Graphite API key on your `localhost` as you w
 
 The `Metrics.init` method takes the following options:
 
-* `app` (required) - `string` - Application name e.g. router
 * `flushEvery` (required) - `integer|boolean` - Specify how frequently you want metrics pushed to Graphite, or `false` if you want to do it manually with `.flush()`
 * `forceGraphiteLogging` (optional) - `boolean` - Set to `true` if you want to log metrics to Graphite from code running in a non-production environment (when `NODE_ENV != production`)
-* `platform` (optional, default: heroku) - `string` - Specify a custom platform name in the [Graphite key](#metrics)
 * `instance` (optional, default: dynamically generated string) - `string|boolean` - Specify a custom instance name in the [Graphite key](#metrics), or set to `false` to omit it
 * `useDefaultAggregators` (optional, default: true) - `boolean` - Set to `false` if you want to disable default aggregators
+* [DEPRECATED] `app` (required) - `string` - Application name e.g. router
+* [DEPRECATED] `platform` (optional, default: heroku) - `string` - Specify a custom platform name in the [Graphite key](#metrics)
 
 ### Checking configuration
 
@@ -115,8 +115,7 @@ const { GraphiteClient } = require('next-metrics');
 const graphite = new GraphiteClient({
     destination: {
         port: 2003,
-        host: 'some.host.com',
-        key: 'some-app-specific-id'
+        host: 'some.host.com'
     },
     prefix: 'some_prefix.',
     noLog: false,
@@ -151,19 +150,27 @@ metrics.instrument(res, { as: 'express.http.res' });
 The first argument is the object you want to instrument, and the second
 argument specifies what type of object it is.
 
+## Note about unit tests and Node v6.x
+
+The unit tests must be run under Node v6.x.x due to the dev dependency of
+`mitm@1.2.0` which doesn't work on newer versions of Node. The unit tests that
+depend on `mitm` need rewriting if we want to use a newer version of `mitm`.
+
+Related `next-metrics` issue: [mitm pinned to 1.2.0 due to failing tests (#111)](https://github.com/Financial-Times/next-metrics/issues/111)
+
 ## Metrics
 
 Data is logged in the form of Graphite keys (dots denote hierarchy):
 
 ```
-<platform>.<application>.<instance>.<metric>   <value>
+<team>.<platform>.<application>.<instance>.<metric>   <value>
 ```
 
 e.g.
 
 ```
-heroku.ads-api.web_1_process_cluster_worker_1_EU.express.concept_GET.res.status.200.time.sum 325.6
-heroku.ads-api.web_1_process_cluster_worker_1_EU.system.process.mem_process_heapUsed 16213144
+next.heroku.ads-api.web_1_process_cluster_worker_1_EU.express.concept_GET.res.status.200.time.sum 325.6
+next.heroku.ads-api.web_1_process_cluster_worker_1_EU.system.process.mem_process_heapUsed 16213144
 ```
 
 You can view data in [Graphite](http://graphite.ft.com/), or in a more user-friendly UI through [Grafana](http://grafana.ft.com).
