@@ -191,7 +191,7 @@ describe('lib/metrics', () => {
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
 				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
-				instance.init({ ...options, app: 'front-page' });
+				instance.init(Object.assign({}, options, { app: 'front-page' }));
 			});
 
 			it('a warn message with the event NEXT_METRICS_DEPRECATED_OPTION_APP should be logged', () => {
@@ -207,7 +207,7 @@ describe('lib/metrics', () => {
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
 				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
-				instance.init({ ...options, platform: 'heroku' });
+				instance.init(Object.assign({}, options, { platform: 'heroku' }));
 			});
 
 			it('a warn message with the event NEXT_METRICS_DEPRECATED_OPTION_PLATFORM should be logged', () => {
