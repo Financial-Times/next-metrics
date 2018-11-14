@@ -50,6 +50,7 @@ describe('lib/metrics', () => {
 			};
 
 			delete process.env.FT_GRAPHITE_APP_UUID;
+			delete process.env.HOSTEDGRAPHITE_APIKEY;
 
 			process.env.NODE_ENV = 'test';
 			process.env.DYNO = 'web.1';
@@ -68,7 +69,7 @@ describe('lib/metrics', () => {
 
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
-				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
+				process.env.FT_GRAPHITE_APP_UUID = 'mock-graphite-app-uuid';
 				instance.init(options);
 			});
 
@@ -82,7 +83,7 @@ describe('lib/metrics', () => {
 			});
 
 			it('the correct prefix should be passed to the Graphite client (opts.prefix)', () => {
-				assert.equal(Graphite.firstCall.args[0].prefix, 'mock-hosted-uuid-env.web_1_process_cluster_worker_1_EU.');
+				assert.equal(Graphite.firstCall.args[0].prefix, 'mock-graphite-app-uuid.web_1_process_cluster_worker_1_EU.');
 			});
 
 			it('metric logging should be enabled for the Graphite client (opts.noLog)', () => {
@@ -150,7 +151,7 @@ describe('lib/metrics', () => {
 		describe('when the FT_GRAPHITE_APP_UUID environment variable is set in a non-production environment', () => {
 
 			beforeEach(() => {
-				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
+				process.env.FT_GRAPHITE_APP_UUID = 'mock-graphite-app-uuid';
 				instance.init(options);
 			});
 
@@ -190,7 +191,7 @@ describe('lib/metrics', () => {
 
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
-				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
+				process.env.FT_GRAPHITE_APP_UUID = 'mock-graphite-app-uuid';
 				instance.init(Object.assign({}, options, { app: 'front-page' }));
 			});
 
@@ -206,7 +207,7 @@ describe('lib/metrics', () => {
 
 			beforeEach(() => {
 				process.env.NODE_ENV = 'production';
-				process.env.FT_GRAPHITE_APP_UUID = 'mock-hosted-uuid-env';
+				process.env.FT_GRAPHITE_APP_UUID = 'mock-graphite-app-uuid';
 				instance.init(Object.assign({}, options, { platform: 'heroku' }));
 			});
 
@@ -214,6 +215,23 @@ describe('lib/metrics', () => {
 				assert.calledOnce(nLogger.default.warn);
 				assert.isObject(nLogger.default.warn.firstCall.args[0]);
 				assert.equal(nLogger.default.warn.firstCall.args[0].event, 'NEXT_METRICS_DEPRECATED_OPTION_PLATFORM');
+			});
+
+		});
+
+		describe('when `HOSTEDGRAPHITE_APIKEY` environment variable is set', () => {
+
+			beforeEach(() => {
+				process.env.NODE_ENV = 'production';
+				process.env.FT_GRAPHITE_APP_UUID = 'mock-graphite-app-uuid';
+				process.env.HOSTEDGRAPHITE_APIKEY = 'mock-hostedgraphite-apikey';
+				instance.init(options);
+			});
+
+			it('a warn message with the event NEXT_METRICS_DEPRECATED_ENV_VAR_HOSTEDGRAPHITE_APIKEY should be logged', () => {
+				assert.calledOnce(nLogger.default.warn);
+				assert.isObject(nLogger.default.warn.firstCall.args[0]);
+				assert.equal(nLogger.default.warn.firstCall.args[0].event, 'NEXT_METRICS_DEPRECATED_ENV_VAR_HOSTEDGRAPHITE_APIKEY');
 			});
 
 		});
