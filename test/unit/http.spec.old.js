@@ -1,5 +1,5 @@
 'use strict';
-/*global describe, it, before, after, beforeEach, afterEach*/
+/*global describe, it, beforeEach, afterEach*/
 
 // TODO this should be moved to use the newer test format.
 // See files in test/unit
