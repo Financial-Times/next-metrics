@@ -148,6 +148,16 @@ describe('lib/metrics', () => {
 
 		});
 
+		describe('when init method runs', () => {
+			it('a warn message with the event NEXT_METRICS_ALREADY_CONFIGURED should be logged', () => {
+				instance.init(Object.assign({}, options));
+				instance.init(Object.assign({}, options));
+				assert.calledOnce(nLogger.default.warn);
+				assert.isObject(nLogger.default.warn.firstCall.args[0]);
+				assert.equal(nLogger.default.warn.firstCall.args[0].event, 'NEXT_METRICS_ALREADY_CONFIGURED');
+			});
+		});
+
 		describe('when the FT_GRAPHITE_APP_UUID environment variable is set in a non-production environment', () => {
 
 			beforeEach(() => {
