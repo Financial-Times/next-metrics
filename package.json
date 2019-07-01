@@ -22,6 +22,7 @@
     "nyc": "^12.0.2",
     "sinon": "^6.1.4",
     "sinon-chai": "^3.2.0",
+    "snyk": "^1.168.0",
     "supertest": "^3.1.0",
     "swig": "^1.4.2"
   },
@@ -31,6 +32,7 @@
   "scripts": {
     "precommit": "node_modules/.bin/secret-squirrel",
     "commitmsg": "node_modules/.bin/secret-squirrel-commitmsg",
-    "prepush": "make verify -j3"
+    "prepush": "make verify -j3",
+    "prepare": "npx snyk protect || npx snyk protect -d || true"
   }
 }
