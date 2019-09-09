@@ -14,7 +14,7 @@
     "express": "^4.13.3",
     "ft-api-client": "https://github.com/Financial-Times/ft-api-client/archive/emit-events.tar.gz",
     "lintspaces-cli": "^0.6.1",
-    "mitm": "1.2.0",
+    "mitm": "1.7.0",
     "mocha": "^5.2.0",
     "mockery": "^2.0.0",
     "nock": "^9.4.3",
