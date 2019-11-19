@@ -215,7 +215,9 @@ describe('lib/metrics/system/process', () => {
 					heapTotal: 456,
 					heapUsed: 789
 				};
-				sinon.stub(global, 'setInterval');
+				sinon.stub(global, 'setInterval').returns({
+					unref: sinon.stub()
+				});
 				sinon.stub(process, 'hrtime');
 				sinon.stub(process, 'memoryUsage').returns(mockMemoryUsage);
 				sinon.stub(process, 'nextTick');
