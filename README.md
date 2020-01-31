@@ -173,4 +173,4 @@ next.heroku.ads-api.web_1_process_cluster_worker_1_EU.express.concept_GET.res.st
 next.heroku.ads-api.web_1_process_cluster_worker_1_EU.system.process.mem_process_heapUsed 16213144
 ```
 
-You can view data in [Graphite](http://graphite.ft.com/), or in a more user-friendly UI through [Grafana](http://grafana.ft.com).
+You can view data in [Graphite](http://graphitev2-api.ft.com/), or in a more user-friendly UI through [Grafana](http://grafana.ft.com).
