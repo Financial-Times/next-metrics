@@ -2,6 +2,8 @@
 
 A library for sending metrics to Graphite, that also provides drop in instrumentation for standard parts of Next applications e.g. [Express](https://expressjs.com/).
 
+> ℹ️ this repo is one of the oldest in FT.com, and so it doesn't follow our current [naming conventions](https://github.com/financial-times/next/wiki/Naming-Conventions#bower-and-npm-modules); because it's a library, not an app, it _should_ be called `n-metrics`. unfortunately, it's used in [way too many places](https://github.com/search?q=org%3AFinancial-Times+%22next-metrics%22&type=Code) to easily rename.
+
 ## Usage
 
 ### Getting started
