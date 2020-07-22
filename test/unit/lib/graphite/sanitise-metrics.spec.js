@@ -5,8 +5,7 @@ const sanitiseMetrics = require('../../../../lib/graphite/sanitise-metrics');
 const mockery = require('mockery');
 const sinon = require('sinon');
 
-// DONOT COMMIT with .only
-describe.only('lib/graphite/sanitise-metrics', () => {
+describe('lib/graphite/sanitise-metrics', () => {
 
     let nLogger;
     let clock;
@@ -49,7 +48,7 @@ describe.only('lib/graphite/sanitise-metrics', () => {
         });
         assert.equal(data.length, 1)
     });
-    it('replace spaces in metric names with underscores', () => {
+    it('replace a space in metric names with underscore', () => {
         const metrics = {'metric 1': 123};
         const data = sanitiseMetrics({
             metrics_prefix,
