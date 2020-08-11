@@ -12,7 +12,7 @@ describe('lib/graphite/sanitise-metrics', () => {
 
     beforeEach(() => {
         // hardcoding the date to Epoch timestamp: 1434399121 for testing metrics inputs
-		clock = sinon.useFakeTimers(new Date('Mon, 15 Jun 2015 20:12:01 UTC').getTime());
+        clock = sinon.useFakeTimers(new Date('Mon, 15 Jun 2015 20:12:01 UTC').getTime());
 
         nLogger = require('../../mock/n-logger.mock');
         mockery.registerMock('@financial-times/n-logger', nLogger);
