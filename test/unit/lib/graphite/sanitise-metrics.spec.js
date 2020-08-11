@@ -40,7 +40,7 @@ describe('lib/graphite/sanitise-metrics', () => {
         assert.equal(data[0],'UUID.appname.metric1 123 1434399121');
         assert.equal(data[1], 'UUID.appname.metric2 23 1434399121');
     });
-    it('strip out retrics with NaN values', () => {
+    it('strip out metrics with NaN values', () => {
         const metrics = {'metric1': 123, 'metric2': NaN};
         const data = sanitiseMetrics({
             metrics_prefix,
