@@ -152,14 +152,6 @@ metrics.instrument(res, { as: 'express.http.res' });
 The first argument is the object you want to instrument, and the second
 argument specifies what type of object it is.
 
-## Note about unit tests and Node v6.x
-
-The unit tests must be run under Node v6.x.x due to the dev dependency of
-`mitm@1.2.0` which doesn't work on newer versions of Node. The unit tests that
-depend on `mitm` need rewriting if we want to use a newer version of `mitm`.
-
-Related `next-metrics` issue: [mitm pinned to 1.2.0 due to failing tests (#111)](https://github.com/Financial-Times/next-metrics/issues/111)
-
 ## Metrics
 
 Data is logged in the form of Graphite keys (dots denote hierarchy):
