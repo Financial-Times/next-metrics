@@ -100,14 +100,14 @@ describe('Http metrics', function () {
 		request(app)
 			.get('/__health')
 			.end(() => {
-					clock.tick(100);
-					expect(metrics.graphites[0].log.args[0][0]['express.http.req.count']).to.equal(0);
-					expect(metrics.graphites[0].log.args[0][0]['express.http.req.dev.count']).to.equal(1);
-					expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.count']).not.to.exist;
-					expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.time.mean']).not.to.exist;
-					expect(metrics.graphites[0].log.args[0][0]['express.dev.res.status.200.count']).to.equal(1);
-					expect(metrics.graphites[0].log.args[0][0]['express.dev.res.status.200.time.mean']).to.equal(0);
-					done();
+				clock.tick(100);
+				expect(metrics.graphites[0].log.args[0][0]['express.http.req.count']).to.equal(0);
+				expect(metrics.graphites[0].log.args[0][0]['express.http.req.dev.count']).to.equal(1);
+				expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.count']).not.to.exist;
+				expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.time.mean']).not.to.exist;
+				expect(metrics.graphites[0].log.args[0][0]['express.dev.res.status.200.count']).to.equal(1);
+				expect(metrics.graphites[0].log.args[0][0]['express.dev.res.status.200.time.mean']).to.equal(0);
+				done();
 			});
 	});
 
@@ -115,12 +115,12 @@ describe('Http metrics', function () {
 		request(app)
 			.get('/200?name=highway_61')
 			.end(() => {
-					clock.tick(100);
-					expect(metrics.graphites[0].log.args[0][0]['express.highway_61_GET.res.status.200.count']).to.equal(1);
-					expect(metrics.graphites[0].log.args[0][0]['express.highway_61_GET.res.status.200.time.mean']).to.exist;
-					expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.count']).to.not.exist;
-					expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.time.mean']).not.to.exist;
-					done();
+				clock.tick(100);
+				expect(metrics.graphites[0].log.args[0][0]['express.highway_61_GET.res.status.200.count']).to.equal(1);
+				expect(metrics.graphites[0].log.args[0][0]['express.highway_61_GET.res.status.200.time.mean']).to.exist;
+				expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.count']).to.not.exist;
+				expect(metrics.graphites[0].log.args[0][0]['express.default_route_GET.res.status.200.time.mean']).not.to.exist;
+				done();
 			});
 	});
 
