@@ -28,11 +28,11 @@ test: verify unit-test-coverage verify-coverage
 	@$(DONE)
 
 unit-test:
-	@NODE_ENV=test mocha test/unit --recursive || echo "NOTE: Unit tests must be run under Node v6.x due to mitm dev dependency (TODO: Fix this - see README for more details)"
+	@NODE_ENV=test node_modules/.bin/mocha test/unit --recursive || echo "NOTE: Unit tests must be run under Node v6.x due to mitm dev dependency (TODO: Fix this - see README for more details)"
 	@$(DONE)
 
 unit-test-coverage:
-	@NODE_ENV=test nyc --reporter=text --reporter=html node_modules/.bin/_mocha test/unit --recursive
+	@NODE_ENV=test nyc --reporter=text --reporter=html node_modules/.bin/mocha test/unit --recursive
 	@$(DONE)
 
 # TODO this doesn't work and isn't _technically_
