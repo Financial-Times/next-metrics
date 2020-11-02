@@ -129,13 +129,6 @@ graphite.log({
 });
 ```
 
-You can also access the [list of Next services](https://github.com/Financial-Times/next-metrics/blob/master/lib/metrics/services.js) that are used for sending
-`fetch` metrics to Graphite:
-
-```javascript
-const { services } = require('next-metrics');
-```
-
 ## Instrumentation
 
 The libary _understands_ certain types of objects within our set of
@@ -151,6 +144,25 @@ metrics.instrument(res, { as: 'express.http.res' });
 
 The first argument is the object you want to instrument, and the second
 argument specifies what type of object it is.
+
+## Services
+
+`next-metrics` logs details of `fetch` requests your app makes, by instrumenting [`isomorphic-fetch`](https://github.com/matthew-andrews/isomorphic-fetch).
+
+So that these metrics are properly grouped and labelled in Graphite, you need to register any HTTP endpoint you call in [`services.js`](https://github.com/Financial-Times/next-metrics/blob/master/lib/metrics/services.js). Any endpoint you call that _isn't_ registered will cause [a default `n-express` healthcheck](https://github.com/Financial-Times/n-express/blob/master/src/lib/unregistered-services-healthCheck.js) to fail.
+
+If the `Metrics: All services for ${appName} registered in next-metrics` healthcheck starts failing, check the healthcheck output to see which URLs aren't registered, add them to `services.js`, and tag a new release of `next-metrics`. You'll also need to update `n-express` to use your new `next-metrics` version, then update `n-express` in your app.
+
+The keys in the object are labels that requests are grouped under, and the values are regexes to group by, for example:
+
+```js
+module.exports = {
+    //...
+	'access': /^https:\/\/access\.ft\.com/,
+}
+```
+
+This groups all URLs starting with `https://access.ft.com` as `access` in Graphite.
 
 ## Metrics
 
