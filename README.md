@@ -82,10 +82,10 @@ for more information on the `Metrics` class.
 
 ### Custom use cases
 
-Typically you'll only want a single instance of the [`Metrics`](https://github.com/Financial-Times/next-metrics/blob/master/lib/metrics.js)
+Typically you'll only want a single instance of the [`Metrics`](https://github.com/Financial-Times/next-metrics/blob/HEAD/lib/metrics.js)
 class to be used by your application. Because of this, when you
 require `next-metrics`, the default export from the module is an
-instance of [`Metrics`](https://github.com/Financial-Times/next-metrics/blob/master/lib/metrics.js),
+instance of [`Metrics`](https://github.com/Financial-Times/next-metrics/blob/HEAD/lib/metrics.js),
 which effectively acts as a singleton.
 
 If you have a custom use case, this module exposes a couple of internal
@@ -149,7 +149,7 @@ argument specifies what type of object it is.
 
 `next-metrics` logs details of `fetch` requests your app makes, by instrumenting [`isomorphic-fetch`](https://github.com/matthew-andrews/isomorphic-fetch).
 
-So that these metrics are properly grouped and labelled in Graphite, you need to register any HTTP endpoint you call in [`services.js`](https://github.com/Financial-Times/next-metrics/blob/master/lib/metrics/services.js). Any endpoint you call that _isn't_ registered will cause [a default `n-express` healthcheck](https://github.com/Financial-Times/n-express/blob/master/src/lib/unregistered-services-healthCheck.js) to fail.
+So that these metrics are properly grouped and labelled in Graphite, you need to register any HTTP endpoint you call in [`services.js`](https://github.com/Financial-Times/next-metrics/blob/HEAD/lib/metrics/services.js). Any endpoint you call that _isn't_ registered will cause [a default `n-express` healthcheck](https://github.com/Financial-Times/n-express/blob/HEAD/src/lib/unregistered-services-healthCheck.js) to fail.
 
 If the `Metrics: All services for ${appName} registered in next-metrics` healthcheck starts failing, check the healthcheck output to see which URLs aren't registered, add them to `services.js`, and tag a new release of `next-metrics`. You'll also need to update `n-express` to use your new `next-metrics` version, then update `n-express` in your app.
 
