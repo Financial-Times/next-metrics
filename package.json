@@ -1,7 +1,6 @@
 {
   "name": "next-metrics",
   "version": "0.0.0",
-  "main": "index.js",
   "dependencies": {
     "@financial-times/n-logger": "^5.5.6",
     "lodash": "^4.17.10",
