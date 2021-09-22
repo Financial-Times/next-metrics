@@ -32,13 +32,12 @@
     "npm": "7.x"
   },
   "scripts": {
-    "prepare": "npx snyk protect || npx snyk protect -d || true",
-    "preinstall": "npm_config_yes=true npx check-engine"
+    "prepare": "npx snyk protect || npx snyk protect -d || true"
   },
   "husky": {
     "hooks": {
       "commit-msg": "node_modules/.bin/secret-squirrel-commitmsg",
-      "pre-commit": "node_modules/.bin/secret-squirrel",
+      "pre-commit": "node_modules/.bin/secret-squirrel && npm_config_yes=true npx check-engine",
       "pre-push": "make verify -j3"
     }
   },
