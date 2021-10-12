@@ -29,7 +29,7 @@
   },
   "engines": {
     "node": "12.x",
-    "npm": "7.x"
+    "npm": "7.x || 8.x"
   },
   "scripts": {
     "prepare": "npx snyk protect || npx snyk protect -d || true",
