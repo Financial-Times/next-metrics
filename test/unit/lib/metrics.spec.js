@@ -83,7 +83,7 @@ describe('lib/metrics', () => {
 			});
 
 			it('the correct prefix should be passed to the Graphite client (opts.prefix)', () => {
-				assert.equal(Graphite.firstCall.args[0].prefix, 'mock-graphite-app-uuid.web_1_process_cluster_worker_1_EU.');
+				assert.equal(Graphite.firstCall.args[0].prefix, 'mock-graphite-app-uuid.web_1_process_cluster_worker_1_EU_process_cluster_worker_1_EU.');
 			});
 
 			it('metric logging should be enabled for the Graphite client (opts.noLog)', () => {
