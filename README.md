@@ -11,24 +11,24 @@ A library for sending metrics to Graphite, that also provides drop in instrument
 Create an instance of the Metrics object:
 
 ```javascript
-const metrics = require('next-metrics');
+const metrics = require("next-metrics");
 ```
 
 Initialise it:
 
 ```javascript
 metrics.init({
-    app: 'example',
-    flushEvery: 5000
+  app: "example",
+  flushEvery: 5000,
 });
 ```
 
 Instrument the response object:
 
 ```javascript
-app.get('/', function (req, res) {
-    metrics.instrument(res, { as: 'express.http.res' });
-    res.send('hello');
+app.get("/", function (req, res) {
+  metrics.instrument(res, { as: "express.http.res" });
+  res.send("hello");
 });
 ```
 
@@ -38,11 +38,9 @@ Add a counter for an arbitrary event in the application,
 
 ```javascript
 var server = app.listen(port, function () {
-    metrics.count('express.start', 1);
+  metrics.count("express.start", 1);
 });
 ```
-
-See the [example app](./examples/app.js) for more information.
 
 ### Configuration
 
@@ -61,12 +59,12 @@ _Note: Don't use the production FT Graphite API key on your `localhost` as you w
 
 The `Metrics.init` method takes the following options:
 
-* `flushEvery` (required) - `integer|boolean` - Specify how frequently you want metrics pushed to Graphite, or `false` if you want to do it manually with `.flush()`
-* `forceGraphiteLogging` (optional) - `boolean` - Set to `true` if you want to log metrics to Graphite from code running in a non-production environment (when `NODE_ENV != production`)
-* `instance` (optional, default: dynamically generated string) - `string|boolean` - Specify a custom instance name in the [Graphite key](#metrics), or set to `false` to omit it
-* `useDefaultAggregators` (optional, default: true) - `boolean` - Set to `false` if you want to disable default aggregators
-* [DEPRECATED] `app` (required) - `string` - Application name e.g. router
-* [DEPRECATED] `platform` (optional, default: heroku) - `string` - Specify a custom platform name in the [Graphite key](#metrics)
+- `flushEvery` (required) - `integer|boolean` - Specify how frequently you want metrics pushed to Graphite, or `false` if you want to do it manually with `.flush()`
+- `forceGraphiteLogging` (optional) - `boolean` - Set to `true` if you want to log metrics to Graphite from code running in a non-production environment (when `NODE_ENV != production`)
+- `instance` (optional, default: dynamically generated string) - `string|boolean` - Specify a custom instance name in the [Graphite key](#metrics), or set to `false` to omit it
+- `useDefaultAggregators` (optional, default: true) - `boolean` - Set to `false` if you want to disable default aggregators
+- [DEPRECATED] `app` (required) - `string` - Application name e.g. router
+- [DEPRECATED] `platform` (optional, default: heroku) - `string` - Specify a custom platform name in the [Graphite key](#metrics)
 
 ### Checking configuration
 
@@ -93,39 +91,39 @@ classes that might help you out:
 
 ```javascript
 // Create your own instance of Metrics
-const { Metrics } = require('next-metrics');
+const { Metrics } = require("next-metrics");
 
-const metrics = new Metrics;
+const metrics = new Metrics();
 
 metrics.init({
-    platform: 'custom-platform',
-    app: 'some-app',
-    instance: false,
-    useDefaultAggregators: false,
-    flushEvery: false,
-    forceGraphiteLogging: true
+  platform: "custom-platform",
+  app: "some-app",
+  instance: false,
+  useDefaultAggregators: false,
+  flushEvery: false,
+  forceGraphiteLogging: true,
 });
 
-metrics.count('some_filename.size', 2454589);
-metrics.count('some_filename.gzip_size', 45345);
+metrics.count("some_filename.size", 2454589);
+metrics.count("some_filename.gzip_size", 45345);
 
 metrics.flush();
 
 // Send raw metrics directly to a Graphite server
-const { GraphiteClient } = require('next-metrics');
+const { GraphiteClient } = require("next-metrics");
 
 const graphite = new GraphiteClient({
-    destination: {
-        port: 2003,
-        host: 'some.host.com'
-    },
-    prefix: 'some_prefix.',
-    noLog: false,
+  destination: {
+    port: 2003,
+    host: "some.host.com",
+  },
+  prefix: "some_prefix.",
+  noLog: false,
 });
 
 graphite.log({
-    'build.time': 536,
-    'build.count': 1,
+  "build.time": 536,
+  "build.count": 1,
 });
 ```
 
@@ -139,7 +137,7 @@ For example, to instrument an Express response object, put this inside one of
 your route handlers:
 
 ```javascript
-metrics.instrument(res, { as: 'express.http.res' });
+metrics.instrument(res, { as: "express.http.res" });
 ```
 
 The first argument is the object you want to instrument, and the second
@@ -157,9 +155,9 @@ The keys in the object are labels that requests are grouped under, and the value
 
 ```js
 module.exports = {
-    //...
-	'access': /^https:\/\/access\.ft\.com/,
-}
+  //...
+  access: /^https:\/\/access\.ft\.com/,
+};
 ```
 
 This groups all URLs starting with `https://access.ft.com` as `access` in Graphite.

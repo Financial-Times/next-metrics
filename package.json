@@ -13,7 +13,6 @@
     "check-engines": "^1.5.0",
     "eslint": "^5.2.0",
     "express": "^4.13.3",
-    "ft-api-client": "https://github.com/Financial-Times/ft-api-client/archive/emit-events.tar.gz",
     "lintspaces-cli": "^0.6.1",
     "mitm": "1.7.0",
     "mocha": "^5.2.0",
@@ -24,8 +23,7 @@
     "sinon": "^6.1.4",
     "sinon-chai": "^3.2.0",
     "snyk": "^1.168.0",
-    "supertest": "^3.1.0",
-    "swig": "^1.4.2"
+    "supertest": "^3.1.0"
   },
   "engines": {
     "node": "12.x",
