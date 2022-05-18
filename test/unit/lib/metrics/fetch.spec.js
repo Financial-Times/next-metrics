@@ -219,6 +219,7 @@ describe('Fetch', () => {
 		const fetch = new Fetch({fetchInstance : fetchInstanceStub});
 		const fetchInstrumentedInstance = fetch.instrument();
 		fetchInstrumentedInstance.should.equal(global.fetch);
+		expect(global.fetch._fromFetchInstance).to.equal(true);
 		fetchInstrumentedInstance._instrumented.should.be.true;
 
 	});
@@ -230,9 +231,10 @@ describe('Fetch', () => {
 
 		global.fetch = null;
 
-		const fetch = new Fetch({fetchInstance : fetchInstanceStub , instrumentGlobalFetch : false});
+		const fetch = new Fetch({fetchInstance : fetchInstanceStub , overrideGlobalFetch : false});
 		const fetchInstrumentedInstance = fetch.instrument();
 		fetchInstrumentedInstance.should.not.equal(global.fetch);
+		expect(fetchInstrumentedInstance._fromFetchInstance).to.equal(true);
 		fetchInstrumentedInstance._instrumented.should.be.true;
 	});
 });

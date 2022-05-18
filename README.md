@@ -92,7 +92,7 @@ classes that might help you out:
 ```javascript
 // Create your own instance of Metrics
 const { Metrics } = require("next-metrics");
-
+const fetch = require('node-fetch');
 const metrics = new Metrics();
 
 metrics.init({
@@ -102,6 +102,8 @@ metrics.init({
   useDefaultAggregators: false,
   flushEvery: false,
   forceGraphiteLogging: true,
+  fetchInstance : fetch, // fetch instance to make request, if we do not pass an instance isomorphic-fetch would be the default fetch instance and will be assigned to global.fetch
+  overrideGlobalFetch: true, //  use to indicate if our fetchInstance should override global.fetch, true by default .
 });
 
 metrics.count("some_filename.size", 2454589);
@@ -145,7 +147,7 @@ argument specifies what type of object it is.
 
 ## Services
 
-`next-metrics` logs details of `fetch` requests your app makes, by instrumenting [`isomorphic-fetch`](https://github.com/matthew-andrews/isomorphic-fetch).
+`next-metrics` logs details of `fetch` requests your app makes, by instrumenting [`isomorphic-fetch`](https://github.com/matthew-andrews/isomorphic-fetch). or the instance that you pass on the option fetchInstance in method init. If we set the option overrideGlobalFetch to false and a fetchInstance , global.fetch wont be override or assigned with our instrumented instance.
 
 So that these metrics are properly grouped and labelled in Graphite, you need to register any HTTP endpoint you call in [`services.js`](https://github.com/Financial-Times/next-metrics/blob/HEAD/lib/metrics/services.js). Any endpoint you call that _isn't_ registered will cause [a default `n-express` healthcheck](https://github.com/Financial-Times/n-express/blob/HEAD/src/lib/unregistered-services-healthCheck.js) to fail.
 

@@ -255,7 +255,7 @@ describe('lib/metrics', () => {
 
 				instance.init({...options,fetchInstance : fetchInstanceStub} );
 			});
-			it('fetch deps should fave option fetchInstance', () => {
+			it('fetch deps should have option fetchInstance', () => {
 				assert.equal(instance.fetch.deps.fetchInstance,fetchInstanceStub);
 			});
 		});
