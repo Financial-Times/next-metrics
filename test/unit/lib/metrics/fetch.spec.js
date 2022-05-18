@@ -6,7 +6,7 @@ const Fetch = require('../../../../lib/metrics/fetch');
 
 chai.use(sinonChai);
 const should = chai.should();
-
+const expect = chai.expect;
 
 describe('Fetch', () => {
 
@@ -36,7 +36,12 @@ describe('Fetch', () => {
 	it('should throw error if instrumenting when there’s no `global.fetch`', () => {
 		global.fetch = undefined;
 		const fetch = new Fetch();
-		fetch.instrument.should.throw('You need to `require(\'isomorphic-fetch\');` before instrumenting it');
+		try{
+			fetch.instrument();
+		}
+		catch(error){
+			expect(error.message).to.equal('next-metrics: You need to `require(\'isomorphic-fetch\');` or pass a fetchInstance as an option before instrumenting it');
+		}
 	});
 
 	it('should be able to restore', () => {
@@ -202,5 +207,21 @@ describe('Fetch', () => {
 				done();
 			}, 10);
 		}, 10);
+	});
+
+	it('should be able to use fetchInstance instead global.fetch', () => {
+		const fetchInstanceStub = sinon.stub()
+			.resolves({
+				status: 200
+			});
+
+		global.fetch.should.equal(fetchStub);
+
+		const fetch = new Fetch({fetchInstance : fetchInstanceStub});
+		const fetchInstrumentedInstance = fetch.instrument();
+		fetchInstrumentedInstance.should.not.equal(global.fetch);
+		fetchInstrumentedInstance._instrumented.should.be.true;
+		expect(global.fetch._instrumented).to.be.undefined;
+
 	});
 });
