@@ -28,7 +28,6 @@ describe('Fetch', () => {
 	it('should be able to instrument', () => {
 		const fetch = new Fetch();
 		fetch.instrument();
-
 		global.fetch._instrumented.should.be.true;
 		global.fetch.should.not.equal(fetchStub);
 	});
@@ -209,7 +208,7 @@ describe('Fetch', () => {
 		}, 10);
 	});
 
-	it('should be able to use fetchInstance instead global.fetch', () => {
+	it('should be able to use fetchInstance and assign to global.fetch', () => {
 		const fetchInstanceStub = sinon.stub()
 			.resolves({
 				status: 200
@@ -219,9 +218,21 @@ describe('Fetch', () => {
 
 		const fetch = new Fetch({fetchInstance : fetchInstanceStub});
 		const fetchInstrumentedInstance = fetch.instrument();
+		fetchInstrumentedInstance.should.equal(global.fetch);
+		fetchInstrumentedInstance._instrumented.should.be.true;
+
+	});
+	it('should be able to use fetchInstance without assign to global.fetch', () => {
+		const fetchInstanceStub = sinon.stub()
+			.resolves({
+				status: 200
+			});
+
+		global.fetch = null;
+
+		const fetch = new Fetch({fetchInstance : fetchInstanceStub , instrumentGlobalFetch : false});
+		const fetchInstrumentedInstance = fetch.instrument();
 		fetchInstrumentedInstance.should.not.equal(global.fetch);
 		fetchInstrumentedInstance._instrumented.should.be.true;
-		expect(global.fetch._instrumented).to.be.undefined;
-
 	});
 });
