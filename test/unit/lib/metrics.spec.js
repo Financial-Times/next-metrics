@@ -246,6 +246,20 @@ describe('lib/metrics', () => {
 
 		});
 
+		describe('when fetchInstance option is passed in constructor', () => {
+			const fetchInstanceStub = sinon.stub()
+				.resolves({
+					status: 200
+				});
+			beforeEach(() => {
+
+				instance.init({...options,fetchInstance : fetchInstanceStub} );
+			});
+			it('fetch deps should have option fetchInstance', () => {
+				assert.equal(instance.fetch.deps.fetchInstance,fetchInstanceStub);
+			});
+		});
+
 	});
 
 });
