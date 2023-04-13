@@ -37,4 +37,4 @@ unit-test-coverage:
 
 # an integration test
 test-integration:
-	@NODE_ENV=test mocha test/integration --exit --recursive
+	@NODE_ENV=test mocha test/integration --recursive
