@@ -35,7 +35,6 @@ unit-test-coverage:
 	@NODE_ENV=test nyc --reporter=text --reporter=html node_modules/.bin/_mocha test/unit --recursive
 	@$(DONE)
 
-# TODO this doesn't work and isn't _technically_
-# an integration test. Revisit this
+# an integration test
 test-integration:
-	export DEBUG=graphite; node examples/app.js
+	@NODE_ENV=test mocha test/integration --exit --recursive

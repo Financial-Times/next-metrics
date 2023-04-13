@@ -15,7 +15,7 @@
     "express": "^4.13.3",
     "lintspaces-cli": "^0.6.1",
     "mitm": "1.7.0",
-    "mocha": "^5.2.0",
+    "mocha": "^10.2.0",
     "mockery": "^2.0.0",
     "nock": "^9.4.3",
     "node-fetch": "^1.7.3",
