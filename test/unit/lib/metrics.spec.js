@@ -8,7 +8,7 @@ describe('lib/metrics', () => {
 	let clock;
 	let Graphite;
 	let metrics;
-	let nLogger;
+	let logger;
 	let Metrics;
 
 	beforeEach(() => {
@@ -19,8 +19,8 @@ describe('lib/metrics', () => {
 		Graphite = require('../mock/graphite.mock');
 		mockery.registerMock('../lib/graphite/client', Graphite);
 
-		nLogger = require('../mock/n-logger.mock');
-		mockery.registerMock('@financial-times/n-logger', nLogger);
+		logger = require('../mock/reliability-kit-logger.mock');
+		mockery.registerMock('@dotcom-reliability-kit/logger', logger);
 
 		Metrics = require('../../../lib/metrics');
 	});
@@ -101,9 +101,9 @@ describe('lib/metrics', () => {
 			});
 
 			it('an error message with the event NEXT_METRICS_INVALID_PRODUCTION_CONFIG should be logged', () => {
-				assert.calledOnce(nLogger.default.error);
-				assert.isObject(nLogger.default.error.firstCall.args[0]);
-				assert.equal(nLogger.default.error.firstCall.args[0].event, 'NEXT_METRICS_INVALID_PRODUCTION_CONFIG');
+				assert.calledOnce(logger.error);
+				assert.isObject(logger.error.firstCall.args[0]);
+				assert.equal(logger.error.firstCall.args[0].event, 'NEXT_METRICS_INVALID_PRODUCTION_CONFIG');
 			});
 
 		});
@@ -116,9 +116,9 @@ describe('lib/metrics', () => {
 			});
 
 			it('an error message with the event NEXT_METRICS_INVALID_PRODUCTION_CONFIG should be logged', () => {
-				assert.calledOnce(nLogger.default.error);
-				assert.isObject(nLogger.default.error.firstCall.args[0]);
-				assert.equal(nLogger.default.error.firstCall.args[0].event, 'NEXT_METRICS_INVALID_PRODUCTION_CONFIG');
+				assert.calledOnce(logger.error);
+				assert.isObject(logger.error.firstCall.args[0]);
+				assert.equal(logger.error.firstCall.args[0].event, 'NEXT_METRICS_INVALID_PRODUCTION_CONFIG');
 			});
 
 		});
@@ -141,9 +141,9 @@ describe('lib/metrics', () => {
 				assert.isTrue(Graphite.firstCall.args[0].noLog);
 			});
 			it('an info message with the event NEXT_METRICS_DISABLED should be logged', () => {
-				assert.calledOnce(nLogger.default.info);
-				assert.isObject(nLogger.default.info.firstCall.args[0]);
-				assert.equal(nLogger.default.info.firstCall.args[0].event, 'NEXT_METRICS_DISABLED');
+				assert.calledOnce(logger.info);
+				assert.isObject(logger.info.firstCall.args[0]);
+				assert.equal(logger.info.firstCall.args[0].event, 'NEXT_METRICS_DISABLED');
 			});
 
 		});
@@ -152,9 +152,9 @@ describe('lib/metrics', () => {
 			it('a warn message with the event NEXT_METRICS_ALREADY_CONFIGURED should be logged', () => {
 				instance.init(Object.assign({}, options));
 				instance.init(Object.assign({}, options));
-				assert.calledOnce(nLogger.default.warn);
-				assert.isObject(nLogger.default.warn.firstCall.args[0]);
-				assert.equal(nLogger.default.warn.firstCall.args[0].event, 'NEXT_METRICS_ALREADY_CONFIGURED');
+				assert.calledOnce(logger.warn);
+				assert.isObject(logger.warn.firstCall.args[0]);
+				assert.equal(logger.warn.firstCall.args[0].event, 'NEXT_METRICS_ALREADY_CONFIGURED');
 			});
 		});
 
@@ -206,9 +206,9 @@ describe('lib/metrics', () => {
 			});
 
 			it('a warn message with the event NEXT_METRICS_DEPRECATED_OPTION_APP should be logged', () => {
-				assert.calledOnce(nLogger.default.warn);
-				assert.isObject(nLogger.default.warn.firstCall.args[0]);
-				assert.equal(nLogger.default.warn.firstCall.args[0].event, 'NEXT_METRICS_DEPRECATED_OPTION_APP');
+				assert.calledOnce(logger.warn);
+				assert.isObject(logger.warn.firstCall.args[0]);
+				assert.equal(logger.warn.firstCall.args[0].event, 'NEXT_METRICS_DEPRECATED_OPTION_APP');
 			});
 
 		});
@@ -222,9 +222,9 @@ describe('lib/metrics', () => {
 			});
 
 			it('a warn message with the event NEXT_METRICS_DEPRECATED_OPTION_PLATFORM should be logged', () => {
-				assert.calledOnce(nLogger.default.warn);
-				assert.isObject(nLogger.default.warn.firstCall.args[0]);
-				assert.equal(nLogger.default.warn.firstCall.args[0].event, 'NEXT_METRICS_DEPRECATED_OPTION_PLATFORM');
+				assert.calledOnce(logger.warn);
+				assert.isObject(logger.warn.firstCall.args[0]);
+				assert.equal(logger.warn.firstCall.args[0].event, 'NEXT_METRICS_DEPRECATED_OPTION_PLATFORM');
 			});
 
 		});
@@ -239,9 +239,9 @@ describe('lib/metrics', () => {
 			});
 
 			it('a warn message with the event NEXT_METRICS_DEPRECATED_ENV_VAR_HOSTEDGRAPHITE_APIKEY should be logged', () => {
-				assert.calledOnce(nLogger.default.warn);
-				assert.isObject(nLogger.default.warn.firstCall.args[0]);
-				assert.equal(nLogger.default.warn.firstCall.args[0].event, 'NEXT_METRICS_DEPRECATED_ENV_VAR_HOSTEDGRAPHITE_APIKEY');
+				assert.calledOnce(logger.warn);
+				assert.isObject(logger.warn.firstCall.args[0]);
+				assert.equal(logger.warn.firstCall.args[0].event, 'NEXT_METRICS_DEPRECATED_ENV_VAR_HOSTEDGRAPHITE_APIKEY');
 			});
 
 		});

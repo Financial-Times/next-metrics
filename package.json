@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "index.js",
   "dependencies": {
-    "@financial-times/n-logger": "^10.2.0",
+    "@dotcom-reliability-kit/logger": "^2.2.6",
     "lodash": "^4.17.21",
     "metrics": "^0.1.8"
   },
