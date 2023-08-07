@@ -68,7 +68,7 @@ The `Metrics.init` method takes the following options:
 
 ### Checking configuration
 
-Configuration errors are logged using [`n-logger`](https://github.com/Financial-Times/n-logger).
+Configuration errors are logged using [Reliability Kit logger](https://github.com/Financial-Times/dotcom-reliability-kit/tree/main/packages/logger#readme).
 It depends on your app configuration, but in most cases, for an app running
 in production the logs will be sent to Splunk.
 
