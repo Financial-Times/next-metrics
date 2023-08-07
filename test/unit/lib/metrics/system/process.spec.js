@@ -218,7 +218,7 @@ describe('lib/metrics/system/process', () => {
 				sinon.stub(global, 'setInterval').returns({
 					unref: sinon.stub()
 				});
-				sinon.stub(process, 'hrtime').returns([0, 0]);
+				sinon.stub(process, 'hrtime');
 				sinon.stub(process, 'memoryUsage').returns(mockMemoryUsage);
 				sinon.stub(process, 'nextTick');
 				instance.instrument();
