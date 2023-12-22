@@ -8,14 +8,18 @@
     "metrics": "^0.1.8"
   },
   "devDependencies": {
-    "@financial-times/n-gage": "^8.3.2",
+    "@dotcom-tool-kit/component": "^4.0.5",
+    "@dotcom-tool-kit/eslint": "^3.1.6",
+    "@dotcom-tool-kit/mocha": "^3.1.6",
+    "@financial-times/eslint-config-next": "^7.1.0",
     "chai": "^4.1.2",
     "check-engines": "^1.5.0",
-    "eslint": "^5.2.0",
+    "dotcom-tool-kit": "^3.3.11",
+    "eslint": "^8.56.0",
     "express": "^4.13.3",
     "lintspaces-cli": "^0.6.1",
     "mitm": "1.7.0",
-    "mocha": "^5.2.0",
+    "mocha": "^10.2.0",
     "mockery": "^2.0.0",
     "nock": "^9.4.3",
     "npm-prepublish": "^1.2.0",
@@ -30,13 +34,15 @@
     "npm": "7.x || 8.x || 9.x"
   },
   "scripts": {
-    "prepare": "npx snyk protect || npx snyk protect -d || true"
+    "prepare": "npx snyk protect || npx snyk protect -d || true",
+    "build": "dotcom-tool-kit build:local",
+    "test": "dotcom-tool-kit test:local",
+    "start": "dotcom-tool-kit run:local"
   },
   "husky": {
     "hooks": {
-      "commit-msg": "node_modules/.bin/secret-squirrel-commitmsg",
-      "pre-commit": "node_modules/.bin/secret-squirrel",
-      "pre-push": "make verify -j3"
+      "commit-msg": "dotcom-tool-kit git:commitmsg",
+      "pre-commit": "dotcom-tool-kit git:precommit"
     }
   },
   "volta": {
