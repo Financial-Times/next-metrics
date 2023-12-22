@@ -2,7 +2,7 @@
 .sass-cache
 node_modules
 .editorconfig
-.eslintrc.js
 coverage
 .nyc_output
 *.env*
+/.toolkitstate
