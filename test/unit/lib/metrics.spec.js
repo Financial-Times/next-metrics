@@ -42,6 +42,7 @@ describe('lib/metrics', () => {
 			options = {
 				useDefaultAggregators: false,
 				instance: 'web_1_process_cluster_worker_1_EU',
+				flushEvery: 123
 			};
 
 			originalEnv = {
