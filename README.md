@@ -151,7 +151,13 @@ argument specifies what type of object it is.
 
 So that these metrics are properly grouped and labelled in Graphite, you need to register any HTTP endpoint you call in [`services.js`](https://github.com/Financial-Times/next-metrics/blob/HEAD/lib/metrics/services.js). Any endpoint you call that _isn't_ registered will cause [a default `n-express` healthcheck](https://github.com/Financial-Times/n-express/blob/HEAD/src/lib/unregistered-services-healthCheck.js) to fail.
 
-If the `Metrics: All services for ${appName} registered in next-metrics` healthcheck starts failing, check the healthcheck output to see which URLs aren't registered, add them to `services.js`, and tag a new release of `next-metrics`. You'll also need to update `n-express` to use your new `next-metrics` version, then update `n-express` in your app.
+If the `Metrics: All services for ${appName} registered in next-metrics` healthcheck starts failing:
+
+1. Check the healthcheck output to see which URLs aren't registered
+2. Add these URLs to `services.js` in a new Pull Request
+3. Once reviewed and merged, tag a new [**minor** release](https://semver.org/) of `next-metrics`
+4. Once the new version of next-metrics is published, bump the version used in `n-express`
+5. Update `n-express` in your app
 
 The keys in the object are labels that requests are grouped under, and the values are regexes to group by, for example:
 
