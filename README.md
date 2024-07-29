@@ -2,6 +2,11 @@
 
 A library for sending metrics to Graphite, that also provides drop in instrumentation for standard parts of Next applications e.g. [Express](https://expressjs.com/).
 
+> [!WARNING]
+> next-metrics has been deprecated as of **2024-07-29**. It will reach end-of-life on **2025-09-30** at which point no further security patches will be applied. The library will continue to work in currently-supported versions of Node.js but **it should not be used in new projects**.
+>
+> The recommended replacement for next-metrics is OpenTelemetry. We maintain [@dotcom-reliability-kit/opentelemetry](https://github.com/Financial-Times/dotcom-reliability-kit/tree/main/packages/opentelemetry#readme) to make this as easy as possible and we published [The Lazy Engineer's Guide to OpenTelemetry](https://financialtimes.atlassian.net/wiki/spaces/DS/blog/2024/06/24/8467087366/The+Lazy+Engineer's+Guide+to+OpenTelemetry) to help.
+
 > ℹ️ this repo is one of the oldest in FT.com, and so it doesn't follow our current [naming conventions](https://github.com/financial-times/next/wiki/Naming-Conventions#bower-and-npm-modules); because it's a library, not an app, it _should_ be called `n-metrics`. unfortunately, it's used in [way too many places](https://github.com/search?q=org%3AFinancial-Times+%22next-metrics%22&type=Code) to easily rename.
 
 ## Usage
