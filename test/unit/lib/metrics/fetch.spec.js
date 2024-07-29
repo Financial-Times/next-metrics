@@ -72,31 +72,7 @@ describe('Fetch', () => {
 			});
 	});
 
-	it('should call `onUninstrumented` and actual fetch if unknown service', () => {
-		const onUninstrumentedSpy = sinon.spy(() => {});
-		const fetch = new Fetch({
-			services: {
-				blogs: /^https?:\/\/blogs\.ft\.com/
-			}
-		});
-		fetch.instrument({
-			onUninstrumented: onUninstrumentedSpy
-		});
-
-		return global.fetch('https://www.ft.com', {
-			method: 'PUT'
-		})
-			.then(() => {
-				onUninstrumentedSpy.should.always.have.been.calledWithExactly('https://www.ft.com', {
-					method: 'PUT'
-				});
-				fetchStub.should.always.have.been.calledWithExactly('https://www.ft.com', {
-					method: 'PUT'
-				});
-			});
-	});
-
-	it('should be able to get report', done => {
+	it('should be able to get a report', done => {
 		const fetch = new Fetch({
 			services: {
 				blogs: /^https?:\/\/blogs\.ft\.com/
@@ -117,6 +93,62 @@ describe('Fetch', () => {
 			['200', '2xx'].forEach(status => {
 				['mean', 'min', 'max', 'median', '95th', '99th'].forEach(grouping => {
 					const key = `fetch.blogs.response.status_${status}.response_time.${grouping}`;
+					should.exist(report[key], `${key} doesn’t exist`);
+				});
+			});
+			done();
+		}, 10);
+	});
+
+	it('should be able to get a report for unknown services', done => {
+		const fetch = new Fetch({
+			services: {
+				blogs: /^https?:\/\/blogs\.ft\.com/
+			}
+		});
+		fetch.instrument();
+		global.fetch('https://www.ft.com');
+
+		// need to do this a bit later, as the metrics are added out of the microqueue
+		setTimeout(() => {
+			const report = fetch.reporter();
+
+			report.should.contain({
+				'fetch.www-ft-com.count': 1,
+				'fetch.www-ft-com.response.status_200.count': 1,
+				'fetch.www-ft-com.response.status_2xx.count': 1
+			});
+			['200', '2xx'].forEach(status => {
+				['mean', 'min', 'max', 'median', '95th', '99th'].forEach(grouping => {
+					const key = `fetch.www-ft-com.response.status_${status}.response_time.${grouping}`;
+					should.exist(report[key], `${key} doesn’t exist`);
+				});
+			});
+			done();
+		}, 10);
+	});
+
+	it('should be able to get a report for services where a default cannot be generated', done => {
+		const fetch = new Fetch({
+			services: {
+				blogs: /^https?:\/\/blogs\.ft\.com/
+			}
+		});
+		fetch.instrument();
+		global.fetch('not-a-url');
+
+		// need to do this a bit later, as the metrics are added out of the microqueue
+		setTimeout(() => {
+			const report = fetch.reporter();
+
+			report.should.contain({
+				'fetch.unknown.count': 1,
+				'fetch.unknown.response.status_200.count': 1,
+				'fetch.unknown.response.status_2xx.count': 1
+			});
+			['200', '2xx'].forEach(status => {
+				['mean', 'min', 'max', 'median', '95th', '99th'].forEach(grouping => {
+					const key = `fetch.unknown.response.status_${status}.response_time.${grouping}`;
 					should.exist(report[key], `${key} doesn’t exist`);
 				});
 			});

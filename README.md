@@ -149,26 +149,22 @@ argument specifies what type of object it is.
 
 `next-metrics` logs details of `fetch` requests your app makes, by instrumenting [`isomorphic-fetch`](https://github.com/matthew-andrews/isomorphic-fetch). or the instance that you pass on the option fetchInstance in method init. If we set the option overrideGlobalFetch to false and a fetchInstance , global.fetch wont be override or assigned with our instrumented instance.
 
-So that these metrics are properly grouped and labelled in Graphite, you need to register any HTTP endpoint you call in [`services.js`](https://github.com/Financial-Times/next-metrics/blob/HEAD/lib/metrics/services.js). Any endpoint you call that _isn't_ registered will cause [a default `n-express` healthcheck](https://github.com/Financial-Times/n-express/blob/HEAD/src/lib/unregistered-services-healthCheck.js) to fail.
+We make a guess at a service name, replacing the request host name `.` with `-` so that metrics are properly grouped and labelled in Graphite. It's possible to override this with the following **but this is not recommended and may be removed in future**:
 
-If the `Metrics: All services for ${appName} registered in next-metrics` healthcheck starts failing:
+### Manual service names
 
-1. Check the healthcheck output to see which URLs aren't registered
-2. Add these URLs to `services.js` in a new Pull Request
-3. Once reviewed and merged, tag a new [**minor** release](https://semver.org/) of `next-metrics`
-4. Once the new version of next-metrics is published, bump the version used in `n-express`
-5. Update `n-express` in your app
+Add any services you want to override the label for to [`services.js`](https://github.com/Financial-Times/next-metrics/blob/HEAD/lib/metrics/services.js).
 
 The keys in the object are labels that requests are grouped under, and the values are regexes to group by, for example:
 
 ```js
 module.exports = {
   //...
-  access: /^https:\/\/access\.ft\.com/,
+  example: /^https:\/\/example\.ft\.com/,
 };
 ```
 
-This groups all URLs starting with `https://access.ft.com` as `access` in Graphite.
+This groups all URLs starting with `https://example.ft.com` as `example` in Graphite. **Once again, we recommend not worrying about the name and letting next-metrics use a sensible default of `example-ft-com`.**
 
 ## Metrics
 
