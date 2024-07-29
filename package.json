@@ -16,7 +16,7 @@
     "chai": "^4.3.10",
     "check-engines": "^1.6.0",
     "dotcom-tool-kit": "^3.3.11",
-    "eslint": "^8.56.0",
+    "eslint": "^9.8.0",
     "express": "^4.19.2",
     "mitm": "^1.7.2",
     "mocha": "^10.2.0",
