@@ -13,7 +13,7 @@
     "@dotcom-tool-kit/eslint": "^3.1.6",
     "@dotcom-tool-kit/mocha": "^3.1.6",
     "@financial-times/eslint-config-next": "^7.1.0",
-    "chai": "^4.3.10",
+    "chai": "^4.5.0",
     "check-engines": "^1.6.0",
     "dotcom-tool-kit": "^3.3.11",
     "eslint": "^8.56.0",
