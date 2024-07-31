@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('chai').assert;
-const mockery = require('mockery');
+const quibble = require('quibble');
 const sinon = require('sinon');
 
 describe('lib/metrics/system/process', () => {
@@ -11,10 +11,10 @@ describe('lib/metrics/system/process', () => {
 
 	beforeEach(() => {
 		os = require('../../../mock/os.mock');
-		mockery.registerMock('os', os);
+		quibble('os', os);
 
 		metrics = require('../../../mock/metrics.mock');
-		mockery.registerMock('metrics', metrics);
+		quibble('metrics', metrics);
 
 		System = require('../../../../../lib/metrics/system/process');
 	});
@@ -94,6 +94,8 @@ describe('lib/metrics/system/process', () => {
 			let returnValue;
 
 			beforeEach(() => {
+				os.cpus.resetHistory();
+				os.cpus.resetHistory();
 				sinon.stub(process, 'uptime').returns(12345);
 				mockPercentiles = [];
 				mockPercentiles[0.5] = 123;
@@ -239,6 +241,7 @@ describe('lib/metrics/system/process', () => {
 				let setIntervalCall;
 
 				beforeEach(() => {
+					os.loadavg.resetHistory();
 					instance.counters['system.process.mem_process_rss'].count = 0;
 					instance.counters['system.process.mem_process_heapTotal'].count = 0;
 					instance.counters['system.process.mem_process_heapUsed'].count = 0;

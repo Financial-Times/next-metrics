@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('chai').assert;
-const mockery = require('mockery');
+const quibble = require('quibble');
 const sinon = require('sinon');
 
 describe('lib/metrics', () => {
@@ -14,13 +14,13 @@ describe('lib/metrics', () => {
 	beforeEach(() => {
 		clock = sinon.useFakeTimers(new Date('Mon, 15 Jun 2015 20:12:01 UTC').getTime());
 		metrics = require('../mock/metrics.mock');
-		mockery.registerMock('metrics', metrics);
+		quibble('metrics', metrics);
 
 		Graphite = require('../mock/graphite.mock');
-		mockery.registerMock('../lib/graphite/client', Graphite);
+		quibble('../../../lib/graphite/client', Graphite);
 
 		logger = require('../mock/reliability-kit-logger.mock');
-		mockery.registerMock('@dotcom-reliability-kit/logger', logger);
+		quibble('@dotcom-reliability-kit/logger', logger);
 
 		Metrics = require('../../../lib/metrics');
 	});
