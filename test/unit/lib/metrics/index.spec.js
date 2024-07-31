@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('chai').assert;
-const mockery = require('mockery');
+const quibble = require('quibble');
 const sinon = require('sinon');
 
 describe('lib/metrics/index', () => {
@@ -13,16 +13,16 @@ describe('lib/metrics/index', () => {
 
 	beforeEach(() => {
 		Fetch = sinon.stub();
-		mockery.registerMock('./fetch', Fetch);
+		quibble('../../../../lib/metrics/fetch', Fetch);
 
 		HttpRequest = sinon.stub();
-		mockery.registerMock('./express/http-request', HttpRequest);
+		quibble('../../../../lib/metrics/express/http-request', HttpRequest);
 
 		HttpResponse = sinon.stub();
-		mockery.registerMock('./express/http-response', HttpResponse);
+		quibble('../../../../lib/metrics/express/http-response', HttpResponse);
 
 		System = sinon.stub();
-		mockery.registerMock('./system/process', System);
+		quibble('../../../../lib/metrics/system/process', System);
 
 		index = require('../../../../lib/metrics/index');
 	});

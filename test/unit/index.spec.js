@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('chai').assert;
-const mockery = require('mockery');
+const quibble = require('quibble');
 const sinon = require('sinon');
 
 describe('index', () => {
@@ -13,10 +13,10 @@ describe('index', () => {
 	beforeEach(() => {
 		mockMetrics = {isMockMetricsInstance: true};
 		Metrics = sinon.stub().returns(mockMetrics);
-		mockery.registerMock('./lib/metrics', Metrics);
+		quibble('../../lib/metrics', Metrics);
 
 		services = sinon.stub();
-		mockery.registerMock('./lib/metrics/services', services);
+		quibble('../../lib/metrics/services', services);
 
 		nextMetrics = require('../..');
 	});
