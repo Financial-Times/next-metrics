@@ -16,7 +16,7 @@
     "chai": "^4.5.0",
     "dotcom-tool-kit": "^3.5.2",
     "eslint": "^8.57.0",
-    "express": "^4.19.2",
+    "express": "^4.20.0",
     "mitm": "^1.7.3",
     "mocha": "^10.7.3",
     "mockery": "^2.1.0",
