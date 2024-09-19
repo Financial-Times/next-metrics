@@ -1,14 +1,11 @@
 plugins:
   - "@dotcom-tool-kit/component"
-  - "@dotcom-tool-kit/mocha"
   - "@dotcom-tool-kit/eslint"
 commands:
   test:local:
     - Eslint
-    - Mocha
   test:ci:
     - Eslint
-    - Mocha
 options:
   plugins:
     '@dotcom-tool-kit/circleci':
