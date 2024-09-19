@@ -3,28 +3,15 @@
   "version": "0.0.0",
   "main": "index.js",
   "dependencies": {
-    "@dotcom-reliability-kit/logger": "^3.1.6",
-    "lodash": "^4.17.21",
-    "metrics": "^0.1.8"
+    "@dotcom-reliability-kit/logger": "^3.1.6"
   },
   "devDependencies": {
     "@dotcom-reliability-kit/eslint-config": "^3.1.0",
     "@dotcom-tool-kit/component": "^5.0.3",
     "@dotcom-tool-kit/eslint": "^4.0.2",
-    "@dotcom-tool-kit/mocha": "^4.0.2",
     "@financial-times/eslint-config-next": "^7.1.0",
-    "chai": "^4.5.0",
     "dotcom-tool-kit": "^4.0.5",
-    "eslint": "^8.57.1",
-    "express": "^4.21.1",
-    "mitm": "^1.7.3",
-    "mocha": "^10.7.3",
-    "mockery": "^2.1.0",
-    "nock": "^13.5.5",
-    "quibble": "^0.9.2",
-    "sinon": "^19.0.2",
-    "sinon-chai": "^3.7.0",
-    "supertest": "^7.0.0"
+    "eslint": "^8.57.1"
   },
   "engines": {
     "node": "18.x || 20.x || 22.x",
