@@ -2,7 +2,7 @@ plugins:
   - "@dotcom-tool-kit/component"
   - "@dotcom-tool-kit/mocha"
   - "@dotcom-tool-kit/eslint"
-hooks:
+commands:
   test:local:
     - Eslint
     - Mocha
@@ -10,8 +10,9 @@ hooks:
     - Eslint
     - Mocha
 options:
-  '@dotcom-tool-kit/circleci':
-    nodeVersion:
-      - '22.5'
-      - '20.16'
-      - '18.20'
+  plugins:
+    '@dotcom-tool-kit/circleci':
+      cimgNodeVersions:
+        - '22.9'
+        - '20.17'
+        - '18.20'
