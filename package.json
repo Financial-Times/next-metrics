@@ -14,7 +14,7 @@
     "@dotcom-tool-kit/mocha": "^4.0.2",
     "@financial-times/eslint-config-next": "^7.1.0",
     "chai": "^4.5.0",
-    "dotcom-tool-kit": "^4.0.3",
+    "dotcom-tool-kit": "^4.0.4",
     "eslint": "^8.57.1",
     "express": "^4.21.1",
     "mitm": "^1.7.3",
