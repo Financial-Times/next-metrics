@@ -7,10 +7,10 @@
   },
   "devDependencies": {
     "@dotcom-reliability-kit/eslint-config": "^3.1.1",
-    "@dotcom-tool-kit/component": "^5.0.5",
-    "@dotcom-tool-kit/eslint": "^4.1.1",
+    "@dotcom-tool-kit/component": "^5.1.2",
+    "@dotcom-tool-kit/eslint": "^4.2.2",
     "@financial-times/eslint-config-next": "^7.1.0",
-    "dotcom-tool-kit": "^4.2.0",
+    "dotcom-tool-kit": "^4.3.5",
     "eslint": "^8.57.1"
   },
   "engines": {
